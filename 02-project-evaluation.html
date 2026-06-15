@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Evaluation & Programme Management — Week 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;
+    --line:#2a3040;--text:#e9e7e0;--muted:#8b909e;
+    --pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;
+    --glow:rgba(255,122,92,.45);
+    --mono:'JetBrains Mono',monospace;
+    --body:'Hanken Grotesk',system-ui,sans-serif;
+    --display:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),
+      radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),
+      var(--ink);
+    color:var(--text);font-family:var(--body);line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:0 24px 120px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}
+  h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}
+  .meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .meta-item b{color:var(--text)}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}
+  .note+.note{margin-top:12px}
+  .note b{color:var(--text);font-weight:600}
+  .note i{color:var(--text);font-style:italic}
+  .timing{
+    font-family:var(--mono);font-size:11px;background:var(--panel-2);
+    border:1px solid var(--line);border-radius:999px;padding:3px 10px;
+    color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;
+  }
+
+  /* ---- objective list ---- */
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px;letter-spacing:.06em}
+  .obj-t{font-size:15px;color:var(--text);line-height:1.5}
+
+  /* ---- concept cards ---- */
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}
+  .gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}
+  .gdef b{color:var(--text);font-weight:600}
+  .gdef i{color:var(--text);font-style:italic}
+
+  /* ---- term cards ---- */
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:15px;min-width:56px;text-align:center;flex-shrink:0;line-height:1.4;letter-spacing:.02em;color:var(--accent)}
+  .term .tbody{flex:1}
+  .term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}
+  .term .tdef b{color:var(--text);font-weight:600}
+  .term .tdef code{font-family:var(--mono);font-size:13px;background:var(--panel-2);padding:2px 6px;border-radius:4px;color:var(--accent)}
+
+  /* ---- exercise box ---- */
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}
+  .exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .exercise ul li{font-size:14px;color:var(--muted)}
+  .exercise ul li b{color:var(--text)}
+
+  /* ---- case study callout ---- */
+  .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
+  .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
+  .casestudy p{font-size:15px;color:var(--text);line-height:1.6}
+  .casestudy p+p{margin-top:8px}
+
+  /* ---- key takeaway ---- */
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}
+  .key-point p b{color:var(--pos)}
+
+  /* ---- split point ---- */
+  .split-point{
+    text-align:center;padding:22px 0;margin:20px 0;
+    border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---- worked example / equation ---- */
+  .eq-box{background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px;overflow-x:auto}
+  .eq-line{font-family:var(--mono);font-size:clamp(15px,2.6vw,22px);letter-spacing:.02em;white-space:nowrap;line-height:1.8}
+  .eq-line+.eq-line{margin-top:8px}
+  .ek{color:var(--muted)}
+  .ev{color:var(--accent);font-weight:700}
+  .er{color:var(--pos);font-weight:700}
+  .en{color:var(--neg)}
+
+  /* ---- comparison table ---- */
+  .tbl-wrap{overflow-x:auto;margin-top:20px;border-radius:14px;border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left}
+  td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--muted);vertical-align:top;line-height:1.5}
+  tr:last-child td{border-bottom:none}
+  tr:nth-child(even) td{background:var(--ink-2)}
+  td b{color:var(--text);font-weight:600}
+  td code{font-family:var(--mono);font-size:12px;background:var(--panel-2);padding:2px 6px;border-radius:4px;color:var(--accent)}
+
+  /* ---- part header ---- */
+  .part-header{
+    background:linear-gradient(90deg,rgba(255,185,92,.08),transparent);
+    border-left:3px solid var(--accent);border-radius:0 12px 12px 0;
+    padding:16px 22px;margin-bottom:40px;
+  }
+  .part-header .ph-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .part-header .ph-title{font-family:var(--display);font-weight:700;font-size:22px}
+  .part-header .ph-sub{font-size:14px;color:var(--muted);margin-top:4px}
+
+  /* ---- homework panel ---- */
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}
+  .hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}
+  .hw-text{font-size:15px;color:var(--muted);line-height:1.5}
+  .hw-text b{color:var(--text);font-weight:600}
+
+  /* ---- floating nav ---- */
+  .next-lesson{
+    position:fixed;bottom:28px;right:28px;z-index:50;
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;
+    text-decoration:none;background:var(--pos);color:var(--ink);
+    border-radius:999px;padding:14px 24px;
+    box-shadow:0 8px 24px -10px var(--glow);transition:.15s;
+  }
+  .next-lesson:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}
+  .next-lesson .arr{display:inline-block;transition:transform .15s}
+  .next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{
+    position:fixed;bottom:28px;left:28px;z-index:50;
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;
+    text-decoration:none;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;
+  }
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}
+  .home-btn .arr{display:inline-block;transition:transform .15s}
+  .home-btn:hover .arr{transform:translateX(-3px)}
+
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">SPM · Week 02</span>
+  <h1>Project Evaluation & <em>Programme Management</em></h1>
+  <p class="lede">How to build a business case, compare competing proposals using NPV and payback period, evaluate business risk — then coordinate related projects as a unified programme.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell Ch.2, pp. 21–48</span>
+    <span class="meta-item"><b>Duration:</b> ~105 min (two distinct halves; split point marked)</span>
+  </div>
+</header>
+
+<!-- ============ OBJECTIVES ============ -->
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>Learning objectives</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Describe the contents of a typical business case</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Explain project portfolio management</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Carry out evaluation and selection of projects against strategic, technical and economic criteria</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Use cost-benefit evaluation techniques — net profit, payback period, ROI, NPV — for comparing competing proposals</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Evaluate the business risk involved in a project</span></div>
+    <div class="obj"><span class="obj-n">06</span><span class="obj-t">Explain how individual projects can be grouped into programmes</span></div>
+    <div class="obj"><span class="obj-n">07</span><span class="obj-t">Explain how programmes and projects are managed so that planned benefits are actually achieved</span></div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PART A — PROJECT EVALUATION
+     ====================================================== -->
+
+<section id="part-a-intro">
+  <div class="part-header">
+    <div class="ph-label">Part A · §2.1–2.6</div>
+    <div class="ph-title">Project Evaluation</div>
+    <div class="ph-sub">~60 min — calculation-heavy; bring a spreadsheet or work the numbers on the board live</div>
+  </div>
+  <span class="tag">01 · The business case</span>
+  <h2>Before a team is assembled<span class="timing">10 min</span></h2>
+  <p class="note">§2.1–2.2. Recap from last week: every project needs a justification before resources are committed. The business case is the formal document that provides this justification.</p>
+
+  <div class="subhead">The 10-part business case structure (§2.2)</div>
+  <div class="glossary" style="margin-top:16px">
+    <div class="gcard"><div class="gterm">1. Introduction / Background</div><div class="gdef">Why is this proposal being made? What context prompted it?</div></div>
+    <div class="gcard"><div class="gterm">2. Proposed project</div><div class="gdef">What will be built or changed? High-level scope.</div></div>
+    <div class="gcard"><div class="gterm">3. Market</div><div class="gdef">Who are the customers/users? What is the demand?</div></div>
+    <div class="gcard"><div class="gterm">4. Organizational / operational infrastructure</div><div class="gdef">What organizational changes are needed alongside the technical ones?</div></div>
+    <div class="gcard"><div class="gterm">5. Benefits</div><div class="gdef">What value will be created — and for whom? (Covered in depth in §2.4–2.5.)</div></div>
+    <div class="gcard"><div class="gterm">6. Outline implementation plan</div><div class="gdef">High-level schedule — when will this be done?</div></div>
+    <div class="gcard"><div class="gterm">7. Costs</div><div class="gdef">Development, setup, and ongoing operational costs over the system lifetime.</div></div>
+    <div class="gcard"><div class="gterm">8. Financial case</div><div class="gdef">The cost-benefit analysis — is this financially justified?</div></div>
+    <div class="gcard"><div class="gterm">9. Risks</div><div class="gdef">What could go wrong with the project or the expected benefits?</div></div>
+    <div class="gcard"><div class="gterm">10. Management plan</div><div class="gdef">Who owns this initiative and how will it be governed?</div></div>
+  </div>
+
+  <div class="casestudy">
+    <div class="cs-tag">Capstone tie-in</div>
+    <p>This 10-part structure is what capstone teams will produce as their <b>first deliverable</b> — pairs naturally with the Annex 1 project plan template from Week 1. Announce this now so students can start thinking about it.</p>
+  </div>
+</section>
+
+<!-- ============ PORTFOLIO MANAGEMENT ============ -->
+<section id="portfolio">
+  <span class="tag">02 · Project portfolio management</span>
+  <h2>Choosing which projects to run<span class="timing">10 min</span></h2>
+  <p class="note">§2.3. An organization doesn't run just one project — it manages a portfolio of projects simultaneously. Portfolio management is the process of deciding which projects to invest in, and in what priority.</p>
+
+  <div class="subhead">Three aspects of portfolio management</div>
+  <div class="terms">
+    <div class="term"><div class="tsym">Define</div><div class="tbody"><div class="tname">Portfolio definition</div><div class="tdef">What projects are currently in flight? What is proposed? An accurate inventory is the starting point — many organizations are surprised by how many projects they're actually running.</div></div></div>
+    <div class="term"><div class="tsym">Manage</div><div class="tbody"><div class="tname">Portfolio management</div><div class="tdef">Prioritizing, resourcing, and coordinating the active set of projects. Trade-offs when resources are constrained.</div></div></div>
+    <div class="term"><div class="tsym">Optimize</div><div class="tbody"><div class="tname">Portfolio optimization</div><div class="tdef">Balancing the mix — new product development (NPD) vs. <b>renewal projects</b> (improving how the organization operates internally).</div></div></div>
+  </div>
+
+  <div class="key-point">
+    <p><b>The "below the line" problem:</b> informal, ad-hoc work that doesn't appear in the official portfolio but still consumes real staff time and budget. Every organization has it; most underestimate it. Getting this work into the portfolio is part of what portfolio management achieves.</p>
+  </div>
+</section>
+
+<!-- ============ EVALUATING PROJECTS ============ -->
+<section id="evaluating">
+  <span class="tag">03 · Evaluating individual projects</span>
+  <h2>Technical and cost-benefit assessment<span class="timing">10 min</span></h2>
+  <p class="note">§2.4. Before committing to a project, two questions must be answered:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Technical assessment</div>
+      <div class="gdef">Can the required functionality be achieved with <b>current, affordable technology?</b> If not, either the approach or the requirements must change. This is often the first filter applied.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Cost-benefit analysis</div>
+      <div class="gdef">Identify all costs (development, setup, operational over lifetime) and all benefits — then express both in monetary terms. Figure 2.1 shows the typical cash flow shape: <b>negative during development</b>, positive once the system is operating, sometimes negative again at decommissioning.</div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 2.1 — Brightmouth College (in-class)</div>
+    <p>For the Brightmouth College payroll project, students identify and categorize all costs and benefits:</p>
+    <ul>
+      <li><b>Quantified and valued</b> — can be expressed as a specific monetary figure</li>
+      <li><b>Quantified but not valued</b> — measurable but not easily converted to money (e.g. "reduces errors by 30%")</li>
+      <li><b>Identified but not easily valued</b> — real benefits that resist quantification (e.g. "improved staff morale")</li>
+    </ul>
+    <p style="margin-top:10px">Good discussion: which benefits are easiest to quantify? Which are most likely to be underestimated?</p>
+  </div>
+</section>
+
+<!-- ============ COST-BENEFIT TECHNIQUES ============ -->
+<section id="cost-benefit">
+  <span class="tag">04 · Cost-benefit evaluation techniques</span>
+  <h2>Four ways to measure financial value<span class="timing">20 min</span></h2>
+  <p class="note">§2.5. Work through <b>Table 2.1</b> (four IOE project cash flows) live — ideally on a spreadsheet on a projector so students can follow the arithmetic. Each technique reveals something different about the same set of cash flows.</p>
+
+  <div class="tbl-wrap" style="margin-top:28px">
+    <table>
+      <thead>
+        <tr>
+          <th>Technique</th>
+          <th>What it measures</th>
+          <th>Formula / approach</th>
+          <th>Key limitation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Net Profit</b></td>
+          <td>Total income minus total costs over project life</td>
+          <td><code>Σ income − Σ costs</code></td>
+          <td>Ignores <i>when</i> cash flows occur — £50k in year 1 and £50k in year 5 look the same</td>
+        </tr>
+        <tr>
+          <td><b>Payback Period</b></td>
+          <td>How long until cumulative income = total cost (break-even)</td>
+          <td>Read from the cumulative cash flow table</td>
+          <td>Ignores everything that happens <i>after</i> the break-even point</td>
+        </tr>
+        <tr>
+          <td><b>ROI / ARR</b></td>
+          <td>Average annual profit as a percentage of total investment</td>
+          <td><code>(avg annual profit ÷ total investment) × 100</code></td>
+          <td>Still ignores timing; can't compare with bank interest rates directly</td>
+        </tr>
+        <tr>
+          <td><b>NPV</b></td>
+          <td>Present value of all future cash flows, discounted by interest rate</td>
+          <td><code>PV = value ÷ (1 + r)ᵗ</code> — then sum all years</td>
+          <td>Requires a chosen discount rate; sensitive to that choice</td>
+        </tr>
+        <tr>
+          <td><b>IRR</b></td>
+          <td>The discount rate that makes NPV = 0; a comparable "% return"</td>
+          <td>Solve iteratively (or use a spreadsheet's IRR function)</td>
+          <td>Doesn't show absolute size of return; can have multiple solutions for complex cash flows</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subhead">NPV worked example — Table 2.3, Project 1</div>
+  <p class="note" style="margin-top:14px">Walk through this at 10% discount rate. The formula for each year:</p>
+  <div class="eq-box">
+    <div class="eq-line"><span class="ek">PV of year t cash flow  =  </span><span class="ev">net cash flow</span><span class="ek">  ÷  </span><span class="ev">(1 + 0.10)ᵗ</span></div>
+    <div class="eq-line"><span class="ek">NPV  =  </span><span class="ev">Σ (all years' PV)</span><span class="ek">  =  </span><span class="er">£618</span><span class="ek">  (positive → worth doing at 10%)</span></div>
+  </div>
+
+  <div class="key-point">
+    <p><b>Key takeaway to state explicitly:</b> no single technique is sufficient on its own. Real evaluation uses several together — net profit checks viability, payback period checks how long you're exposed to risk, ROI allows board-level comparison, NPV accounts for the time value of money and re-ranks projects that look equal on simpler measures.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercises 2.2–2.6 — follow along with Table 2.1</div>
+    <p>Have students calculate payback period (Ex 2.3), ROI (Ex 2.4), and NPV (Ex 2.5–2.6) for the IOE projects using their own calculators or a shared spreadsheet. The key insight emerges from Ex 2.5–2.6: <b>NPV re-ranks Projects 1 and 2</b> even though they have identical net profit — because NPV is sensitive to <i>when</i> the money comes in.</p>
+  </div>
+</section>
+
+<!-- ============ RISK EVALUATION ============ -->
+<section id="risk-eval">
+  <span class="tag">05 · Risk evaluation</span>
+  <h2>Probability, expected value, and decision trees<span class="timing">10 min</span></h2>
+  <p class="note">§2.6. Distinguish two types of risk that are easy to conflate:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Project risk</div>
+      <div class="gdef">Threatens the successful <i>execution</i> of the project — delays, cost overruns, technical failures. This is managed by the PM during the project. (Covered in depth in Week 7.)</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Business risk</div>
+      <div class="gdef">Threatens whether the <i>delivered product</i> will be profitable. Even a perfectly executed project can fail if the market changes, competition undercuts prices, or the expected benefits don't materialize. This is the focus here.</div>
+    </div>
+  </div>
+
+  <div class="subhead">Risk matrix — Table 2.5</div>
+  <p class="note" style="margin-top:14px">Rate each business risk on two dimensions: <b>importance</b> (H/M/L — how bad if it happens?) × <b>likelihood</b> (H/M/L — how probable?). Risks in the HH cell need immediate mitigation strategies.</p>
+
+  <div class="subhead">Handling risk: discount rate adjustment</div>
+  <p class="note" style="margin-top:14px">For risky projects, add a <b>risk premium</b> (typically 2–5%) to the discount rate used in the NPV calculation. This automatically reduces the NPV of uncertain future benefits — a higher discount rate means future cash flows are worth less in today's money.</p>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 2.7 — BuyRight expected income</div>
+    <p>Three possible income scenarios with assigned probabilities. Students calculate <b>expected income</b> = Σ(income × probability) using Table 2.6. Then ask: should BuyRight proceed, given development costs of £750,000 and ongoing operational costs of £200,000/year?</p>
+  </div>
+
+  <div class="exercise" style="margin-top:16px">
+    <div class="ex-tag">Figure 2.2 — Decision tree (discuss)</div>
+    <p>A sales order system: <b>extend</b> vs. <b>replace</b>, under uncertainty about market expansion. Walk through calculating the expected value of each branch: Extend = £40,000, Replace = £10,000 → choose Extend. Decision trees make implicit trade-offs explicit and auditable.</p>
+  </div>
+
+  <div class="split-point">— Natural split point for a two-session week —</div>
+</section>
+
+<!-- ======================================================
+     PART B — PROGRAMME MANAGEMENT
+     ====================================================== -->
+<section id="part-b-intro">
+  <div class="part-header">
+    <div class="ph-label">Part B · §2.7–2.14</div>
+    <div class="ph-title">Programme Management</div>
+    <div class="ph-sub">~45 min — more conceptual; good for discussion and debate</div>
+  </div>
+  <span class="tag">06 · What is a programme?</span>
+  <h2>When projects need each other<span class="timing">10 min</span></h2>
+  <p class="note">§2.7. Sometimes a strategic objective can't be achieved by a single project. A programme is a coordinated group of related projects managed together to achieve benefits that couldn't be realized if each project were managed independently.</p>
+
+  <div class="subhead">Ferns' definition</div>
+  <div class="key-point">
+    <p><i>"A group of projects that are managed in a coordinated way to gain benefits that would not be possible were the projects to be managed independently."</i></p>
+  </div>
+
+  <div class="subhead">Five types of programme</div>
+  <div class="glossary" style="margin-top:16px">
+    <div class="gcard"><div class="gterm">Business cycle programmes</div><div class="gdef">Tied to an annual planning cycle — the portfolio of projects funded in a given fiscal year.</div></div>
+    <div class="gcard"><div class="gterm">Strategic programmes</div><div class="gdef">Implement a specific strategic goal: e.g. all projects contributing to a digital transformation initiative.</div></div>
+    <div class="gcard"><div class="gterm">Infrastructure programmes</div><div class="gdef">Renew shared platforms — network upgrades, data centre migrations, ERP implementations — that underpin multiple other projects.</div></div>
+    <div class="gcard"><div class="gterm">R&amp;D programmes</div><div class="gdef">Open-ended investigation — objectives may evolve as learning accumulates.</div></div>
+    <div class="gcard"><div class="gterm">Innovative partnerships</div><div class="gdef">Cross-organizational — two or more organizations co-invest in a shared goal.</div></div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMME VS PROJECT MANAGER ============ -->
+<section id="prog-vs-proj">
+  <span class="tag">07 · Programme manager vs. project manager</span>
+  <h2>Different jobs, different mindsets<span class="timing">10 min</span></h2>
+  <p class="note">§2.8–2.9. Table 2.7 from the book. This is a comparison worth dwelling on — students often assume "programme manager" is just a senior project manager. The role is genuinely different:</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Programme Manager</th>
+          <th>Project Manager</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Manages <b>many simultaneous projects</b></td><td>Manages <b>one project</b> at a time</td></tr>
+        <tr><td>Personal relationship with <b>skilled individual resources</b></td><td>Impersonal relationship with a <b>resource type</b> (e.g. "a Java developer")</td></tr>
+        <tr><td>Goal: <b>maximize resource utilization</b> across the portfolio</td><td>Goal: <b>minimize resource demand</b> for their project</td></tr>
+        <tr><td>Projects tend to be <b>similar</b> (domain expertise matters)</td><td>Projects tend to be <b>dissimilar</b> across a PM's career</td></tr>
+        <tr><td>Focuses on <b>benefit realization</b> over years</td><td>Focuses on <b>delivery</b> within a fixed time box</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note" style="margin-top:20px">§2.9 briefly introduces <b>OGC</b> (Office of Government Commerce) strategic programme management — sets up Appendix A (PRINCE2) for later in the course if covered.</p>
+</section>
+
+<!-- ============ CREATING A PROGRAMME ============ -->
+<section id="creating-programme">
+  <span class="tag">08 · Creating a programme</span>
+  <h2>From mandate to delivery plan<span class="timing">10 min</span></h2>
+  <p class="note">§2.10. Walk through the pipeline using the book's "merging two organizations" example:</p>
+
+  <div class="terms" style="margin-top:20px">
+    <div class="term"><div class="tsym">01</div><div class="tbody"><div class="tname">Programme mandate</div><div class="tdef">Senior management decides a strategic change is needed. This triggers the programme. A Programme Director is appointed.</div></div></div>
+    <div class="term"><div class="tsym">02</div><div class="tbody"><div class="tname">Programme brief</div><div class="tdef">High-level definition: vision statement, expected benefits, known risks, rough costs and timescales.</div></div></div>
+    <div class="term"><div class="tsym">03</div><div class="tbody"><div class="tname">Blueprint</div><div class="tdef">The "to be" state in detail: business models, organizational structure, information systems required, costs of the new state.</div></div></div>
+    <div class="term"><div class="tsym">04</div><div class="tbody"><div class="tname">Benefit profiles</div><div class="tdef">For each benefit: what it is, how it will be measured, when it will be realized, and who owns it.</div></div></div>
+    <div class="term"><div class="tsym">05</div><div class="tbody"><div class="tname">Programme portfolio</div><div class="tdef">The set of projects needed to move from current state to the blueprint. Then: preliminary plan + financial plan.</div></div></div>
+  </div>
+</section>
+
+<!-- ============ AIDS TO PROGRAMME MANAGEMENT ============ -->
+<section id="aids">
+  <span class="tag">09 · Aids to programme management</span>
+  <h2>Dependency diagrams and tranches<span class="timing">10 min</span></h2>
+  <p class="note">§2.11. Two tools for visualizing how projects within a programme relate to each other:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Dependency diagram — Figure 2.3</div>
+      <div class="gdef">Shows which projects must complete before others can begin. The book's example has 7 projects (A through G) where both C and D depend on A completing first — A is a "systems study" that both subsequent workstreams need before they can start. Visualizes the critical sequencing constraints.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Delivery planning / tranches — Figure 2.4</div>
+      <div class="gdef">Groups the portfolio into <b>tranches</b> — sets of projects that deliver a coherent package of benefits together. Each tranche ends with a decision gate: continue to the next tranche, or stop? This makes the programme reviewable and stoppable at logical points.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS MANAGEMENT ============ -->
+<section id="benefits">
+  <span class="tag">10 · Reservations and benefits management</span>
+  <h2>Did the benefits actually arrive?<span class="timing">5 min</span></h2>
+  <p class="note">§2.12–2.14. The hardest part of programme management is ensuring that the benefits described in the business case are actually realized after the projects complete.</p>
+
+  <div class="subhead">Types of benefit (Table 2.8)</div>
+  <div class="glossary" style="margin-top:16px">
+    <div class="gcard"><div class="gterm">Mandatory compliance</div><div class="gdef">Legal or regulatory requirement — the benefit is avoiding a penalty or maintaining the right to operate.</div></div>
+    <div class="gcard"><div class="gterm">Quality of service</div><div class="gdef">Faster, more reliable, more accurate service delivery.</div></div>
+    <div class="gcard"><div class="gterm">Productivity</div><div class="gdef">Doing more with the same (or fewer) resources.</div></div>
+    <div class="gcard"><div class="gterm">Risk reduction</div><div class="gdef">Reducing the probability or impact of adverse events.</div></div>
+    <div class="gcard"><div class="gterm">Economy</div><div class="gdef">Reducing costs.</div></div>
+    <div class="gcard"><div class="gterm">Revenue enhancement / acceleration</div><div class="gdef">Increasing revenue, or getting to revenue faster.</div></div>
+    <div class="gcard"><div class="gterm">Strategic fit</div><div class="gdef">Positioning the organization better for future opportunities.</div></div>
+  </div>
+
+  <div class="subhead">Disbenefits</div>
+  <p class="note" style="margin-top:14px">Not all consequences of a change are positive. <b>Disbenefits</b> are negative outcomes that should be identified and managed — e.g. more sales driven by a new system → more overtime cost for the fulfilment team.</p>
+
+  <div class="key-point">
+    <p><b>Business change managers</b> own benefit realization <i>after</i> the project closes. This is the crucial insight: benefits can't be tracked within a project's own lifetime — they emerge during operations, months or years after delivery. Someone outside the project team must be accountable for ensuring benefits are realized.</p>
+  </div>
+
+  <div class="subhead">Reservations (§2.12)</div>
+  <p class="note" style="margin-top:14px">A programme isn't a "super-project." Over-structuring risks creating bureaucracy that prevents the individual projects from responding to change. Programmes must evolve as the business environment changes — hold the structure loosely.</p>
+</section>
+
+<!-- ============ WRAP-UP ============ -->
+<section id="wrapup">
+  <span class="tag">11 · Wrap-up</span>
+  <h2>Four conclusions (§2.14)</h2>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">1. Projects must be evaluated on multiple grounds</div><div class="gdef">Strategic fit, technical feasibility, and economic return — all three, not just the financial case.</div></div>
+    <div class="gcard"><div class="gterm">2. Many projects are only justifiable as part of a programme</div><div class="gdef">A project whose benefits can't be realized independently needs a programme to combine it with enabling projects.</div></div>
+    <div class="gcard"><div class="gterm">3. Not all benefits can be precisely quantified</div><div class="gdef">Some genuine value — improved morale, strategic positioning, reduced risk — resists financial quantification. A good business case acknowledges this rather than ignoring non-quantifiable benefits.</div></div>
+    <div class="gcard"><div class="gterm">4. Assess costs and income over the full system lifetime</div><div class="gdef">Not just development costs. Operational costs over 5–10 years often dwarf the initial build cost — NPV forces this discipline by requiring all future cash flows to be identified.</div></div>
+  </div>
+</section>
+
+<!-- ============ HOMEWORK ============ -->
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Homework</span>
+  <h2>Follow-up</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Before next session</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Ch.2 in full (pp. 21–48)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Problem set:</b> Exercises 2.1–2.7 — strong candidate for a spreadsheet-based tutorial/lab. Set up a spreadsheet with Table 2.1's IOE cash flows and compute all five techniques for each project.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Further Exercises §2.15:</b> the insurance company claims-settlement case — identify benefits, disbenefits, and affected benefit categories.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> draft the <b>business case</b> for your chosen project using §2.2's 10-part structure. Include at least a payback-period estimate and an NPV estimate at a chosen discount rate. This is Deliverable 1.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Built for classroom use · Hughes & Cotterell, Software Project Management, 5th ed., Ch.2 (pp. 21–48)</div>
+</footer>
+
+</div>
+
+<a class="next-lesson" href="index.html">All lectures <span class="arr">→</span></a>
+<a class="home-btn" href="01-introduction.html"><span class="arr">←</span> Week 01</a>
+
+</body>
+</html>

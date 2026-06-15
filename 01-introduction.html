@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Software Project Management — Week 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;
+    --line:#2a3040;--text:#e9e7e0;--muted:#8b909e;
+    --pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;
+    --glow:rgba(255,122,92,.45);
+    --mono:'JetBrains Mono',monospace;
+    --body:'Hanken Grotesk',system-ui,sans-serif;
+    --display:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),
+      radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),
+      var(--ink);
+    color:var(--text);font-family:var(--body);line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:0 24px 120px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}
+  h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}
+  .meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .meta-item b{color:var(--text)}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}
+  .note+.note{margin-top:12px}
+  .note b{color:var(--text);font-weight:600}
+  .note i{color:var(--text);font-style:italic}
+  .timing{
+    font-family:var(--mono);font-size:11px;background:var(--panel-2);
+    border:1px solid var(--line);border-radius:999px;padding:3px 10px;
+    color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;
+  }
+
+  /* ---- objective list ---- */
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{
+    display:flex;gap:14px;align-items:flex-start;padding:14px 18px;
+    background:linear-gradient(180deg,var(--panel),var(--ink-2));
+    border:1px solid var(--line);border-radius:12px;
+  }
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px;letter-spacing:.06em}
+  .obj-t{font-size:15px;color:var(--text);line-height:1.5}
+
+  /* ---- concept cards (same as DL gcard) ---- */
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}
+  .gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}
+  .gdef b{color:var(--text);font-weight:600}
+  .gdef i{color:var(--text);font-style:italic}
+
+  /* ---- term breakdown cards (same as DL .terms/.term) ---- */
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:18px;min-width:48px;text-align:center;flex-shrink:0;line-height:1.4;letter-spacing:.04em}
+  .term .tbody{flex:1}
+  .term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}
+  .term .tdef b{color:var(--text);font-weight:600}
+  .term.ta .tsym{color:var(--pos)}
+  .term.tb .tsym{color:var(--neg)}
+  .term.tc .tsym{color:var(--accent)}
+  .term.td .tsym{color:var(--text)}
+
+  /* ---- exercise box ---- */
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}
+  .exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .exercise ul li{font-size:14px;color:var(--muted)}
+  .exercise ul li b{color:var(--text)}
+
+  /* ---- case study callout ---- */
+  .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
+  .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
+  .casestudy p{font-size:15px;color:var(--text);line-height:1.6}
+  .casestudy p+p{margin-top:8px}
+
+  /* ---- key takeaway ---- */
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}
+  .key-point p b{color:var(--pos)}
+
+  /* ---- split point ---- */
+  .split-point{
+    text-align:center;padding:22px 0;margin:20px 0;
+    border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---- stat callouts ---- */
+  .stat-row{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}
+  .stat{flex:1;min-width:160px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .stat .sv{font-family:var(--display);font-weight:900;font-size:clamp(28px,4vw,42px);color:var(--pos);line-height:1;letter-spacing:-.02em}
+  .stat .sk{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+  /* ---- homework panel ---- */
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}
+  .hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}
+  .hw-text{font-size:15px;color:var(--muted);line-height:1.5}
+  .hw-text b{color:var(--text);font-weight:600}
+
+  /* ---- floating nav ---- */
+  .next-lesson{
+    position:fixed;bottom:28px;right:28px;z-index:50;
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;
+    text-decoration:none;background:var(--pos);color:var(--ink);
+    border-radius:999px;padding:14px 24px;
+    box-shadow:0 8px 24px -10px var(--glow);transition:.15s;
+  }
+  .next-lesson:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}
+  .next-lesson .arr{display:inline-block;transition:transform .15s}
+  .next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{
+    position:fixed;bottom:28px;left:28px;z-index:50;
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;
+    text-decoration:none;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;
+  }
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}
+  .home-btn .arr{display:inline-block;transition:transform .15s}
+  .home-btn:hover .arr{transform:translateX(-3px)}
+
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">SPM · Week 01</span>
+  <h1>Introduction to <em>Software Project Management</em></h1>
+  <p class="lede">What a software project is, why they fail so often, and what "managing" one actually means — from lifecycle stages to stakeholder objectives and the project control cycle.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell Ch.1, pp. 1–20</span>
+    <span class="meta-item"><b>Duration:</b> ~100 min (split point marked)</span>
+  </div>
+</header>
+
+<!-- ============ OBJECTIVES ============ -->
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>Learning objectives</h2>
+  <p class="note">By the end of this lecture, students should be able to:</p>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Define the scope of "software project management"</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Understand the problems and concerns of software project managers</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Define the usual stages of a software project</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Explain the main elements of the role of management</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Appreciate the need for planning, monitoring and control</span></div>
+    <div class="obj"><span class="obj-n">06</span><span class="obj-t">Identify the stakeholders of a project and their objectives</span></div>
+    <div class="obj"><span class="obj-n">07</span><span class="obj-t">Define the success criteria for a project</span></div>
+  </div>
+</section>
+
+<!-- ============ SECTION 1: HOOK ============ -->
+<section id="hook">
+  <span class="tag">01 · Why does this matter?</span>
+  <h2>Software projects fail — constantly<span class="timing">10 min</span></h2>
+  <p class="note">Open with the book's own numbers — no need to import outside statistics here. These figures come from the chapter itself (§1.2) and the impact hits immediately.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="sv">£2.3bn</div>
+      <div class="sk">UK government ICT spend in 2002–03 — more than it spent on roads that year</div>
+    </div>
+    <div class="stat">
+      <div class="sv">82%</div>
+      <div class="sk">of 13,322 projects surveyed by the Standish Group (2003) were <b>late</b></div>
+    </div>
+    <div class="stat">
+      <div class="sv">43%</div>
+      <div class="sk">of the same projects came in <b>over budget</b></div>
+    </div>
+  </div>
+
+  <div class="subhead">Root cause (National Audit Office)</div>
+  <div class="key-point">
+    <p>Failures were traced to <b>"lack of skills and proven approach to project management and risk management."</b> Not technology. Not budget. The absence of structured management.</p>
+  </div>
+
+  <div class="exercise" style="margin-top:28px">
+    <div class="ex-tag">Discussion prompt — open the session</div>
+    <p>"Why do IT projects fail so often, even with smart people and big budgets?" Give students 2 minutes to write down one reason, then take 3–4 responses before moving on.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: WHAT IS A PROJECT ============ -->
+<section id="what-is-project">
+  <span class="tag">02 · What is a project?</span>
+  <h2>All projects are about meeting objectives<span class="timing">15 min</span></h2>
+  <p class="note">§1.1: the simplest possible definition — a project is a <b>planned activity</b>. Software project management = ensuring stakeholder objectives are met within the context of that planned activity.</p>
+
+  <div class="subhead">Figure 1.1 — the project spectrum</div>
+  <p class="note">Draw this on the board (or show it from the text). Projects sit between two poles:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Routine jobs <span class="gsym">← left end</span></div>
+      <div class="gdef">Repetitive, low uncertainty. Same inputs, same outputs, every time. <b>Example:</b> processing weekly payroll with an existing system.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Projects <span class="gsym">← middle</span></div>
+      <div class="gdef">Non-routine, require planning, have specific objectives, a fixed time span, and constrained resources. <b>This is where the course lives.</b></div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Exploration <span class="gsym">← right end</span></div>
+      <div class="gdef">High uncertainty — outcomes can't be defined in advance. <b>Example:</b> a research programme or a Mars rover mission where the "product" isn't fully known at the start.</div>
+    </div>
+  </div>
+
+  <div class="subhead">Eight characteristics that mark something as a "project"</div>
+  <p class="note">From §1.3 — run through these quickly; the point is to distinguish projects from both pure routine work and open-ended exploration:</p>
+  <div class="glossary" style="margin-top:16px">
+    <div class="gcard"><div class="gterm">1. Non-routine</div><div class="gdef">Something that hasn't been done in exactly this form before.</div></div>
+    <div class="gcard"><div class="gterm">2. Requires planning</div><div class="gdef">The non-routine nature means you must think ahead — you can't rely on habit.</div></div>
+    <div class="gcard"><div class="gterm">3. Specific objectives</div><div class="gdef">There is an agreed-upon end state that defines completion.</div></div>
+    <div class="gcard"><div class="gterm">4. Fixed time span</div><div class="gdef">Projects have a start and an end — they are not ongoing operations.</div></div>
+    <div class="gcard"><div class="gterm">5. Work for someone else</div><div class="gdef">There is a client or stakeholder who commissioned the work and will judge its success.</div></div>
+    <div class="gcard"><div class="gterm">6. Multiple specialisms</div><div class="gdef">Different types of skill are required — no single person has all of them.</div></div>
+    <div class="gcard"><div class="gterm">7. Temporary team</div><div class="gdef">People are brought together for the duration of the project, then dispersed.</div></div>
+    <div class="gcard"><div class="gterm">8. Constrained resources</div><div class="gdef">Budget, time, and people are limited — trade-offs are unavoidable.</div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 1.1 — in-class activity (5 min)</div>
+    <p>Rank these examples along the <b>routine → project → exploration</b> spectrum and justify your ordering:</p>
+    <ul>
+      <li>Producing a daily newspaper</li>
+      <li>A Mars rover mission</li>
+      <li>Getting married</li>
+      <li>A second-year programming assignment</li>
+      <li>Installing a word processor update</li>
+    </ul>
+    <p style="margin-top:12px">Good opener — gets discussion going, and students often disagree on the edge cases (the programming assignment is particularly interesting).</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: SOFTWARE SPECIFICS ============ -->
+<section id="software-specifics">
+  <span class="tag">03 · What makes software projects different?</span>
+  <h2>Brooks' four characteristics<span class="timing">15 min</span></h2>
+  <p class="note">From §1.4. Fred Brooks identified four properties of software that make its project management uniquely difficult compared to building a bridge or manufacturing a product. These recur throughout the entire course.</p>
+
+  <div class="terms">
+    <div class="term ta">
+      <div class="tsym">INV</div>
+      <div class="tbody">
+        <div class="tname">Invisibility</div>
+        <div class="tdef">Physical progress on a bridge is visible — you can see it grow. Software progress <b>isn't</b>. A team might be 80% done or 20% done and it looks the same from the outside. This makes monitoring and control uniquely hard.</div>
+      </div>
+    </div>
+    <div class="term ta">
+      <div class="tsym">CPX</div>
+      <div class="tbody">
+        <div class="tname">Complexity</div>
+        <div class="tdef">Software has <b>more complexity per pound/dollar</b> than virtually any other engineered product. A large system can have billions of possible states — no other engineering discipline deals with this scale of combinatorial complexity.</div>
+      </div>
+    </div>
+    <div class="term ta">
+      <div class="tsym">CON</div>
+      <div class="tbody">
+        <div class="tname">Conformity</div>
+        <div class="tdef">Software must conform to <b>human and organizational requirements</b>, which are inconsistent, contradictory, and constantly changing. Unlike physics, there's no underlying natural law the software can appeal to — it just has to do what people want.</div>
+      </div>
+    </div>
+    <div class="term ta">
+      <div class="tsym">FLX</div>
+      <div class="tbody">
+        <div class="tname">Flexibility</div>
+        <div class="tdef">Because software <i>can</i> be changed easily (compared to concrete), it <i>is</i> expected to change — constantly. The perceived malleability of software becomes a source of uncontrolled scope growth.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subhead">§1.5 — Contract vs. technical project management</div>
+  <p class="note">This book focuses on <b>supplier-side PM</b> (managing the people who build the software). Briefly distinguish:</p>
+  <div class="glossary" style="margin-top:14px">
+    <div class="gcard">
+      <div class="gterm">Client-side PM</div>
+      <div class="gdef">Manages the budget, contract, and relationship with the supplier. Concerned with "are we getting what we paid for?"</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Supplier-side PM</div>
+      <div class="gdef">Manages the technical delivery — the team, the schedule, the quality. This is the primary focus of this course.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: LIFECYCLE ============ -->
+<section id="lifecycle">
+  <span class="tag">04 · The software project lifecycle</span>
+  <h2>From feasibility to acceptance<span class="timing">15 min</span></h2>
+  <p class="note">§1.6. Two figures to work through — draw both on the board or refer to the book:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Figure 1.2 — the high-level cycle</div>
+      <div class="gdef"><b>Feasibility study</b> ("is it worth doing?") → <b>Plan</b> ("how do we do it?") → <b>Project execution</b> ("do it!"). A project can loop back — feasibility might be revisited mid-execution as scope changes.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Figure 1.3 — ISO 12207 lifecycle</div>
+      <div class="gdef">Requirements analysis → Architecture design → Detailed design → Code &amp; test → Integration → Qualification testing → Installation → Acceptance support. Note: this is a <i>reference standard</i>, not a prescription — Chapter 4 will discuss when to follow it strictly and when to adapt it.</div>
+    </div>
+  </div>
+
+  <div class="casestudy">
+    <div class="cs-tag">Running case study — introduce here (Exercise 1.2)</div>
+    <p><b>Brightmouth College</b> currently has its payroll run by a local authority computer centre. The college wants to replace this with an off-the-shelf package run in-house.</p>
+    <p style="margin-top:10px"><i>Ask students:</i> What are the main stages of this project? How would it differ if the software were written from scratch instead of purchased?</p>
+    <p style="margin-top:10px">This case study recurs throughout §1.8–1.16 and will be used as the <b>running example for the entire semester</b>. It reappears in Chapters 2–13. Introduce it now and make it familiar.</p>
+  </div>
+
+  <div class="split-point">— Natural split point for a two-session week —</div>
+
+</section>
+
+<!-- ============ SECTION 5: PLANS & METHODS ============ -->
+<section id="plans-methods">
+  <span class="tag">05 · Plans, methods, methodologies</span>
+  <h2>Three terms students confuse<span class="timing">10 min</span></h2>
+  <p class="note">§1.7–1.8. Clarify these three terms precisely — they are used loosely in industry but the book distinguishes them carefully:</p>
+
+  <div class="terms">
+    <div class="term tc">
+      <div class="tsym">Method</div>
+      <div class="tbody">
+        <div class="tname">How to do a type of task</div>
+        <div class="tdef">A general technique applicable to a category of task. <b>Example:</b> "structured walkthrough" is a method for reviewing code.</div>
+      </div>
+    </div>
+    <div class="term tc">
+      <div class="tsym">Plan</div>
+      <div class="tbody">
+        <div class="tname">A method applied to a specific real situation</div>
+        <div class="tdef">A plan takes a method and gives it concrete activities, dates, owners, and resource allocations. It's always particular — not generic.</div>
+      </div>
+    </div>
+    <div class="term tc">
+      <div class="tsym">Methodology</div>
+      <div class="tbody">
+        <div class="tname">A grouped set of methods</div>
+        <div class="tdef">A collection of related methods used together. <b>Example:</b> object-oriented design is a methodology (it groups together multiple related methods for analysis, design, and implementation).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subhead">Categorization dimensions (§1.8)</div>
+  <p class="note">Projects can also be characterized along these axes — useful for choosing the right methodology (Chapter 4 goes deeper):</p>
+  <div class="glossary" style="margin-top:14px">
+    <div class="gcard"><div class="gterm">Compulsory vs. voluntary users</div><div class="gdef">Payroll users have no choice but to use the system. A consumer app must compete for user adoption. This affects quality and usability requirements dramatically.</div></div>
+    <div class="gcard"><div class="gterm">Information systems vs. embedded/real-time</div><div class="gdef">An IS project manages data and business processes. An embedded/real-time system must respond to the physical world within tight time constraints — testing and reliability requirements are very different.</div></div>
+    <div class="gcard"><div class="gterm">Objective-driven vs. product-driven</div><div class="gdef"><b>Objective-driven:</b> the goal is clear but the solution isn't yet defined (e.g. "reduce payroll processing time by 50%"). <b>Product-driven:</b> the deliverable is specified in detail upfront (e.g. a specific piece of software with defined features).</div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercises 1.4–1.5 — quick categorization</div>
+    <p>Apply these categories to <b>Brightmouth College's payroll project</b>: Is it objective-driven or product-driven? Is it an information system or an embedded system? Are the users compulsory or voluntary?</p>
+    <p style="margin-top:8px">Students should be able to justify each answer — the point is to practice applying the framework, not to get a single "right" answer.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 6: STAKEHOLDERS ============ -->
+<section id="stakeholders">
+  <span class="tag">06 · Stakeholders and objectives</span>
+  <h2>Who has a stake, and what do they want?<span class="timing">15 min</span></h2>
+  <p class="note">§1.9–1.10. This is one of the most practically important sections. Students often assume a project has one client — in reality there are multiple parties with conflicting interests, and the PM's job is to manage all of them.</p>
+
+  <div class="subhead">Three categories of stakeholder</div>
+  <div class="glossary" style="margin-top:14px">
+    <div class="gcard"><div class="gterm">Internal to the project team</div><div class="gdef">Developers, analysts, testers — people doing the work. They want reasonable workloads, interesting problems, career development.</div></div>
+    <div class="gcard"><div class="gterm">External to the team but inside the organization</div><div class="gdef">Finance dept, HR, management, other departments who will use or be affected by the system. They want it delivered on time, on budget, and actually useful.</div></div>
+    <div class="gcard"><div class="gterm">External to the organization</div><div class="gdef">Customers, suppliers, regulatory bodies, the public. Their requirements may be non-negotiable (e.g. legal compliance).</div></div>
+  </div>
+
+  <div class="subhead">Theory W — Boehm & Ross</div>
+  <div class="key-point">
+    <p><b>Win-win:</b> The project manager's job is to make every stakeholder a winner. If any party loses, they will eventually find a way to make the project lose too — by withdrawing support, changing requirements, or undermining decisions. Identify what "winning" means for each stakeholder group early.</p>
+  </div>
+
+  <div class="subhead">SMART objectives</div>
+  <p class="note" style="margin-top:14px">Project objectives must be testable. "Improve performance" is not an objective — it's a wish. The SMART framework turns wishes into measurable commitments:</p>
+  <div class="terms" style="margin-top:14px">
+    <div class="term td"><div class="tsym">S</div><div class="tbody"><div class="tname">Specific</div><div class="tdef">Targets a particular outcome, not a vague direction. <b>"Reduce payroll processing time" → "Reduce payroll processing time by 50%."</b></div></div></div>
+    <div class="term td"><div class="tsym">M</div><div class="tbody"><div class="tname">Measurable</div><div class="tdef">Can be objectively verified. If you can't measure it, you can't know whether you've achieved it.</div></div></div>
+    <div class="term td"><div class="tsym">A</div><div class="tbody"><div class="tname">Achievable</div><div class="tdef">Realistic given the constraints. Setting an impossible target destroys team morale and project credibility.</div></div></div>
+    <div class="term td"><div class="tsym">R</div><div class="tbody"><div class="tname">Relevant</div><div class="tdef">Connects to an actual business need. Objectives that don't link to real organizational goals will eventually lose stakeholder support.</div></div></div>
+    <div class="term td"><div class="tsym">T</div><div class="tbody"><div class="tname">Time-constrained</div><div class="tdef">Has a deadline. Without one, "eventually" becomes the default answer to "when will this be done?"</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercises 1.6–1.8 — group activity (8 min)</div>
+    <p>In groups of 3–4, using <b>Brightmouth College's payroll project</b>:</p>
+    <ul>
+      <li><b>Exercise 1.6:</b> List all the stakeholders you can identify — external, internal, and within the project team</li>
+      <li><b>Exercise 1.7:</b> Identify a project authority — who should have the final say on scope and acceptance?</li>
+      <li><b>Exercise 1.8:</b> Write two or three SMART objectives for the project. Challenge: can you write one for Brigette (the project leader) and one for the Finance department?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SECTION 7: BUSINESS CASE ============ -->
+<section id="business-case">
+  <span class="tag">07 · Business case and project success</span>
+  <h2>What does it mean to succeed?<span class="timing">10 min</span></h2>
+  <p class="note">§1.11–1.12. This distinction is one of the most important in the entire course and the book places it here in Chapter 1 deliberately.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Project objectives</div>
+      <div class="gdef">Functional requirements delivered. On time. On budget. To the specified quality. These are the <b>internal</b> success criteria — within the PM's direct control.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Business objectives</div>
+      <div class="gdef">Does the delivered product actually create value for the organization? Does it get used? Does it change behaviour? These are <b>external</b> success criteria — often not within the PM's control but absolutely matter.</div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>A project can hit all four project-objective targets and still be a business failure.</b> Shipped on time, on budget, to spec — and nobody uses it. This is the business case failure: the project solved the wrong problem, or the problem changed, or the benefits were never realized.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Discussion prompt</div>
+    <p>"Can you think of a product that was delivered on time, on budget, to spec — but still failed in the market?" Take 2–3 examples from the class. This is where the lecture naturally opens up to student experience.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 8: MANAGEMENT ============ -->
+<section id="management">
+  <span class="tag">08 · What is management?</span>
+  <h2>Eight activities and the control cycle<span class="timing">10 min</span></h2>
+  <p class="note">§1.13–1.14. "Management" is often treated as a vague concept. This section gives it concrete structure — 8 specific activities that a PM performs, and a feedback model for how control actually works.</p>
+
+  <div class="subhead">The 8 management activities</div>
+  <div class="glossary" style="margin-top:16px">
+    <div class="gcard"><div class="gterm">Planning <span class="gsym">decide what to do and how</span></div><div class="gdef">Deciding what will be done, when, by whom, and with what resources. This is not a one-off event — plans are revised continuously.</div></div>
+    <div class="gcard"><div class="gterm">Organizing <span class="gsym">structure the team and work</span></div><div class="gdef">Dividing work into tasks, assigning responsibilities, establishing reporting lines.</div></div>
+    <div class="gcard"><div class="gterm">Staffing <span class="gsym">get the right people</span></div><div class="gdef">Recruiting, training, and retaining the people needed for the project.</div></div>
+    <div class="gcard"><div class="gterm">Directing <span class="gsym">guide day-to-day work</span></div><div class="gdef">Giving instructions, making decisions, resolving conflicts as work proceeds.</div></div>
+    <div class="gcard"><div class="gterm">Monitoring <span class="gsym">watch what is happening</span></div><div class="gdef">Collecting data on progress, quality, and cost — without monitoring you have no basis for control.</div></div>
+    <div class="gcard"><div class="gterm">Controlling <span class="gsym">act on what you see</span></div><div class="gdef">Taking corrective action when monitoring reveals a deviation from plan. Control without monitoring is guesswork; monitoring without control is useless.</div></div>
+    <div class="gcard"><div class="gterm">Innovating <span class="gsym">find better ways</span></div><div class="gdef">Adapting methods and processes as you learn more about the project and its constraints.</div></div>
+    <div class="gcard"><div class="gterm">Representing <span class="gsym">interface with the outside</span></div><div class="gdef">Communicating with stakeholders, sponsors, clients, and other teams — managing the project's external relationships.</div></div>
+  </div>
+
+  <div class="subhead">Figure 1.4 — the project control cycle</div>
+  <p class="note" style="margin-top:14px">Draw this loop on the board:</p>
+  <div class="key-point">
+    <p><b>Real world</b> → data collection → <b>data processing</b> (compare to plan, model outcomes) → <b>decisions</b> (revise plan, reallocate resources) → <b>implementation</b> → back to the real world. Projects are controlled by continuously cycling through this loop — not by writing a plan once at the start and executing it blindly.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 1.9 — Paul Duggan case (5 min)</div>
+    <p>The book gives a short narrative of a section manager's typical day: a staffing meeting, a team member's accident, arranging a replacement, dealing with a client call, reviewing a report.</p>
+    <p style="margin-top:8px">Students map each of Paul's actions to one of the 8 management activities. Works well as a quick individual exercise before comparing answers as a class — the same action often maps to multiple activities, which is the interesting part.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 9: WRAP-UP ============ -->
+<section id="wrapup">
+  <span class="tag">09 · Wrap-up</span>
+  <h2>Five conclusions and a template<span class="timing">5 min</span></h2>
+  <p class="note">§1.15–1.16. The book states 5 conclusions for the chapter — worth stating them explicitly:</p>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">1. Projects are inherently uncertain</div><div class="gdef">Especially software projects — the invisibility and flexibility characteristics mean change is constant.</div></div>
+    <div class="gcard"><div class="gterm">2. Software has particular difficulties</div><div class="gdef">Invisibility, complexity, conformity, and flexibility make software PM harder than most other engineering disciplines.</div></div>
+    <div class="gcard"><div class="gterm">3. Clear objectives are central to success</div><div class="gdef">Without them, the team has no shared target and stakeholders have no basis for evaluating progress.</div></div>
+    <div class="gcard"><div class="gterm">4. Objectives need measurable tests</div><div class="gdef">SMART criteria — if you can't measure it, you can't manage it.</div></div>
+    <div class="gcard"><div class="gterm">5. Communication channels must be established early</div><div class="gdef">With all stakeholders — not just the development team. Surprises late in a project are almost always caused by communication failures early on.</div></div>
+  </div>
+
+  <div class="subhead">Annex 1 — the project plan template</div>
+  <div class="casestudy">
+    <div class="cs-tag">Capstone tie-in</div>
+    <p>The book's Annex 1 gives the standard sections of a project plan: Introduction, Background/business case, Objectives, Constraints, Methods, Products, Activities, Resources, Risks, Management.</p>
+    <p style="margin-top:10px">This is the <b>template for the semester capstone project plan deliverable.</b> Point it out now — students will be filling this in incrementally as each chapter is covered. Every chapter in this course contributes something to one or more of these sections.</p>
+  </div>
+</section>
+
+<!-- ============ HOMEWORK ============ -->
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Homework</span>
+  <h2>Follow-up</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Before next session</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Ch.1 in full (pp. 1–20)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Further Exercises §1.16:</b> #1 (reflect on a personal ICT project experience), #2 (roles in an IS department), #3 (stakeholders and objectives for a public library system)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> form groups of 3–4 and choose a "build vs. buy / replace a legacy system" scenario similar to Brightmouth College. Come to next session with the scenario written in one paragraph.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Optional:</b> bring one real-world example of a product "delivered on time, on budget, to spec — but still a business failure" for next session's opening discussion.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Built for classroom use · Hughes & Cotterell, Software Project Management, 5th ed., Ch.1 (pp. 1–20)</div>
+</footer>
+
+</div>
+
+<a class="next-lesson" href="02-project-evaluation.html">Next lecture <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+
+</body>
+</html>

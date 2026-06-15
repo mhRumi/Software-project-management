@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Project Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;
+    --line:#2a3040;--text:#e9e7e0;--muted:#8b909e;
+    --pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;
+    --glow:rgba(255,122,92,.45);
+    --mono:'JetBrains Mono',monospace;
+    --body:'Hanken Grotesk',system-ui,sans-serif;
+    --display:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),
+      radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),
+      var(--ink);
+    color:var(--text);font-family:var(--body);line-height:1.6;
+    -webkit-font-smoothing:antialiased;padding:0 24px 120px;
+  }
+  .wrap{max-width:840px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,72px);line-height:1;letter-spacing:-.02em}
+  h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:560px;margin-top:24px;font-size:18px;color:var(--muted)}
+
+  .shelf-head{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);margin:48px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--line);
+  }
+  .lessons{display:flex;flex-direction:column;gap:16px}
+  .lesson{
+    display:flex;align-items:center;gap:20px;
+    background:linear-gradient(180deg,var(--panel),var(--ink-2));
+    border:1px solid var(--line);border-radius:14px;padding:22px 26px;
+    text-decoration:none;color:var(--text);transition:.15s;
+  }
+  .lesson:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .lesson .num{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.08em}
+  .lesson .title{font-family:var(--display);font-weight:700;font-size:20px;margin-top:4px}
+  .lesson .desc{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.5}
+  .lesson .arrow{margin-left:auto;font-family:var(--mono);color:var(--muted);font-size:20px;flex-shrink:0}
+  .lesson:hover .arrow{color:var(--accent)}
+
+  .coming{border:1px dashed var(--line);border-radius:14px;overflow:hidden}
+  .coming-item{
+    display:flex;align-items:center;gap:16px;
+    padding:13px 22px;border-bottom:1px solid var(--line);
+  }
+  .coming-item:last-child{border-bottom:none}
+  .coming-item .num{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:100px;flex-shrink:0}
+  .coming-item .title{font-size:14px;color:var(--muted)}
+  .badge{
+    margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:4px;padding:2px 8px;flex-shrink:0;
+  }
+
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono);line-height:1.8}
+  footer b{color:var(--text)}
+  a{color:var(--accent)}
+
+  /* ---- entrance animations ---- */
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  .lesson{animation:fadeSlide .5s ease both}
+  header{animation:fadeSlide .5s ease both}
+  .shelf-head{animation:fadeSlide .5s ease .15s both}
+  .coming{animation:fadeSlide .5s ease .35s both}
+  footer{animation:fadeSlide .5s ease .5s both}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">Software Project Management · Course</span>
+    <h1>Software Project <em>Management</em></h1>
+    <p class="lede">15 weekly lectures built on Hughes & Cotterell's 5th edition — from business cases and estimation to risk, quality, and the human side of running software projects.</p>
+  </header>
+
+  <div class="shelf-head">Available now</div>
+  <div class="lessons">
+
+    <a class="lesson" href="01-introduction.html" style="animation-delay:.2s">
+      <div>
+        <div class="num">Week 01 · Chapter 1</div>
+        <div class="title">Introduction to Software Project Management</div>
+        <div class="desc">What a software project is, why they fail so often, and what "managing" one actually means — from lifecycle stages to stakeholder objectives and the project control cycle.</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="lesson" href="02-project-evaluation.html" style="animation-delay:.3s">
+      <div>
+        <div class="num">Week 02 · Chapter 2</div>
+        <div class="title">Project Evaluation & Programme Management</div>
+        <div class="desc">How to build a business case and compare proposals using net profit, payback period, ROI, and NPV — then coordinate related projects as a coordinated programme.</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+  </div>
+
+  <div class="shelf-head" style="margin-top:40px">Coming soon</div>
+  <div class="coming">
+    <div class="coming-item">
+      <span class="num">Week 03 · Ch.3</span>
+      <span class="title">An Overview of Project Planning — Step Wise</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 04 · Ch.4</span>
+      <span class="title">Selecting a Project Approach</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 05a · Ch.5</span>
+      <span class="title">Effort Estimation — Concepts & Techniques</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 05b · Ch.5</span>
+      <span class="title">Effort Estimation — Algorithmic Models</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 06 · Ch.6</span>
+      <span class="title">Activity Planning</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 07 · Ch.7</span>
+      <span class="title">Risk Management</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 08 · Ch.8</span>
+      <span class="title">Resource Allocation</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 09 · Ch.9</span>
+      <span class="title">Monitoring and Control</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 10 · Ch.10</span>
+      <span class="title">Managing Contracts</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 11 · Ch.11</span>
+      <span class="title">Managing People in Software Environments</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 12 · Ch.12</span>
+      <span class="title">Working in Teams</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 13 · Ch.13</span>
+      <span class="title">Software Quality</span>
+      <span class="badge">Soon</span>
+    </div>
+    <div class="coming-item">
+      <span class="num">Week 14 · —</span>
+      <span class="title">Review & Capstone Presentations</span>
+      <span class="badge">Soon</span>
+    </div>
+  </div>
+
+  <footer>
+    <div>Built for classroom use · self-contained, no framework needed.</div>
+    <div>Textbook: <b>Bob Hughes & Mike Cotterell, Software Project Management, 5th ed. (McGraw-Hill, 2009)</b></div>
+  </footer>
+
+</div>
+</body>
+</html>
