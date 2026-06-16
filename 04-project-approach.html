@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecting a Project Approach — Week 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}.exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
+  .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
+  .casestudy p{font-size:15px;color:var(--text);line-height:1.6}.casestudy p+p{margin-top:10px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* approach comparison selector */
+  .approach-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+  .atab{font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
+  .atab:hover{border-color:var(--accent);color:var(--text)}
+  .atab.active{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:700}
+  .approach-panels{margin-top:20px}
+  .apanel{display:none;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:16px;padding:24px 28px}
+  .apanel.show{display:block}
+  .apanel-name{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:4px}
+  .apanel-tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+  .apanel-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  @media(max-width:600px){.apanel-grid{grid-template-columns:1fr}}
+  .apanel-cell{background:var(--ink-2);border-radius:10px;padding:14px 16px}
+  .apanel-cell-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .apanel-cell-val{font-size:14px;color:var(--text);line-height:1.5}
+  .pros{color:var(--pos)!important}.cons{color:var(--neg)!important}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 04</span>
+  <h1>Selecting a <em>Project Approach</em></h1>
+  <p class="lede">Waterfall. Agile. Prototyping. Incremental. Everyone has an opinion about which is best. The real answer is: it depends on the project. This week we build the framework for making that choice deliberately, not by habit.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.4 (pp. 73–102)</span>
+    <span class="meta-item"><b>Duration:</b> ~90 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Describe the major software development lifecycle models and their trade-offs</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Explain the difference between structured and agile approaches</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Identify which approach suits which type of project</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Describe Scrum and explain how it manages uncertainty</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Apply approach selection criteria to a real project scenario</span></div>
+  </div>
+</section>
+
+<section id="why-approach">
+  <span class="tag">01 · Why the approach matters</span>
+  <h2>The approach is a bet about what you know<span class="timing">10 min</span></h2>
+  <p class="note">Every project approach makes an implicit assumption about certainty. Waterfall assumes you can fully define requirements up front. Agile assumes you can't. Prototyping assumes users don't know what they want until they see something. Which assumption matches your project's reality? That's how you choose.</p>
+  <p class="note">Getting this wrong is expensive. Choose waterfall for a project where requirements will inevitably change, and you'll spend months building the wrong thing and then fighting change requests. Choose an agile approach for a safety-critical system where every decision needs sign-off, and you'll spend sprints re-opening settled issues.</p>
+  <p class="note">Step Wise Step 3 (from last week) is where this decision gets made. The output of that step is your chosen approach. This week we give you the information to make that choice well.</p>
+</section>
+
+<section id="approaches">
+  <span class="tag">02 · The major approaches</span>
+  <h2>Compare them for your specific project<span class="timing">30 min</span></h2>
+  <p class="note">Click each approach to see when it works, when it doesn't, and what it requires:</p>
+
+  <div class="approach-tabs">
+    <button class="atab active" onclick="showApproach('build-fix')">Build-and-fix</button>
+    <button class="atab" onclick="showApproach('waterfall')">Waterfall</button>
+    <button class="atab" onclick="showApproach('vmodel')">V-Model</button>
+    <button class="atab" onclick="showApproach('proto')">Prototyping</button>
+    <button class="atab" onclick="showApproach('incremental')">Incremental</button>
+    <button class="atab" onclick="showApproach('scrum')">Scrum</button>
+  </div>
+
+  <div class="approach-panels">
+    <div class="apanel show" id="ap-build-fix">
+      <div class="apanel-name">Build-and-fix</div>
+      <div class="apanel-tag">No lifecycle model · the default when you have no process</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">Code first, think later. Build something, show it to the user, fix what's wrong, repeat. No formal requirements. No design phase. This isn't really a methodology — it's the absence of one. And most projects start here by default unless someone actively introduces a process.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val">The project is tiny (&lt;1 person, &lt;1 week), well understood, and the "client" is the developer themselves.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Fails when</div><div class="apanel-cell-val">Anyone else is involved, the project has a deadline, or quality matters. Technical debt accumulates instantly and compounds.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Core risk</div><div class="apanel-cell-val pros">None on paper — very fast to start.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Core risk</div><div class="apanel-cell-val cons">No plan → no control → unpredictable delivery. Maintenance becomes impossible.</div></div>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-waterfall">
+      <div class="apanel-name">Waterfall</div>
+      <div class="apanel-tag">Sequential · each phase completes before the next begins</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">Requirements → Design → Build → Test → Deploy. Each phase produces a signed-off document before the next begins. The metaphor is a waterfall: water flows in one direction — you can't go back upstream easily. This is the most common "traditional" approach and maps closely to the ISO 12207 lifecycle from Week 1.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val">Requirements are fully understood and stable. The technology is known. Clients need formal documentation and sign-off. Government or defence contracts.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Fails when</div><div class="apanel-cell-val">Requirements change mid-project (they almost always do). Users can't articulate what they need without seeing it. The technology is novel.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Strengths</div><div class="apanel-cell-val pros">Clear milestones. Easy to estimate. Full documentation at each stage. Progress is measurable.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Weaknesses</div><div class="apanel-cell-val cons">Late integration of all components. Bugs found late are expensive. Inflexible to change. Users see nothing until the end.</div></div>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-vmodel">
+      <div class="apanel-name">V-Model</div>
+      <div class="apanel-tag">Waterfall + explicit testing phases paired with each development phase</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">An evolution of waterfall. Each development phase on the left of the "V" has a corresponding test phase on the right. Requirements define acceptance tests. Architecture defines integration tests. Detailed design defines unit tests. The tests are planned early, not as an afterthought.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val">Quality and correctness are paramount. Safety-critical systems. Medical, aviation, defence.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Adds over waterfall</div><div class="apanel-cell-val">Test planning happens alongside development planning — not as an afterthought after the code is written.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Strengths</div><div class="apanel-cell-val pros">Explicit validation at every stage. Defects found earlier. Traceability between requirements and tests.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Weaknesses</div><div class="apanel-cell-val cons">Even more rigid than waterfall. Very heavy documentation overhead. Slow to deliver working software.</div></div>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-proto">
+      <div class="apanel-name">Prototyping</div>
+      <div class="apanel-tag">Build to learn · show the user something so they can tell you what they actually want</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">Build a quick, rough version of part of the system — just enough to make the requirements conversation concrete. Show it to users. They'll react to what they see rather than to an abstract description. Use that reaction to clarify the requirements, then build the real thing. The prototype is almost always thrown away — its purpose is learning, not delivery.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val">Users genuinely don't know what they want until they see it. Novel UI concepts. Requirements are fuzzy. High risk of building the wrong thing.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Critical warning</div><div class="apanel-cell-val cons">Don't let the prototype become the production system. It was built to explore, not to be maintained.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Strengths</div><div class="apanel-cell-val pros">Rapidly surfaces misunderstandings. Users feel heard. Reduces costly late-stage rework.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Weaknesses</div><div class="apanel-cell-val cons">Can give users unrealistic expectations about delivery speed. Hard to manage scope creep once users start requesting changes to the prototype.</div></div>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-incremental">
+      <div class="apanel-name">Incremental delivery</div>
+      <div class="apanel-tag">Deliver a working subset · expand it in successive releases</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">Instead of delivering everything at once, deliver a useful subset of the system early, then expand functionality in subsequent releases. Each increment is fully working and tested. Users get value sooner and can give feedback that informs the next increment. The final product is built in layers rather than assembled at the end.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val">Some features are more urgent than others. Early delivery has business value. Requirements are likely to evolve based on user experience.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Architecture requirement</div><div class="apanel-cell-val">The system architecture must support incremental growth from the start — adding increment 3 shouldn't require rewriting increment 1.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Strengths</div><div class="apanel-cell-val pros">Early ROI. Real user feedback. Lower risk of total failure. Easier to stop if business conditions change.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Weaknesses</div><div class="apanel-cell-val cons">Architecture planning is critical and difficult. Users may not accept a "partial" system. Coordination complexity between increments.</div></div>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-scrum">
+      <div class="apanel-name">Scrum</div>
+      <div class="apanel-tag">Agile · fixed-length sprints with continuous feedback and adaptation</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:16px">Work is organized into short sprints (1–4 weeks). Each sprint takes items from a prioritized backlog, builds them, tests them, and delivers a potentially shippable product increment. The backlog is re-prioritized at the start of every sprint — so the most valuable work is always next. Scrum doesn't assume you can plan the future; it assumes you'll learn your way there.</p>
+      <div class="apanel-grid">
+        <div class="apanel-cell"><div class="apanel-cell-label">Key roles</div><div class="apanel-cell-val"><b>Product Owner:</b> owns the backlog, decides priority. <b>Scrum Master:</b> removes blockers, protects the team. <b>Development Team:</b> self-organizes to deliver each sprint.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Key ceremonies</div><div class="apanel-cell-val">Sprint Planning → Daily Standup → Sprint Review → Sprint Retrospective. Each has a specific purpose and time limit.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Works when</div><div class="apanel-cell-val pros">Requirements will change. Users can engage continuously. The team is small and co-located. Speed and adaptability are more important than predictability.</div></div>
+        <div class="apanel-cell"><div class="apanel-cell-label">Struggles when</div><div class="apanel-cell-val cons">Fixed-price contracts require a fully-defined scope. Safety-critical systems require formal sign-off at each step. Clients need to see a detailed plan before agreeing to fund.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="choosing">
+  <span class="tag">03 · How to choose</span>
+  <h2>The right approach depends on what you know — and what you don't<span class="timing">20 min</span></h2>
+  <p class="note">There's no universally best approach. The choice depends on the nature of the project, the organization's culture, the contract type, and the team's skills. Here are the key questions to ask:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">How well understood are the requirements?</div><div class="gdef">If requirements are clear and stable → waterfall or V-model. If requirements are fuzzy or likely to change → agile or prototyping. If the goal is clear but the solution isn't → incremental delivery.</div></div>
+    <div class="gcard"><div class="gterm">What are the quality and safety requirements?</div><div class="gdef">Safety-critical systems (medical, aviation, defence) almost always require the V-model or a similarly rigorous approach. Every decision needs traceability and sign-off. Agile's flexibility is a liability here, not an asset.</div></div>
+    <div class="gcard"><div class="gterm">How available are the users?</div><div class="gdef">Agile and prototyping both require frequent, meaningful user involvement. If your client can only meet quarterly, scrum doesn't work — the sprint reviews will be superficial and the backlog will drift.</div></div>
+    <div class="gcard"><div class="gterm">What type of contract is in place?</div><div class="gdef">A fixed-price contract requires a defined scope — which maps to waterfall. A time-and-materials contract can accommodate changing scope — which enables agile. (Contract types covered in Week 10.)</div></div>
+    <div class="gcard"><div class="gterm">What's the team's experience with the technology?</div><div class="gdef">If the team has done this exact thing before, a sequential approach works. If the technology is new, plan for experimentation — incremental delivery or spikes (short research tasks) built into the schedule.</div></div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>The hybrid reality:</b> most real projects use a hybrid. Requirements might be gathered using agile techniques (user stories, workshops), documented using structured methods (use cases, specifications), built using incremental delivery, and tested using V-model discipline. Don't treat these as mutually exclusive religions — treat them as tools you combine based on need.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 4.1 — approach selection (group activity, 10 min)</div>
+    <p>For each scenario below, choose an approach and justify your choice using the criteria above:</p>
+    <ul>
+      <li><b>Scenario A:</b> A hospital wants a new patient record system. Regulatory compliance is essential. Requirements are well-defined by legal standards.</li>
+      <li><b>Scenario B:</b> A startup wants to build a new social app. They don't know exactly what features users will want. They have 6 months of funding.</li>
+      <li><b>Scenario C:</b> Brightmouth College wants to replace its payroll system with an off-the-shelf package. Configuration is needed but no new code will be written.</li>
+      <li><b>Scenario D:</b> A bank wants to redesign its customer dashboard. Users are available for regular feedback sessions. No external regulatory constraints.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="agile-detail">
+  <span class="tag">04 · Agile in more depth</span>
+  <h2>What "agile" actually means in practice<span class="timing">15 min</span></h2>
+  <p class="note">The word "agile" gets overloaded. It's a value system (the Agile Manifesto, 2001), a family of methodologies (Scrum, XP, Kanban, SAFe), and also a buzzword that organisations apply to whatever they're already doing. Let's unpack what it actually means for project management.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">The Agile Manifesto — four values</div>
+      <div class="gdef"><b>Individuals and interactions</b> over processes and tools. <b>Working software</b> over comprehensive documentation. <b>Customer collaboration</b> over contract negotiation. <b>Responding to change</b> over following a plan. The manifesto doesn't say process, documentation, contracts, and plans are bad — it says the items on the left matter <i>more</i> when they conflict with the items on the right.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Scrum — the sprint cycle</div>
+      <div class="gdef">Sprint Planning (commit to a backlog slice) → daily Standups (15-min syncs: what I did, what I'll do, what's blocking me) → Sprint Review (demo to stakeholders) → Sprint Retrospective (what went well, what to improve). Then repeat. The rhythm is the structure — it replaces detailed upfront planning with continuous replanning.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">XP — Extreme Programming</div>
+      <div class="gdef">Pair programming, test-driven development (write tests before code), continuous integration, refactoring, and very short release cycles. More technical and prescriptive than Scrum — focused on code quality rather than project management. Often used alongside Scrum (Scrum for the process, XP for the engineering practices).</div>
+    </div>
+  </div>
+
+  <div class="casestudy">
+    <div class="cs-tag">Agile at scale — the PM challenge</div>
+    <p>Scrum works beautifully for a single team of 5–9 people. Now imagine 10 teams all working on the same product. Who coordinates the backlogs? How do you avoid one team's sprint creating a dependency that blocks three others?</p>
+    <p>Scaling frameworks like SAFe (Scaled Agile Framework) and LeSS (Large-Scale Scrum) try to solve this. The honest answer is that large-scale agile is genuinely hard — and many organizations that claim to be "doing agile at scale" are actually doing something closer to waterfall with sprint names attached.</p>
+  </div>
+</section>
+
+<section id="wrapup">
+  <span class="tag">05 · Wrap-up</span>
+  <h2>The key insight</h2>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Methodology choice is a risk management decision</div><div class="gdef">Choosing an approach is really choosing which risks to accept and which to mitigate. Waterfall accepts the risk of late discovery in exchange for upfront clarity. Agile accepts the risk of scope ambiguity in exchange for flexibility. Know what you're trading off before you commit.</div></div>
+    <div class="gcard"><div class="gterm">The approach shapes the contract</div><div class="gdef">Or vice versa. The relationship between the project approach and the contract type is tight — you can't run scrum under a fixed-price contract without one of them breaking. This becomes a recurring theme in Week 10.</div></div>
+    <div class="gcard"><div class="gterm">Document the reasons for your choice</div><div class="gdef">When someone asks later "why are we doing it this way?", you need an answer grounded in project characteristics, not habit or fashion. Step 3 of Step Wise produces this rationale — write it down.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 4 in full (pp. 73–102)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 4.2:</b> For Brightmouth College, make and justify an approach selection. What does your choice imply for how the project plan will be structured?</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Document your chosen approach for your project, with a written rationale covering the five criteria from this lecture. This becomes Section 5 (Methods) of your project plan.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.4 (pp. 73–102)</div></footer>
+</div>
+
+<a class="next-lesson" href="05a-estimation-concepts.html">Week 05a <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+function showApproach(id){
+  document.querySelectorAll('.apanel').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ap-'+id).classList.add('show');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
