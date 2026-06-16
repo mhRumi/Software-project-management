@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing People — Week 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:14px;min-width:52px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--accent)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}.exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* Maslow pyramid */
+  .maslow-wrap{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .maslow-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .maslow-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+  .maslow-levels{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .maslow-level{display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;transition:transform .15s,box-shadow .15s;text-align:center;padding:12px 16px}
+  .maslow-level:hover{transform:translateY(-2px);box-shadow:0 8px 20px -10px rgba(0,0,0,.5)}
+  .maslow-level.active{outline:2px solid var(--accent);outline-offset:3px}
+  .maslow-level-inner{display:flex;flex-direction:column;gap:4px}
+  .maslow-lname{font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink)}
+  .maslow-ldesc{font-size:11px;color:rgba(0,0,0,.7);line-height:1.3}
+  .maslow-detail{margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;min-height:80px}
+  .maslow-detail-name{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:6px}
+  .maslow-detail-text{font-size:14px;color:var(--muted);line-height:1.6}
+  .maslow-detail-text b{color:var(--text)}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 11</span>
+  <h1>Managing <em>People</em></h1>
+  <p class="lede">Software is built by people. Not processes, not tools, not methodologies — people. Everything else in this course is a support structure for the humans doing the work. This week: what makes people productive, motivated, and willing to stick around.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.11 (pp. 254–270)</span>
+    <span class="meta-item"><b>Duration:</b> ~80 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Describe Maslow's hierarchy and explain what it implies for managing software developers</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Distinguish Herzberg's hygiene factors from motivators</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Compare McGregor's Theory X and Theory Y management styles</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Explain the causes and signs of stress in software teams</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Describe how to structure effective performance reviews</span></div>
+  </div>
+</section>
+
+<section id="why-people">
+  <span class="tag">01 · Why this matters</span>
+  <h2>The best process won't save you from a disengaged team<span class="timing">10 min</span></h2>
+  <p class="note">DeMarco and Lister measured software team productivity across dozens of organizations and found that the best teams were 10× more productive than the worst — not 10% more. That gap wasn't explained by technology, process, or experience level. It was explained almost entirely by team cohesion, psychological safety, and whether people actually wanted to do the work.</p>
+  <p class="note">Managing people isn't soft — it's the highest-leverage thing a PM can do. Understanding what motivates the people on your team, what stresses them, and what keeps them engaged is not optional. It's the job.</p>
+</section>
+
+<section id="maslow">
+  <span class="tag">02 · Maslow's hierarchy of needs</span>
+  <h2>You can't meet a higher need until lower ones are covered<span class="timing">20 min</span></h2>
+  <p class="note">Abraham Maslow's hierarchy (1943) describes human needs in five levels. The key insight for management: people are motivated by whatever need is <i>currently unmet</i>. You can't inspire someone with "meaningful work" if they're worried about keeping their job.</p>
+  <p class="note">Click each level below to see what it means in a software team context:</p>
+
+  <div class="maslow-wrap">
+    <div class="maslow-title">Maslow's Hierarchy — in the software workplace</div>
+    <div class="maslow-sub">Click any level to see its management implications</div>
+    <div class="maslow-levels" id="maslowLevels">
+      <div class="maslow-level" style="background:#ff7a5c;width:200px" onclick="showMaslow(4)">
+        <div class="maslow-level-inner"><div class="maslow-lname">Self-actualisation</div><div class="maslow-ldesc">Growth, mastery, purpose</div></div>
+      </div>
+      <div class="maslow-level" style="background:#ff9a7c;width:260px" onclick="showMaslow(3)">
+        <div class="maslow-level-inner"><div class="maslow-lname">Esteem</div><div class="maslow-ldesc">Recognition, achievement, status</div></div>
+      </div>
+      <div class="maslow-level" style="background:#ffb95c;width:330px" onclick="showMaslow(2)">
+        <div class="maslow-level-inner"><div class="maslow-lname">Social / belonging</div><div class="maslow-ldesc">Team connection, relationships, inclusion</div></div>
+      </div>
+      <div class="maslow-level" style="background:#ffd090;width:410px" onclick="showMaslow(1)">
+        <div class="maslow-level-inner"><div class="maslow-lname">Safety</div><div class="maslow-ldesc">Job security, fair treatment, predictability</div></div>
+      </div>
+      <div class="maslow-level" style="background:#ffe8c0;width:500px" onclick="showMaslow(0)">
+        <div class="maslow-level-inner"><div class="maslow-lname">Physiological</div><div class="maslow-ldesc">Pay, reasonable hours, working conditions</div></div>
+      </div>
+    </div>
+    <div class="maslow-detail" id="maslowDetail">
+      <div class="maslow-detail-name" id="mdName">Select a level</div>
+      <div class="maslow-detail-text" id="mdText">Click any level in the pyramid to see its implications for managing a software team.</div>
+    </div>
+  </div>
+</section>
+
+<section id="herzberg">
+  <span class="tag">03 · Herzberg's two-factor theory</span>
+  <h2>Removing dissatisfaction ≠ creating satisfaction<span class="timing">15 min</span></h2>
+  <p class="note">Frederick Herzberg found that job satisfaction and job dissatisfaction are driven by <i>different</i> factors — not opposite ends of the same scale. This is one of the most practically useful — and most misunderstood — findings in management research.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Hygiene factors <span class="gsym">→ cause dissatisfaction if absent</span></div>
+      <div class="gdef">Salary, working conditions, company policy, supervision style, job security, status. If these are poor, people are unhappy. But improving them only removes dissatisfaction — it doesn't create motivation. Giving someone a raise when they're already reasonably paid produces a temporary good feeling, then returns to baseline. <b>Hygiene factors are the price of admission.</b></div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Motivators <span class="gsym">→ create genuine satisfaction and engagement</span></div>
+      <div class="gdef">Achievement, recognition for good work, the work itself being interesting, responsibility, advancement, growth. These are intrinsic to the job — you can't install them with a policy. <b>Motivators are what makes people stay late willingly and care about quality.</b></div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>The practical implication:</b> if you want to motivate a software team, first get the hygiene factors right (fair pay, decent equipment, reasonable deadlines, clear direction). Then create the conditions for motivators: give people real responsibility, let them see the impact of their work, ensure achievements get recognized publicly. Throwing money at a team that's bored and unchallenged won't fix the problem.</p>
+  </div>
+</section>
+
+<section id="mcgregor">
+  <span class="tag">04 · McGregor's Theory X and Theory Y</span>
+  <h2>What you believe about people shapes how you manage them<span class="timing">15 min</span></h2>
+  <p class="note">Douglas McGregor argued that every manager holds one of two implicit sets of beliefs about their team — and those beliefs determine their management style, often unconsciously.</p>
+
+  <div class="terms" style="margin-top:20px">
+    <div class="term">
+      <div class="tsym" style="color:var(--pos)">X</div>
+      <div class="tbody">
+        <div class="tname">Theory X — people avoid work if they can</div>
+        <div class="tdef">Employees are inherently lazy and dislike responsibility. Left unsupervised, they'll do the minimum. Management must control, direct, and coerce. Leads to: close monitoring, detailed task assignments, approval bottlenecks, distrust. <b>Creates the very behaviour it assumes</b> — being treated as untrustworthy tends to produce untrustworthy behaviour over time.</div>
+      </div>
+    </div>
+    <div class="term">
+      <div class="tsym" style="color:var(--neg)">Y</div>
+      <div class="tbody">
+        <div class="tname">Theory Y — people seek meaning and take pride in good work</div>
+        <div class="tdef">Given the right conditions, employees are self-directed, creative, and willing to take responsibility. Management's job is to create those conditions — clear goals, autonomy to achieve them, recognition when they do. Leads to: delegated responsibility, collaborative goal-setting, investment in people's growth. <b>Creates the self-motivated team it assumes</b> — trust generates trustworthy behaviour.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>For software teams specifically:</b> developers are almost always Theory Y people. They chose a demanding, constantly-evolving field because they find it interesting. Managing them with Theory X assumptions — micromanaging, requiring permission for every decision, treating them as productivity units — is one of the fastest ways to lose good people to competitors who treat them differently.</p>
+  </div>
+</section>
+
+<section id="stress">
+  <span class="tag">05 · Stress and health</span>
+  <h2>Stress is a project risk, not a personal weakness<span class="timing">10 min</span></h2>
+  <p class="note">Software projects create stress — tight deadlines, unclear requirements, technical complexity, stakeholder pressure. Some stress is productive (it drives urgency). Chronic stress is destructive — it impairs judgment, causes errors, increases turnover, and can cause serious health problems.</p>
+  <p class="note">The PM's responsibility is to recognize the difference and to address the organizational causes of stress, not just the symptoms.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Common causes in software projects</div><div class="gdef">Unrealistic deadlines. Unclear or constantly-changing requirements. Lack of technical support or tooling. Poor communication from management. Being asked to deliver quality while being given insufficient time. Feeling responsible for outcomes you don't control.</div></div>
+    <div class="gcard"><div class="gterm">Signs to watch for</div><div class="gdef">Declining code quality. Increasing error rates. Reduced communication. Withdrawal from team activities. Presenteeism (being present but not productive). Brittle tempers in meetings. The PM who only looks at deliverables will miss these signals until it's too late.</div></div>
+    <div class="gcard"><div class="gterm">What helps</div><div class="gdef">Honest estimates with stakeholders (don't accept impossible deadlines silently). Regular 1-on-1s where people can raise concerns. Recognition of achievements, not just escalation of problems. Flexible working where possible. Ensuring workloads are visible — overload shouldn't be invisible.</div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Discussion — 10 min</div>
+    <p>You notice that one of your developers, who is usually communicative, has been quiet in standups for the last two weeks. Their commits have decreased and there are more bugs in their recent code.</p>
+    <p>1. What are the possible causes? List at least four before converging on one explanation.</p>
+    <p>2. How would you approach a 1-on-1 conversation? What would you say in the first 60 seconds?</p>
+    <p>3. What's the difference between supporting someone and managing their output? Which is appropriate here?</p>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 11 in full (pp. 254–270)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Reflection:</b> Think about a team you've been part of. Which level of Maslow was most relevant to your motivation at the time? Which of Herzberg's motivators or hygiene factors were present or absent?</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Draft a brief "team charter" for your project group — agreed working norms, communication expectations, and how you'll handle disagreements. Bring it to the next session for discussion.</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.11 (pp. 254–270)</div></footer>
+</div>
+<a class="next-lesson" href="12-working-in-teams.html">Week 12 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+
+const maslowData=[
+  {name:'Physiological',text:'<b>In the software workplace:</b> fair salary, ergonomic setup, reasonable working hours, proper lunch breaks. This sounds obvious — but many companies fail here. Mandatory unpaid overtime, poor equipment, and below-market pay are physiological problems. Fix these before worrying about anything else. Nobody is thinking about "meaningful work" when they\'re worrying about paying rent.'},
+  {name:'Safety',text:'<b>In the software workplace:</b> job security, predictable processes, fair treatment, clear expectations. Constant restructuring, arbitrary management decisions, or a PM who reacts unpredictably create safety anxiety. People spend cognitive resources on self-protection rather than the project. Psychological safety — knowing you can raise a concern without punishment — lives here too.'},
+  {name:'Social / belonging',text:'<b>In the software workplace:</b> team cohesion, inclusion, a sense of being part of something. Remote teams lose this naturally and must rebuild it deliberately. Pair programming, team rituals, shared lunches, cross-team knowledge sharing. Isolation — being the only person who understands a module, or being excluded from decisions — destroys this need.'},
+  {name:'Esteem',text:'<b>In the software workplace:</b> recognition for good work, credibility with peers, the respect of their manager. "Good job" in a 1-on-1 is not enough. Public recognition, promotion, interesting assignments, invitations to lead — these are esteem. When a developer fixes a critical bug and nobody mentions it, esteem needs go unmet.'},
+  {name:'Self-actualisation',text:'<b>In the software workplace:</b> mastery, growth, working on problems that stretch capabilities, contributing to something meaningful. The best developers stay for this. They could earn the same salary elsewhere — they stay because this work helps them become better. Conference talks, open-source contributions, interesting technical challenges, the chance to mentor others — these are self-actualisation.'}
+];
+function showMaslow(idx){
+  document.querySelectorAll('.maslow-level').forEach((l,i)=>l.classList.toggle('active',i===(4-idx)));
+  document.getElementById('mdName').textContent=maslowData[idx].name;
+  document.getElementById('mdText').innerHTML=maslowData[idx].text;
+}
+</script>
+</body>
+</html>
