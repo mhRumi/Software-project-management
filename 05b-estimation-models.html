@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effort Estimation: Algorithmic Models — Week 5b</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .eq-box{background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px;overflow-x:auto}
+  .eq-line{font-family:var(--mono);font-size:clamp(14px,2.4vw,20px);letter-spacing:.02em;white-space:nowrap;line-height:1.8}.eq-line+.eq-line{margin-top:8px}
+  .ek{color:var(--muted)}.ev{color:var(--accent);font-weight:700}.er{color:var(--pos);font-weight:700}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* COCOMO calculator */
+  .cocomo-calc{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .cc-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .cc-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+  .cc-row{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+  .cc-label{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:180px}
+  .cc-select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:13px;cursor:pointer;flex:1;min-width:160px}
+  .cc-input{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 12px;font-family:var(--mono);font-size:16px;width:100px;text-align:center}
+  .cc-results{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}
+  .cc-res{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;flex:1;min-width:140px}
+  .cc-res-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .cc-res-val{font-family:var(--display);font-weight:900;font-size:clamp(22px,3vw,34px);color:var(--accent)}
+  .cc-res-unit{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 05b</span>
+  <h1>Effort Estimation — <em>Algorithmic Models</em></h1>
+  <p class="lede">Can a formula tell you how long a software project will take? Not perfectly — but the right formula, applied with judgment and calibrated to your organization, gets you a lot closer than gut feeling alone.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.5 §5.10–5.14 (pp. 114–128)</span>
+    <span class="meta-item"><b>Duration:</b> ~60 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Explain what an algorithmic estimation model is and what it requires as input</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Describe COCOMO I Basic and apply the three-category formula</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Explain how COCOMO II improves on COCOMO I</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Describe the limitations of all algorithmic models</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Explain how to use multiple estimation methods together for confidence</span></div>
+  </div>
+</section>
+
+<section id="what-is-algorithmic">
+  <span class="tag">01 · Algorithmic models</span>
+  <h2>A formula built from thousands of past projects<span class="timing">10 min</span></h2>
+  <p class="note">An algorithmic model is built by collecting data from a large set of completed projects — size, effort, duration, team size, complexity — and fitting a mathematical formula to the patterns. You then feed your current project's characteristics into the formula and get an estimate back.</p>
+  <p class="note">The best-known family of models is <b>COCOMO</b> (Constructive Cost Model), developed by Barry Boehm in 1981 and updated as COCOMO II in the 1990s. It's based on data from 63 projects at TRW Aerospace. The basic insight: effort grows non-linearly with size — doubling the size of a project more than doubles the effort, because coordination and communication costs increase faster than the code does.</p>
+
+  <div class="key-point">
+    <p><b>The crucial limitation up front:</b> all algorithmic models are calibrated on historical data from other organizations. If your team, technology, and domain are similar to the calibration set, the model may be accurate. If not, it can be wildly off. The model gives you a starting point and a structure for thinking — not a certified answer. Always triangulate with other methods.</p>
+  </div>
+</section>
+
+<section id="cocomo1">
+  <span class="tag">02 · COCOMO I Basic</span>
+  <h2>Three project types, two equations<span class="timing">20 min</span></h2>
+  <p class="note">COCOMO I Basic classifies every project into one of three categories based on complexity, and applies a different formula to each. "Size" is measured in Thousands of Delivered Source Instructions (KDSI) — not ideal, but this was 1981. (COCOMO II updates this to Function Points and Object Points.)</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Organic <span class="gsym">→ small teams, well-understood domain</span></div>
+      <div class="gdef">Examples: batch data processing, simple business applications, familiar technology. The team has done similar work before. Most organizational software projects fall here at the smaller end.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Semi-detached <span class="gsym">→ mixed experience, medium complexity</span></div>
+      <div class="gdef">Mix of experienced and inexperienced staff. Some novel requirements. Typical business systems, utility software, transaction processing systems.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Embedded <span class="gsym">→ tight constraints, novel/complex</span></div>
+      <div class="gdef">Strong performance, reliability, or safety requirements. Operating systems, compilers, real-time control systems. Teams facing significant technical unknowns.</div>
+    </div>
+  </div>
+
+  <div class="subhead">The COCOMO I Basic formulas</div>
+  <div class="eq-box">
+    <div class="eq-line"><span class="ek">Organic:      </span><span class="ev">Effort</span><span class="ek"> = </span><span class="er">2.4 × KDSI^1.05</span><span class="ek">  person-months</span></div>
+    <div class="eq-line"><span class="ek">Semi-det:     </span><span class="ev">Effort</span><span class="ek"> = </span><span class="er">3.0 × KDSI^1.12</span><span class="ek">  person-months</span></div>
+    <div class="eq-line"><span class="ek">Embedded:     </span><span class="ev">Effort</span><span class="ek"> = </span><span class="er">3.6 × KDSI^1.20</span><span class="ek">  person-months</span></div>
+    <div class="eq-line" style="margin-top:16px"><span class="ek">Duration:     </span><span class="ev">Time</span><span class="ek"> = </span><span class="er">2.5 × Effort^0.38</span><span class="ek">  months  (similar exponents vary by type)</span></div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>The exponent > 1 is the key insight.</b> For Organic projects, the exponent is 1.05 — effort grows slightly faster than size. For Embedded projects, it's 1.20 — effort grows much faster than size. This captures the "diseconomy of scale" in software: large projects don't just take proportionally more time, they take <i>disproportionately</i> more time because of coordination overhead, integration complexity, and communication costs.</p>
+  </div>
+
+  <!-- COCOMO Calculator -->
+  <div class="cocomo-calc">
+    <div class="cc-title">COCOMO I Basic Calculator</div>
+    <div class="cc-sub">Enter your estimated size in KDSI (thousands of source lines), choose a project type, and see the effort and duration estimates.</div>
+    <div class="cc-row">
+      <span class="cc-label">Project type</span>
+      <select class="cc-select" id="cType" onchange="calcCocomo()">
+        <option value="organic">Organic (small, familiar)</option>
+        <option value="semi">Semi-detached (medium)</option>
+        <option value="embedded">Embedded (complex, novel)</option>
+      </select>
+    </div>
+    <div class="cc-row">
+      <span class="cc-label">Size (KDSI)</span>
+      <input type="number" class="cc-input" id="cSize" value="10" min="1" max="1000" oninput="calcCocomo()">
+    </div>
+    <div class="cc-results">
+      <div class="cc-res"><div class="cc-res-label">Effort</div><div class="cc-res-val" id="cEffort">—</div><div class="cc-res-unit">person-months</div></div>
+      <div class="cc-res"><div class="cc-res-label">Duration</div><div class="cc-res-val" id="cDuration">—</div><div class="cc-res-unit">months</div></div>
+      <div class="cc-res"><div class="cc-res-label">Team size</div><div class="cc-res-val" id="cTeam">—</div><div class="cc-res-unit">people (avg)</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cocomo2">
+  <span class="tag">03 · COCOMO II</span>
+  <h2>The 1990s update — built for modern software<span class="timing">15 min</span></h2>
+  <p class="note">COCOMO I was built for the 1970s–80s world: mainframes, batch processing, measured in source lines of code. By the 1990s, object-oriented programming, reusable components, rapid application development, and modern tooling had changed what "building software" meant. COCOMO II was calibrated on 161 projects and designed to handle these realities.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Three sub-models</div>
+      <div class="gdef"><b>Application Composition model:</b> for prototyping and applications built with high-level tools (4GLs, GUI builders). Uses Object Points as the size measure. <b>Early Design model:</b> for use before architecture is set. Uses Function Points. <b>Post-Architecture model:</b> the main detailed model, used once the system architecture is established. Most accurate, requires the most information.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Scale factors (replacing the 3-type classification)</div>
+      <div class="gdef">COCOMO II replaced COCOMO I's three project types with five scale factors, each rated 1–6: <b>Precedentedness</b> (how similar to prior work?), <b>Development flexibility</b>, <b>Architecture/risk resolution</b>, <b>Team cohesion</b>, <b>Process maturity</b>. These determine the exponent applied to size — which determines how much worse large size makes things.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Effort multipliers (cost drivers)</div>
+      <div class="gdef">17 factors (down from 15 in COCOMO I, reorganized) that multiply or reduce the base estimate: product reliability requirements, database size, personnel capability, tool maturity, schedule pressure. Each rated Very Low / Low / Nominal / High / Very High / Extra High, with calibrated multiplier values.</div>
+    </div>
+  </div>
+
+  <div class="subhead">The COCOMO II Post-Architecture formula</div>
+  <div class="eq-box">
+    <div class="eq-line"><span class="ev">Effort</span><span class="ek">  =  </span><span class="er">A × Size^E × Π(EM)</span></div>
+    <div class="eq-line"><span class="ek">where  </span><span class="ev">A</span><span class="ek"> = 2.94  (calibration constant)</span></div>
+    <div class="eq-line"><span class="ek">       </span><span class="ev">E</span><span class="ek"> = 0.91 + 0.01 × ΣSF  (exponent from scale factors)</span></div>
+    <div class="eq-line"><span class="ek">       </span><span class="ev">EM</span><span class="ek"> = product of all effort multipliers</span></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 5.3 — COCOMO comparison</div>
+    <p>A project is estimated at 50 KDSI. Using the COCOMO I calculator above:</p>
+    <p>1. Calculate effort and duration for Organic, Semi-detached, and Embedded. What's the ratio between Organic and Embedded effort?</p>
+    <p>2. The duration formula gives a "natural" project duration. What happens if management insists on completing the project in half that time? (Consult the "Impossible Region" concept from §5.13.)</p>
+  </div>
+</section>
+
+<section id="limits">
+  <span class="tag">04 · Putting it all together</span>
+  <h2>Use multiple methods and triangulate<span class="timing">10 min</span></h2>
+  <p class="note">No single estimation method is reliable on its own. The professional approach is to use at least two or three methods and compare the results:</p>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Bottom-up (from WBS) + COCOMO + Function Points</div><div class="gdef">If all three methods give results in the same ballpark, confidence is higher. If they diverge significantly, find out why — usually one method is using incorrect inputs or the project has unusual characteristics that distort one of the models.</div></div>
+    <div class="gcard"><div class="gterm">Range estimates, not point estimates</div><div class="gdef">Rather than "this project will take 12 months," say "our estimates range from 9 to 16 months across three methods, with a central estimate of 12 months, contingent on [stated assumptions]." Commit to the range, not the point.</div></div>
+    <div class="gcard"><div class="gterm">Calibrate to your organization</div><div class="gdef">COCOMO and function point benchmarks are based on industry averages. Your team's productivity, your tools, and your domain will differ. Track actuals on every project and adjust your multipliers over time. After 5–10 projects, your organization-specific calibration will be far more accurate than any industry model.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Ch.5 §5.10–5.14 (pp. 114–128)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 5.4:</b> Apply COCOMO I to the Brightmouth payroll project. Justify your choice of project type. Compare the result to your function point estimate from 5a.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Produce a final effort estimate using at least two methods. Document where they agree, where they diverge, and how you reconciled the difference. This becomes Section 7 (Resources) of your project plan.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.5 §5.10–5.14 (pp. 114–128)</div></footer>
+</div>
+
+<a class="next-lesson" href="06-activity-planning.html">Week 06 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+
+const params={organic:{a:2.4,b:1.05,c:2.5,d:0.38},semi:{a:3.0,b:1.12,c:2.5,d:0.38},embedded:{a:3.6,b:1.20,c:2.5,d:0.32}};
+function calcCocomo(){
+  const type=document.getElementById('cType').value;
+  const kdsi=parseFloat(document.getElementById('cSize').value)||1;
+  const p=params[type];
+  const effort=p.a*Math.pow(kdsi,p.b);
+  const dur=p.c*Math.pow(effort,p.d);
+  const team=effort/dur;
+  document.getElementById('cEffort').textContent=effort.toFixed(1);
+  document.getElementById('cDuration').textContent=dur.toFixed(1);
+  document.getElementById('cTeam').textContent=team.toFixed(1);
+}
+calcCocomo();
+</script>
+</body>
+</html>
