@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Overview of Project Planning — Week 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}
+  h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}
+  .meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}
+  .note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}
+  .gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:15px;min-width:48px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--pos)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
+  .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
+  .casestudy p{font-size:15px;color:var(--text);line-height:1.6}.casestudy p+p{margin-top:10px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}
+  .hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}
+  .hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}
+  .next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}
+  .home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* Step Wise interactive diagram */
+  .stepwise{display:flex;flex-direction:column;gap:0;margin-top:28px}
+  .sw-step{display:flex;gap:0;cursor:pointer;position:relative}
+  .sw-num{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--ink);background:var(--accent);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:2;transition:background .15s,transform .15s}
+  .sw-step:hover .sw-num,.sw-step.active .sw-num{background:var(--pos);transform:scale(1.1)}
+  .sw-connector{width:2px;background:var(--line);margin:0 19px;flex-shrink:0}
+  .sw-connector.loop{background:var(--neg);border-left:2px dashed var(--neg);width:0;margin-left:19px}
+  .sw-content{flex:1;padding:10px 0 10px 18px}
+  .sw-title{font-family:var(--display);font-weight:700;font-size:16px;margin-bottom:4px;line-height:1.2}
+  .sw-desc{font-size:14px;color:var(--muted);line-height:1.5;max-height:0;overflow:hidden;transition:max-height .35s ease,opacity .3s ease;opacity:0}
+  .sw-step.active .sw-desc{max-height:200px;opacity:1}
+  .sw-desc b{color:var(--text)}
+  .sw-loop-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--neg);margin-left:18px;padding:6px 0}
+
+  /* progress bar */
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none;transition:width .08s linear}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+  .fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">SPM · Week 03</span>
+  <h1>An Overview of <em>Project Planning</em></h1>
+  <p class="lede">Planning isn't something you do once at the start of a project. It's something you do continuously, at multiple levels, adjusting as reality diverges from expectation. This week: a step-by-step framework for doing it right.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.3 (pp. 49–72)</span>
+    <span class="meta-item"><b>Duration:</b> ~90 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Explain what a project plan contains, and distinguish a plan from the activity of planning</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Describe the Step Wise framework and what each step produces</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Explain the two-level planning hierarchy: programme level vs. activity level</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Identify project constraints and understand how they shape planning decisions</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Apply the first three steps of Step Wise to a real project scenario</span></div>
+  </div>
+</section>
+
+<section id="what-is-plan">
+  <span class="tag">01 · What a plan actually is</span>
+  <h2>The word "plan" hides a lot of confusion<span class="timing">10 min</span></h2>
+  <p class="note">When a manager says "we need a plan," they often mean a schedule — a list of tasks with dates. That's one part of a plan, but it's not the whole thing. A real project plan is more like a complete argument for how the work will get done: it describes what needs to happen, in what order, using what resources, at what cost, with what risks, and how you'll know when it's working.</p>
+  <p class="note">The other confusion is between a plan (the document) and planning (the activity). <b>The document goes stale almost immediately</b> — reality rarely matches the initial assumptions. But the activity of planning — regularly asking "where are we, where do we need to be, what's in the way?" — is what actually keeps a project on track.</p>
+
+  <div class="key-point">
+    <p><b>Annex A of Hughes & Cotterell</b> lists what a project plan document should contain: Introduction, Background, Objectives, Constraints, Methods, Products, Activities, Resources, Risks, Management approach. This is the template for your capstone Deliverable 1 — and it maps directly to the 10-part business case from Week 2.</p>
+  </div>
+
+  <div class="subhead">Three types of plan in a typical project</div>
+  <div class="glossary" style="margin-top:14px">
+    <div class="gcard"><div class="gterm">Project plan</div><div class="gdef">Covers the entire project from start to finish. High-level. Stable enough to share with stakeholders and use as the baseline for control.</div></div>
+    <div class="gcard"><div class="gterm">Stage plan</div><div class="gdef">A detailed plan for the next phase of work. More granular than the project plan — covers the next 4–8 weeks at the task level. Updated at the start of each phase.</div></div>
+    <div class="gcard"><div class="gterm">Exception plan</div><div class="gdef">Created when a stage goes significantly off track. Replaces the current stage plan with a new one that accounts for what actually happened.</div></div>
+  </div>
+</section>
+
+<section id="stepwise">
+  <span class="tag">02 · Step Wise</span>
+  <h2>A framework for turning a project into a plan<span class="timing">30 min</span></h2>
+  <p class="note">Hughes & Cotterell introduce their own planning framework, called Step Wise. It's not a methodology for <i>doing</i> the project — it's a methodology for <i>planning</i> any project, regardless of what methodology you use to execute it.</p>
+  <p class="note">The framework has two loops: an <b>outer loop</b> that creates the programme-level plan for the whole project, and an <b>inner loop</b> that repeats for each individual activity as the project progresses. Click each step below to see what it involves:</p>
+
+  <div class="stepwise" id="sw">
+    <div class="sw-step" data-idx="0" onclick="toggleStep(this)">
+      <div class="sw-num">0</div>
+      <div class="sw-content">
+        <div class="sw-title">Select project</div>
+        <div class="sw-desc">This step is the output of Chapter 2 — the business case and portfolio management process. By the time you're planning, the project has already been approved. <b>Key question:</b> do we have a clear mandate and committed funding?</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="1" onclick="toggleStep(this)">
+      <div class="sw-num">1</div>
+      <div class="sw-content">
+        <div class="sw-title">Identify project scope and objectives</div>
+        <div class="sw-desc">What exactly will this project deliver — and what will it <i>not</i> deliver? Without explicit scope boundaries, everything is up for grabs and the project never ends. <b>Outputs:</b> Statement of Work, objectives (SMART), measurable success criteria.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="2" onclick="toggleStep(this)">
+      <div class="sw-num">2</div>
+      <div class="sw-content">
+        <div class="sw-title">Identify project infrastructure</div>
+        <div class="sw-desc">What's already in place that this project fits into? Organizational standards, existing systems, reporting structures, tools, physical environments. <b>Key question:</b> what constraints does our environment impose before we even start planning?</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="3" onclick="toggleStep(this)">
+      <div class="sw-num">3</div>
+      <div class="sw-content">
+        <div class="sw-title">Analyze project characteristics</div>
+        <div class="sw-desc">What kind of project is this? (Recall Week 1's spectrum: routine → project → exploration.) Is it objective-driven or product-driven? Information system or embedded? What does that imply for the right methodology? <b>Output:</b> choice of project approach — sets up Chapter 4.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="4" onclick="toggleStep(this)">
+      <div class="sw-num">4</div>
+      <div class="sw-content">
+        <div class="sw-title">Identify products and activities</div>
+        <div class="sw-desc">What tangible things will the project produce (products/deliverables)? What work is needed to produce each one (activities)? This is the Work Breakdown Structure — covered in detail in Week 6. <b>Note:</b> always start from deliverables, not tasks. Tasks are how you get there; deliverables are what you're building.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="5" onclick="toggleStep(this)">
+      <div class="sw-num">5</div>
+      <div class="sw-content">
+        <div class="sw-title">Estimate effort for each activity</div>
+        <div class="sw-desc">How long will each activity take? This is notoriously difficult in software — covered fully in Weeks 5a/5b. At the planning stage, all estimates have uncertainty. <b>The plan must make that uncertainty visible</b>, not hide it in false precision.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="6" onclick="toggleStep(this)">
+      <div class="sw-num">6</div>
+      <div class="sw-content">
+        <div class="sw-title">Identify activity risks</div>
+        <div class="sw-desc">What could go wrong with each specific activity? (Not project risks broadly — those were in Week 2. These are risks at the task level: "the database migration might take twice as long if the legacy data is messier than we expect.") Risk identification at this level feeds back into estimates. Covered in Week 7.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="7" onclick="toggleStep(this)">
+      <div class="sw-num">7</div>
+      <div class="sw-content">
+        <div class="sw-title">Allocate resources</div>
+        <div class="sw-desc">Assign people, equipment, and budget to each activity. Resources are always constrained — this step turns the abstract plan into a schedule anchored in reality. Who is actually available, and when? Covered in Week 8.</div>
+      </div>
+    </div>
+    <div style="display:flex"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--line)"></div></div></div>
+    <div class="sw-step" data-idx="8" onclick="toggleStep(this)">
+      <div class="sw-num">8</div>
+      <div class="sw-content">
+        <div class="sw-title">Review and publicize the plan</div>
+        <div class="sw-desc">A plan that hasn't been reviewed is a guess. A plan that hasn't been shared is useless. Review: does it make sense? Are the estimates realistic? Are the risks identified? Publicize: every stakeholder who needs to know about it should have seen it and signed off. <b>A plan without buy-in is just a wish list.</b></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0"><div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:20px;background:var(--neg)"></div></div><span style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--neg);margin-left:12px">↓ inner loop — repeats for each activity</span></div>
+    <div class="sw-step" data-idx="9" onclick="toggleStep(this)">
+      <div class="sw-num" style="background:var(--neg);color:var(--ink)">9</div>
+      <div class="sw-content">
+        <div class="sw-title">Execute the plan / initiate lower-level planning</div>
+        <div class="sw-desc">Work begins. As each activity is approached, it gets its own mini-plan (Steps 4–8 applied again at finer granularity). The outer plan gives direction; the inner loop keeps daily work grounded in reality. <b>Monitoring and control</b> happen continuously here — covered in Week 9.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:28px">
+    <p><b>The most important property of Step Wise:</b> it's iterative. Steps 5, 6, and 7 feed back into each other — if estimates in step 5 reveal the project can't be done in the available time, you return to step 4 and remove scope. If resource allocation in step 7 reveals a key person isn't available, the timeline shifts and risks may change. Planning is negotiation between objectives, resources, and time.</p>
+  </div>
+</section>
+
+<section id="constraints">
+  <span class="tag">03 · Constraints and the plan</span>
+  <h2>The things that aren't negotiable shape everything else<span class="timing">15 min</span></h2>
+  <p class="note">Every project operates within constraints. Some of those constraints are explicitly stated ("the system must be live before the fiscal year end"). Others are implicit — the team might not even realize they're there until they've already committed to a schedule that violates them.</p>
+  <p class="note">The plan's job is to make all constraints visible and accounted for.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Technical constraints</div><div class="gdef">The system must integrate with an existing API. It must run on hardware the client already owns. It must meet a specific performance benchmark. These are design constraints that limit the solution space before any design decisions are made.</div></div>
+    <div class="gcard"><div class="gterm">Quality constraints</div><div class="gdef">Acceptable defect rates, compliance standards, test coverage requirements. In safety-critical systems, these can dominate the entire plan — testing takes longer than building.</div></div>
+    <div class="gcard"><div class="gterm">Resource constraints</div><div class="gdef">Budget caps, team size limits, specific skill requirements. The classic tension: a shorter timeline requires more people, but more people often slow things down (Brooks' Law — covered in Week 11).</div></div>
+    <div class="gcard"><div class="gterm">Schedule constraints</div><div class="gdef">Fixed external deadlines — a regulatory deadline, a product launch tied to a marketing campaign, a client go-live date. When these exist, scope and resources become the only variables that can flex.</div></div>
+  </div>
+
+  <div class="casestudy">
+    <div class="cs-tag">Brightmouth College — Exercise 3.3</div>
+    <p>Apply Steps 1–3 of Step Wise to the Brightmouth College payroll project. For each step, produce the expected output:</p>
+    <p><b>Step 1:</b> Write a brief scope statement. What exactly will be delivered? What explicitly will NOT be in scope (even if someone might want it to be)?</p>
+    <p><b>Step 2:</b> What infrastructure already exists at the college? What standards or constraints does it impose on the project?</p>
+    <p><b>Step 3:</b> What type of project is this? What approach does that suggest?</p>
+  </div>
+</section>
+
+<section id="products">
+  <span class="tag">04 · Products and activities</span>
+  <h2>Start with what you're building, not what you're doing<span class="timing">15 min</span></h2>
+  <p class="note">One of the most common planning mistakes: building a task list before thinking about deliverables. Tasks are easy to generate — you can always add more. But if you start from the list of things the project must produce, the tasks become much more grounded in what actually matters.</p>
+
+  <div class="terms" style="margin-top:20px">
+    <div class="term">
+      <div class="tsym">PBS</div>
+      <div class="tbody">
+        <div class="tname">Product Breakdown Structure</div>
+        <div class="tdef">A hierarchical list of everything the project must deliver. Start at the top with the final product, then break it down into components and sub-components. <b>This is the "what."</b></div>
+      </div>
+    </div>
+    <div class="term">
+      <div class="tsym">WBS</div>
+      <div class="tbody">
+        <div class="tname">Work Breakdown Structure</div>
+        <div class="tdef">A hierarchical list of all the work needed to produce the PBS. Derived from the PBS, not invented independently. Each leaf node in the WBS should correspond to a deliverable in the PBS. <b>This is the "how."</b></div>
+      </div>
+    </div>
+    <div class="term">
+      <div class="tsym">PFD</div>
+      <div class="tbody">
+        <div class="tname">Product Flow Diagram</div>
+        <div class="tdef">Shows how products are created from other products — which deliverables are inputs to which other deliverables. Reveals the natural sequencing of work without needing to think about resources yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 3.2 — Brightmouth College products</div>
+    <p>Draw a simple Product Breakdown Structure for the payroll project. Start with "New Payroll System" at the top. What are the major components? For each component, what work activities are needed to produce it?</p>
+    <p>Then draw a Product Flow Diagram — which products depend on other products being finished first?</p>
+  </div>
+</section>
+
+<section id="wrapup">
+  <span class="tag">05 · Wrap-up</span>
+  <h2>What Step Wise gives you</h2>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">1. A structure for the plan, not just the project</div><div class="gdef">Step Wise tells you what a plan needs to contain, in what order to figure it out, and how the pieces connect. Without this, planning becomes a free-form conversation that ends in a schedule with no foundation.</div></div>
+    <div class="gcard"><div class="gterm">2. The two-level loop</div><div class="gdef">The outer loop creates the programme plan. The inner loop replans each activity just before it starts — when you have much better information. Planning too far ahead in detail is wasted effort; Step Wise structures when to plan what.</div></div>
+    <div class="gcard"><div class="gterm">3. A connective thread through the course</div><div class="gdef">Every remaining chapter of this course covers one or more of the Step Wise steps in depth. Estimation (Week 5) = Step 5. Risk (Week 7) = Step 6. Resource allocation (Week 8) = Step 7. Monitoring (Week 9) = Step 9. Step Wise is the skeleton the course hangs on.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 3 in full (pp. 49–72)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 3.1:</b> For Brightmouth College, complete Steps 1–3 of Step Wise and document the outputs in writing</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Apply Step Wise Steps 1–4 to your chosen project. Produce a PBS, a first-draft WBS, and a PFD. You'll refine these as we cover estimation and risk.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.3 (pp. 49–72)</div></footer>
+</div>
+
+<a class="next-lesson" href="04-project-approach.html">Week 04 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+function toggleStep(el){const isActive=el.classList.contains('active');document.querySelectorAll('.sw-step').forEach(s=>s.classList.remove('active'));if(!isActive)el.classList.add('active');}
+// open first step by default
+document.querySelector('.sw-step').classList.add('active');
+</script>
+</body>
+</html>
