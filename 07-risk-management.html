@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Management — Week 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}.exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
+  .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
+  .casestudy p{font-size:15px;color:var(--text);line-height:1.6}.casestudy p+p{margin-top:10px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* interactive risk matrix */
+  .risk-matrix{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .rm-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .rm-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+  .rm-grid{display:grid;grid-template-columns:80px repeat(3,1fr);grid-template-rows:auto repeat(3,80px);gap:4px;margin-bottom:20px}
+  .rm-hdr{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:8px 4px;text-align:center}
+  .rm-cell{border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:default;transition:transform .15s}
+  .rm-cell.low{background:rgba(67,198,214,.12);color:var(--neg)}
+  .rm-cell.medium{background:rgba(255,185,92,.15);color:var(--accent)}
+  .rm-cell.high{background:rgba(255,122,92,.2);color:var(--pos)}
+  .rm-row-lbl{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:12px;text-align:right;line-height:1.3}
+  .rm-axis-x{grid-column:2/-1;grid-row:1;display:flex;justify-content:space-around;font-family:var(--mono);font-size:11px;color:var(--muted);padding-bottom:4px}
+  .rm-risk-dot{width:10px;height:10px;border-radius:50%;background:var(--text);border:2px solid var(--ink);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);cursor:pointer;transition:transform .2s}
+  .rm-risk-dot:hover{transform:translate(-50%,-50%) scale(1.5)}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 07</span>
+  <h1><em>Risk Management</em></h1>
+  <p class="lede">A risk is something that might go wrong. Managing risk doesn't mean preventing everything bad from happening — it means making conscious decisions about which bad things to guard against and which to accept. This week: how to do that systematically.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.7 (pp. 162–191)</span>
+    <span class="meta-item"><b>Duration:</b> ~90 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Define risk and explain why risk management is a core PM responsibility</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Use structured techniques to identify risks systematically</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Assess risks using probability and impact, and use a risk matrix</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Describe and choose between risk response strategies</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Maintain a risk log and explain how risk monitoring works</span></div>
+  </div>
+</section>
+
+<section id="what-is-risk">
+  <span class="tag">01 · What risk is — and isn't</span>
+  <h2>Risk is uncertainty that matters<span class="timing">10 min</span></h2>
+  <p class="note">A risk is not a problem — it's something that <i>might</i> become a problem. This distinction matters because the appropriate response is different. A problem needs solving now. A risk needs managing before it becomes a problem.</p>
+  <p class="note">Also: risks are <b>value-neutral until prioritized</b>. The fact that a key developer might leave is a risk — but so is the fact that the market for your product might grow faster than expected. We mostly think of risks as threats, but they can also be opportunities. Real risk management covers both.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Risk = Probability × Impact</div>
+      <div class="gdef">The two dimensions that determine a risk's importance: how likely is it to happen, and how bad would it be if it did? A risk that's highly likely but trivially impactful gets less attention than one that's unlikely but catastrophic. <b>Risk exposure</b> = P × I, expressed in time, money, or both.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Residual risk</div>
+      <div class="gdef">The risk that remains after you've applied your mitigation strategy. No mitigation eliminates risk entirely — it only reduces probability or impact. The residual risk is what you're still accepting.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Risk appetite</div>
+      <div class="gdef">How much residual risk an organization is willing to accept. A startup might accept high risk in exchange for speed. A hospital cannot accept the same risk in patient record software. Know your organization's appetite before setting the threshold for "acceptable residual risk."</div>
+    </div>
+  </div>
+</section>
+
+<section id="identification">
+  <span class="tag">02 · Risk identification</span>
+  <h2>You can't manage risks you haven't named<span class="timing">20 min</span></h2>
+  <p class="note">The most common mistake in risk management is not doing enough identification. Teams often list the obvious risks (key person leaves, requirements change) and stop there. The risks that kill projects are usually the ones that weren't on the list.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Checklists</div><div class="gdef">Use a standard list of risk categories as a prompt. The book provides a comprehensive checklist covering: organizational, project management, technical, and external risks. Work through it systematically before starting each new project — different team members will flag different items.</div></div>
+    <div class="gcard"><div class="gterm">Brainstorming</div><div class="gdef">Gather the full team. Go around the room — everyone contributes one risk at a time, no criticism allowed. The goal is quantity first, quality second. Use checklists to prime the pump if the group gets stuck.</div></div>
+    <div class="gcard"><div class="gterm">Assumption analysis</div><div class="gdef">Every estimate and every plan rests on assumptions ("the database performance will be adequate," "the API vendor will maintain the current interface"). List those assumptions explicitly. Each one is a potential risk — if the assumption turns out to be wrong, what happens?</div></div>
+    <div class="gcard"><div class="gterm">Causal mapping (fishbone/Ishikawa)</div><div class="gdef">For complex risk areas, draw a cause-and-effect diagram. Start with the potential bad outcome in the "head" and trace back through categories of cause (People, Process, Technology, External). Surfaces root causes rather than just symptoms.</div></div>
+  </div>
+
+  <div class="subhead">Common software project risk categories (Boehm)</div>
+  <div class="glossary" style="margin-top:14px">
+    <div class="gcard"><div class="gterm">Personnel shortfalls</div><div class="gdef">Key people are unavailable, have weaker skills than assumed, or leave mid-project. Often the highest-ranked risk in software projects — and the hardest to mitigate without organizational change.</div></div>
+    <div class="gcard"><div class="gterm">Unrealistic schedule/budget</div><div class="gdef">The constraints were set by management before the team estimated. The plan says 6 months; the team knows it's a year. This risk usually isn't surfaced until it's too late.</div></div>
+    <div class="gcard"><div class="gterm">Developing the wrong system</div><div class="gdef">Requirements were wrong, misunderstood, or changed. One of the most expensive risks to realize late — entire modules may need to be rebuilt from scratch.</div></div>
+    <div class="gcard"><div class="gterm">Technology risk</div><div class="gdef">The chosen technology doesn't perform as expected, isn't supported, or has integration incompatibilities only discovered during build.</div></div>
+    <div class="gcard"><div class="gterm">External risks</div><div class="gdef">Third-party APIs change, suppliers go out of business, regulatory requirements shift, market conditions change. The PM often has zero direct control here — the response is monitoring and contingency planning.</div></div>
+  </div>
+</section>
+
+<section id="assessment">
+  <span class="tag">03 · Risk assessment</span>
+  <h2>Score, map, and prioritize<span class="timing">20 min</span></h2>
+  <p class="note">Once you've identified a list of risks, you need to prioritize them — you can't respond to everything with equal intensity. Assess each risk on two scales:</p>
+
+  <div class="risk-matrix">
+    <div class="rm-title">Risk Matrix</div>
+    <div class="rm-sub">Each cell shows the combined risk level. High probability + High impact = immediate action required. Click any risk to see its mitigation strategy.</div>
+    <div class="rm-grid">
+      <div class="rm-hdr">Impact →</div>
+      <div class="rm-axis-x">
+        <span>Low</span><span>Medium</span><span>High</span>
+      </div>
+      <!-- row: High probability -->
+      <div class="rm-row-lbl">High<br>Prob.</div>
+      <div class="rm-cell medium">Medium</div>
+      <div class="rm-cell high" style="position:relative">High
+        <div class="rm-risk-dot" title="Key developer may leave" onclick="showRisk('Requirements change to scope-creep level')"></div>
+      </div>
+      <div class="rm-cell high" style="position:relative">Critical
+        <div class="rm-risk-dot" style="background:var(--pos)" title="Critical"></div>
+      </div>
+      <!-- row: Medium probability -->
+      <div class="rm-row-lbl">Med<br>Prob.</div>
+      <div class="rm-cell low">Low</div>
+      <div class="rm-cell medium" style="position:relative">Medium
+        <div class="rm-risk-dot" style="background:var(--accent)" title="Medium risk"></div>
+      </div>
+      <div class="rm-cell high">High</div>
+      <!-- row: Low probability -->
+      <div class="rm-row-lbl">Low<br>Prob.</div>
+      <div class="rm-cell low">Low</div>
+      <div class="rm-cell low">Low</div>
+      <div class="rm-cell medium" style="position:relative">Medium
+        <div class="rm-risk-dot" style="background:var(--neg)" title="Medium-low"></div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6"><b style="color:var(--text)">Using the matrix:</b> list your identified risks. For each, assign H/M/L on both axes. Risks in the High-High and High-Medium zones need documented mitigation plans and named owners. Risks in the Low-Low zone can be monitored passively.</p>
+  </div>
+</section>
+
+<section id="response">
+  <span class="tag">04 · Risk responses</span>
+  <h2>Four things you can do about a risk<span class="timing">15 min</span></h2>
+  <p class="note">Once a risk is assessed, you choose a response strategy. The right strategy depends on the risk's probability, impact, and the cost of responding:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Avoid <span class="gsym">→ eliminate the risk entirely</span></div><div class="gdef">Change the plan so the risk can't happen. Don't use the unproven technology — use something familiar instead. Don't attempt the aggressive deadline — negotiate a longer one. <b>Cost:</b> usually requires changing scope, timeline, or approach. <b>Use when:</b> the risk is severe and avoidance is cheaper than mitigation.</div></div>
+    <div class="gcard"><div class="gterm">Reduce <span class="gsym">→ lower probability or impact</span></div><div class="gdef">Invest in activities that make the risk less likely or less damaging if it occurs. Train the team on the new technology (reduces probability of technical failure). Build a prototype first (reduces probability of building the wrong thing). Keep documentation current (reduces impact of losing a key person). <b>Cost:</b> adds effort upfront. <b>Use when:</b> avoidance is too costly but the risk is significant.</div></div>
+    <div class="gcard"><div class="gterm">Transfer <span class="gsym">→ move it to someone else</span></div><div class="gdef">Insurance, fixed-price contracts with suppliers, outsourcing risky components. Note: transfer doesn't eliminate the risk — it changes who bears the cost if it occurs. And transferred risks often come back in disguised forms (vendor failure, contract disputes). <b>Use when:</b> a third party is better placed to absorb or manage the risk.</div></div>
+    <div class="gcard"><div class="gterm">Accept <span class="gsym">→ do nothing, but be aware</span></div><div class="gdef">Some risks are cheap enough to absorb if they occur, rare enough that mitigation is wasteful, or impossible to avoid. Document the decision — passive acceptance is a choice, not an oversight. <b>Active acceptance:</b> build a contingency reserve (time or budget) specifically for this risk. <b>Use when:</b> the risk is Low-Low or the cost of any other response exceeds the expected cost of the risk materializing.</div></div>
+  </div>
+
+  <div class="casestudy">
+    <div class="cs-tag">Exercise 7.1 — risk log for Brightmouth College</div>
+    <p>Build a risk log for the payroll project with at least 8 risks. For each entry: <b>Risk description, Category, Probability (H/M/L), Impact (H/M/L), Exposure score, Response strategy, Specific action, Owner.</b></p>
+    <p>Suggested risks to include: key staff member unavailable, payroll software doesn't integrate with HR system, data migration reveals data quality problems, go-live timed with year-end payroll run (can't be delayed), HMRC submission format changes before cutover.</p>
+  </div>
+</section>
+
+<section id="monitoring">
+  <span class="tag">05 · Risk monitoring</span>
+  <h2>Risk management is continuous, not a one-off<span class="timing">10 min</span></h2>
+  <p class="note">A risk register written in week 1 and filed away isn't risk management — it's risk theater. Real risk management means revisiting the register regularly: are old risks still relevant? Have new risks emerged? Have any risks materialized and become issues?</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Risk triggers (early warning indicators)</div><div class="gdef">For each major risk, identify observable signals that the risk is increasing in probability. "A developer hasn't pushed code in three days" might be an early indicator of disengagement. "The client hasn't responded to requirements questions in two weeks" might signal scope uncertainty growing. Triggers let you act before the risk materializes.</div></div>
+    <div class="gcard"><div class="gterm">Risk vs. Issue</div><div class="gdef">A <b>risk</b> is something that might happen. An <b>issue</b> is something that has happened. When a risk materializes, it moves from the risk register to an issue log. Issues need immediate action; risks need ongoing monitoring. Don't confuse the two — they require different responses.</div></div>
+    <div class="gcard"><div class="gterm">Risk review cadence</div><div class="gdef">At minimum, review the risk register at every project milestone or sprint review. In high-risk phases (integration, testing, cutover), review weekly. The PM should maintain a short-list of the top 5 current risks — these are the things that keep them awake, and the things they should be watching most carefully.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 7 in full (pp. 162–191)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 7.1:</b> Complete the 8-risk log for Brightmouth College with full entries for each risk</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Produce your project risk register (minimum 10 risks). Identify the top 3 risks with detailed mitigation plans and named owners. This becomes Section 9 (Risks) of your project plan.</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.7 (pp. 162–191)</div></footer>
+</div>
+<a class="next-lesson" href="08-resource-allocation.html">Week 08 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+</script>
+</body>
+</html>
