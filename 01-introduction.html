@@ -133,6 +133,32 @@
   .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
   .fade-up.vis{opacity:1;transform:translateY(0)}
   .obj:hover{border-color:var(--accent)}
+
+  /* ---- figure diagrams ---- */
+  .fig-wrap{margin-top:24px}
+  .fig-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .fig-caption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5;font-style:italic;max-width:680px}
+
+  /* Figure 1.2 — three-phase flow */
+  .phase-flow{display:flex;align-items:stretch;background:var(--ink);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .phase-box{flex:1;padding:22px 24px;display:flex;flex-direction:column;gap:6px;position:relative;background:linear-gradient(180deg,var(--panel),var(--ink-2))}
+  .phase-box+.phase-box{border-left:1px solid var(--line)}
+  .phase-n{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+  .phase-q{font-family:var(--display);font-weight:700;font-size:19px;color:var(--accent);line-height:1.2}
+  .phase-tag{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:4px;padding:3px 9px;color:var(--muted);align-self:flex-start;margin-top:6px}
+  .phase-connector{display:flex;align-items:center;padding:0 4px;color:var(--muted);font-family:var(--mono);font-size:22px;flex-shrink:0;background:var(--ink)}
+  @media(max-width:600px){.phase-flow{flex-direction:column}.phase-box+.phase-box{border-left:none;border-top:1px solid var(--line)}.phase-connector{justify-content:center;padding:4px 0;font-size:16px}}
+
+  /* Figure 1.3 — ISO 12207 phases */
+  .iso-wrap{background:var(--ink);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .iso-phase{display:flex;align-items:center;gap:14px;padding:13px 20px;border-bottom:1px solid var(--line);transition:background .15s}
+  .iso-phase:last-child{border-bottom:none}
+  .iso-phase:hover{background:rgba(255,185,92,.04)}
+  .iso-n{font-family:var(--mono);font-size:11px;color:var(--muted);min-width:22px;flex-shrink:0;text-align:right}
+  .iso-arr{font-family:var(--mono);font-size:12px;color:var(--line);flex-shrink:0}
+  .iso-name{font-family:var(--display);font-weight:700;font-size:16px;flex:1}
+  .iso-note{font-size:12px;color:var(--muted);text-align:right;line-height:1.3;max-width:240px;flex-shrink:0}
+  @media(max-width:600px){.iso-note{display:none}}
 </style>
 </head>
 <body>
@@ -299,15 +325,77 @@
   <h2>Every project goes through the same journey<span class="timing">15 min</span></h2>
   <p class="note">The details vary enormously between projects, but the high-level shape is always the same. The book shows it at two levels of detail:</p>
 
-  <div class="glossary" style="margin-top:20px">
-    <div class="gcard">
-      <div class="gterm">Figure 1.2 — the high-level cycle</div>
-      <div class="gdef">Three questions in sequence: <b>Is it worth doing?</b> (feasibility study) → <b>How do we do it?</b> (planning) → <b>Do it</b> (execution). Teams that skip the first two questions almost always regret it — they end up building the wrong thing, or building it without a plan.</div>
+  <!-- Figure 1.2 -->
+  <div class="fig-wrap">
+    <div class="fig-label">Figure 1.2 — The high-level project lifecycle</div>
+    <div class="phase-flow">
+      <div class="phase-box">
+        <div class="phase-n">Phase 1</div>
+        <div class="phase-q">Is it worth doing?</div>
+        <span class="phase-tag">Feasibility Study</span>
+      </div>
+      <div class="phase-connector">→</div>
+      <div class="phase-box">
+        <div class="phase-n">Phase 2</div>
+        <div class="phase-q">How should we do it?</div>
+        <span class="phase-tag">Planning</span>
+      </div>
+      <div class="phase-connector">→</div>
+      <div class="phase-box">
+        <div class="phase-n">Phase 3</div>
+        <div class="phase-q">Do it!</div>
+        <span class="phase-tag">Execution</span>
+      </div>
     </div>
-    <div class="gcard">
-      <div class="gterm">Figure 1.3 — ISO 12207 (the detailed version)</div>
-      <div class="gdef">Requirements analysis → Architecture design → Detailed design → Code &amp; test → Integration → Qualification testing → Installation → Acceptance support. This is a reference standard, not a rigid recipe. Chapter 4 will look at when to follow it closely and when to use something more flexible.</div>
+    <p class="fig-caption">Teams that skip Phase 1 often build something nobody wanted. Teams that skip Phase 2 run out of time or budget before they finish. Both phases feel like overhead — until you've skipped one.</p>
+  </div>
+
+  <!-- Figure 1.3 -->
+  <div class="fig-wrap" style="margin-top:32px">
+    <div class="fig-label">Figure 1.3 — The detailed software lifecycle (after ISO 12207)</div>
+    <div class="iso-wrap">
+      <div class="iso-phase">
+        <span class="iso-n">01</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Requirements Analysis</span>
+        <span class="iso-note">What must the system do? Who are the users?</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">02</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Architectural Design</span>
+        <span class="iso-note">Major components, interfaces, data flow</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">03</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Detailed Design</span>
+        <span class="iso-note">Module-level logic, algorithms, data structures</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">04</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Code &amp; Unit Test</span>
+        <span class="iso-note">Write and verify individual components</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">05</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Integration</span>
+        <span class="iso-note">Assemble components; verify they work together</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">06</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Qualification Testing</span>
+        <span class="iso-note">Full system test against the requirements spec</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">07</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Installation</span>
+        <span class="iso-note">Deploy to production; train users</span>
+      </div>
+      <div class="iso-phase">
+        <span class="iso-n">08</span><span class="iso-arr">↓</span>
+        <span class="iso-name">Acceptance Support</span>
+        <span class="iso-note">Handover, documentation, ongoing maintenance</span>
+      </div>
     </div>
+    <p class="fig-caption">This is a reference model — a recipe you can adapt, not a rigid checklist. Chapter 4 explores when to follow it closely (safety-critical systems) and when a more iterative approach works better.</p>
   </div>
 
   <div class="casestudy">
