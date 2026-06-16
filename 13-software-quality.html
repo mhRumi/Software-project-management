@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Quality — Week 13</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:14px;min-width:52px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--accent)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* ISO 9126 quality characteristics explorer */
+  .qc-wrap{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .qc-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .qc-sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .qc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px}
+  .qc-btn{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.15s;text-align:left}
+  .qc-btn:hover{border-color:var(--neg);box-shadow:0 0 0 1px var(--neg)}
+  .qc-btn.active{border-color:var(--neg);background:rgba(67,198,214,.08)}
+  .qc-btn-name{font-family:var(--display);font-weight:700;font-size:15px;margin-bottom:4px}
+  .qc-btn-hint{font-size:11px;color:var(--muted);line-height:1.3}
+  .qc-detail{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:20px 24px;min-height:100px}
+  .qc-detail-name{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:6px;color:var(--neg)}
+  .qc-detail-def{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:12px}.qc-detail-def b{color:var(--text)}
+  .qc-subs{display:flex;flex-wrap:wrap;gap:8px}
+  .qc-sub-item{font-family:var(--mono);font-size:11px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted)}
+
+  /* CMM levels */
+  .cmm-steps{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+  .cmm-step{display:flex;gap:18px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:16px 20px;background:linear-gradient(180deg,var(--panel),var(--ink-2));transition:border-color .15s}
+  .cmm-step:hover{border-color:var(--accent)}
+  .cmm-n{font-family:var(--display);font-weight:900;font-size:28px;min-width:36px;text-align:center;flex-shrink:0;line-height:1}
+  .cmm-body{flex:1}.cmm-name{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:4px}
+  .cmm-def{font-size:14px;color:var(--muted);line-height:1.5}.cmm-def b{color:var(--text)}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 13</span>
+  <h1>Software <em>Quality</em></h1>
+  <p class="lede">Your app passes every test. It deploys without errors. The PM says it's done. Then users find it impossible to learn, it crashes under load, and the team can't update it without breaking other things. Quality is much bigger than "no bugs." This week: what quality actually means, how to plan for it, and how organizations improve their capability to deliver it.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.13 (pp. 293–324)</span>
+    <span class="meta-item"><b>Duration:</b> ~80 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Explain the six ISO 9126 quality characteristics and give a concrete sub-characteristic for each</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Describe the contents and purpose of a software quality plan</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Distinguish verification from validation and explain the V-Model</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Describe the five levels of the CMM and what each implies about an organization's processes</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Explain the difference between quality assurance and quality control</span></div>
+  </div>
+</section>
+
+<section id="what-is-quality">
+  <span class="tag">01 · What quality actually means</span>
+  <h2>Quality is conformance to requirements — and fitness for purpose<span class="timing">10 min</span></h2>
+  <p class="note">In 2003, a NASA Mars probe called the Mars Climate Orbiter was lost because one engineering team used metric units and another used imperial. The software was technically correct for its own components. But the system as a whole was wrong. Every component passed its tests. The mission failed.</p>
+  <p class="note">Quality in software isn't just about the absence of bugs in individual components. It's about whether the entire system does what stakeholders actually need — reliably, efficiently, and in a way they can use.</p>
+
+  <div class="glossary">
+    <div class="gcard"><div class="gterm">Quality assurance (QA) <span class="gsym">→ process-focused</span></div><div class="gdef">Ensuring that the processes used to build software are appropriate and are being followed correctly. QA looks at <i>how</i> the work is being done — audits, reviews, process checklists. <b>Prevention-focused:</b> catch problems before they create defects.</div></div>
+    <div class="gcard"><div class="gterm">Quality control (QC) <span class="gsym">→ product-focused</span></div><div class="gdef">Testing and inspecting the software itself to find defects. QC looks at <i>what</i> has been produced. <b>Detection-focused:</b> find defects that have already been created and fix them before release.</div></div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>The most important quality principle:</b> the cost of finding and fixing a defect rises dramatically the later it is caught. A requirement error found in review costs pennies to fix. The same error found in user acceptance testing costs 10–100× more. Found in production: potentially orders of magnitude more. Quality is not just a moral good — it's economically rational.</p>
+  </div>
+</section>
+
+<section id="iso9126">
+  <span class="tag">02 · ISO 9126 quality model</span>
+  <h2>Six ways software can be high or low quality<span class="timing">20 min</span></h2>
+  <p class="note">ISO 9126 (now succeeded by ISO 25010) defines six top-level quality characteristics. Each breaks down into measurable sub-characteristics. This gives teams a concrete vocabulary for defining quality requirements — not just "the software should be good" but "the software should have a mean time between failures of at least 500 hours under peak load."</p>
+  <p class="note">Click each characteristic below to see what it means and which sub-characteristics fall under it:</p>
+
+  <div class="qc-wrap">
+    <div class="qc-title">ISO 9126 Quality Characteristics</div>
+    <div class="qc-sub">Click a characteristic to explore its definition and sub-characteristics</div>
+    <div class="qc-grid" id="qcGrid"></div>
+    <div class="qc-detail" id="qcDetail">
+      <div class="qc-detail-name" id="qcName">Select a characteristic</div>
+      <div class="qc-detail-def" id="qcDef">Click any of the tiles above to explore that quality characteristic.</div>
+      <div class="qc-subs" id="qcSubs"></div>
+    </div>
+  </div>
+</section>
+
+<section id="quality-plan">
+  <span class="tag">03 · The quality plan</span>
+  <h2>Quality doesn't happen by accident — it needs a plan<span class="timing">15 min</span></h2>
+  <p class="note">A software quality plan (SQP) is a project document that defines: what quality means for this project, how it will be measured, and what processes will be used to achieve it. It's written at the start of the project, not retrofitted at the end.</p>
+
+  <div class="terms">
+    <div class="term"><div class="tsym">QP1</div><div class="tbody"><div class="tname">Quality targets</div><div class="tdef">Specific, measurable quality goals for this project. <b>Not "the software should be reliable" but "the system shall have 99.5% uptime during business hours and recover from failure within 30 seconds."</b> Each ISO 9126 characteristic relevant to this project gets a target.</div></div></div>
+    <div class="term"><div class="tsym">QP2</div><div class="tbody"><div class="tname">Product and process standards</div><div class="tdef">Which coding standards, design conventions, review procedures, and testing standards apply. This is where team-specific rules are documented — naming conventions, mandatory peer review, static analysis thresholds.</div></div></div>
+    <div class="term"><div class="tsym">QP3</div><div class="tbody"><div class="tname">Reviews and audits</div><div class="tdef">When and how work products will be reviewed. Who reviews what, at which milestone, against what criteria. Formal technical reviews (FTR) are planned events, not ad-hoc inspections. <b>Walkthroughs</b> (informal, author leads) vs <b>inspections</b> (formal, checklists, independent moderator).</div></div></div>
+    <div class="term"><div class="tsym">QP4</div><div class="tbody"><div class="tname">Testing strategy</div><div class="tdef">Unit testing, integration testing, system testing, acceptance testing — which types, who does them, what the exit criteria are. Not just "we will test the software" but a structured plan that can be evaluated.</div></div></div>
+    <div class="term"><div class="tsym">QP5</div><div class="tbody"><div class="tname">Change control</div><div class="tdef">How defects and change requests are tracked, prioritized, and resolved. Without a process here, fixes break other things and the quality baseline erodes silently.</div></div></div>
+  </div>
+</section>
+
+<section id="vv">
+  <span class="tag">04 · Verification and validation</span>
+  <h2>"Are we building it right?" vs. "Are we building the right thing?"<span class="timing">10 min</span></h2>
+  <p class="note">These two questions look similar but address completely different risks. Barry Boehm's classic formulation is the clearest way to remember the distinction.</p>
+
+  <div class="glossary">
+    <div class="gcard"><div class="gterm">Verification <span class="gsym">→ "are we building it right?"</span></div><div class="gdef">Checking that the software conforms to its specification. <b>Internal consistency check.</b> Does the code do what the design says? Does the design do what the requirements say? Techniques: code review, static analysis, inspections, unit tests checked against specs.</div></div>
+    <div class="gcard"><div class="gterm">Validation <span class="gsym">→ "are we building the right thing?"</span></div><div class="gdef">Checking that the software meets the actual needs of users and stakeholders — not just the specification. <b>Reality check.</b> The specification might be wrong. The requirements might be incomplete. Techniques: user acceptance testing, prototype feedback, usability testing, demos to real users.</div></div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>The V-Model</b> maps verification to each development stage and its corresponding testing phase: requirements → acceptance test, architectural design → integration test, detailed design → unit test. Each left-side activity produces a testable artifact that the corresponding right-side activity verifies. <b>This is why requirements must be testable</b> — if you can't write a test for a requirement, it's not a requirement, it's a wish.</p>
+  </div>
+</section>
+
+<section id="cmm">
+  <span class="tag">05 · CMM and process improvement</span>
+  <h2>Organizations, like software, can be measured and improved<span class="timing">15 min</span></h2>
+  <p class="note">The Capability Maturity Model (CMM), developed at the Software Engineering Institute, describes five levels of software process maturity. Most organizations sit at level 1 or 2. Reaching level 3 is considered the threshold of genuine process discipline. Levels 4 and 5 are rare and require sustained organizational investment.</p>
+  <p class="note">CMM is applied to the <i>organization</i>, not individual projects. It describes how consistently and repeatably the organization can deliver software, regardless of which team or which project.</p>
+
+  <div class="cmm-steps">
+    <div class="cmm-step">
+      <div class="cmm-n" style="color:var(--pos)">1</div>
+      <div class="cmm-body">
+        <div class="cmm-name">Initial — heroic effort</div>
+        <div class="cmm-def">Processes are <b>ad hoc and unpredictable.</b> Success depends on individual heroics. The same kind of project may succeed spectacularly one time and fail badly the next, depending on who's doing it. No consistent process, no lessons learned between projects.</div>
+      </div>
+    </div>
+    <div class="cmm-step">
+      <div class="cmm-n" style="color:#ff9a7c">2</div>
+      <div class="cmm-body">
+        <div class="cmm-name">Repeatable — project management in place</div>
+        <div class="cmm-def">Basic project management processes are established. Requirements management, project planning, configuration management. <b>Previously successful practices can be repeated on similar projects</b> — but only similar ones. Novel projects still at high risk.</div>
+      </div>
+    </div>
+    <div class="cmm-step">
+      <div class="cmm-n" style="color:var(--accent)">3</div>
+      <div class="cmm-body">
+        <div class="cmm-name">Defined — standard processes across the organization</div>
+        <div class="cmm-def">A defined, documented set of software engineering and management processes is used organization-wide. <b>Projects tailor the standard processes for their context</b> rather than inventing from scratch. A baseline everyone works from. Most quality frameworks aim for level 3 as a minimum.</div>
+      </div>
+    </div>
+    <div class="cmm-step">
+      <div class="cmm-n" style="color:var(--neg)">4</div>
+      <div class="cmm-body">
+        <div class="cmm-name">Managed — quantitative measurement</div>
+        <div class="cmm-def">Both the software process and products are <b>measured and controlled quantitatively.</b> Defect rates, productivity, quality targets — all tracked with data. Management decisions based on data, not intuition. Process performance is predictable within statistical bounds.</div>
+      </div>
+    </div>
+    <div class="cmm-step">
+      <div class="cmm-n" style="color:#43e8d8">5</div>
+      <div class="cmm-body">
+        <div class="cmm-name">Optimizing — continuous improvement</div>
+        <div class="cmm-def">Quantitative feedback is used to <b>continuously improve processes.</b> The organization systematically identifies weaknesses, experiments with improvements, and adopts what works. Defect prevention is built into the process. Rare — requires sustained leadership commitment and years of investment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>CMMI</b> (Capability Maturity Model Integration) is the successor to CMM — it integrates process improvement for software, systems engineering, and services into one framework. The levels are the same; the scope is broader. Many government contracts now require suppliers to be CMMI Level 3 certified as a minimum.</p>
+  </div>
+
+  <div class="exercise" style="margin-top:24px">
+    <div class="ex-tag">Group Discussion — 10 min</div>
+    <p>Consider a small software agency with 20 people. They deliver roughly 8 projects per year. Each project is estimated and planned differently. Some have code reviews, most don't. They've never done a retrospective that was actually followed up on.</p>
+    <p>1. What CMM level are they probably at? What's your evidence?</p>
+    <p>2. What is the single highest-value change they could make to improve their maturity level?</p>
+    <p>3. Why might moving from Level 1 to Level 2 be harder than it sounds?</p>
+  </div>
+</section>
+
+<section id="testing">
+  <span class="tag">06 · Testing approaches</span>
+  <h2>Different kinds of tests catch different kinds of problems<span class="timing">10 min</span></h2>
+
+  <div class="glossary">
+    <div class="gcard"><div class="gterm">Unit testing</div><div class="gdef">Tests individual functions or modules in isolation. Fast, cheap, can be fully automated. Catches logic errors in components but <b>says nothing about how components interact.</b></div></div>
+    <div class="gcard"><div class="gterm">Integration testing</div><div class="gdef">Tests that components work together correctly. Uncovers interface mismatches, timing issues, data format mismatches — the exact class of problems that unit tests can't see. The Mars Climate Orbiter was an integration failure.</div></div>
+    <div class="gcard"><div class="gterm">System testing</div><div class="gdef">Tests the complete, integrated system against the full requirements spec. Includes performance testing (does it meet load targets?), security testing, reliability testing — quality characteristics beyond pure function.</div></div>
+    <div class="gcard"><div class="gterm">Acceptance testing</div><div class="gdef">Performed by or with the customer/user. <b>Validates</b> — not just verifies — that the system meets actual needs. The final gate before release. In agile: sprint reviews are lightweight acceptance tests every iteration.</div></div>
+    <div class="gcard"><div class="gterm">Regression testing</div><div class="gdef">Re-running tests after changes to ensure that fixes haven't broken something that was previously working. The reason automated test suites are so valuable — running 3,000 regression tests manually before each release is impractical.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up · Final lecture</span>
+  <h2>Final session and capstone preparation</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Course wrap-up</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 13 in full (pp. 293–324) — focus especially on the quality plan template and the inspection process</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone:</b> Draft a one-page quality plan for your project. Identify 3 ISO 9126 characteristics that matter most for your system, state measurable targets for each, and describe the testing strategy you'll use</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exam preparation:</b> Be able to compare any two weeks' concepts — estimation vs. risk, quality vs. monitoring, team structure vs. contract type. The exam will test connections between topics, not just recall</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Reflection:</b> Which of the 13 weeks' topics changed how you think about software development? Note 2-3 concepts you'll apply in your next project and why</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.13 (pp. 293–324)</div></footer>
+</div>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+
+const qcData=[
+  {name:'Functionality',hint:'Does it do what it should?',def:'The software provides the functions needed to meet the stated and implied requirements. <b>The "what" of the system</b> — the features and capabilities it offers.',subs:['Suitability','Accuracy','Interoperability','Security','Compliance']},
+  {name:'Reliability',hint:'Does it stay working?',def:'The software maintains its level of performance under stated conditions over a stated period. <b>Dependability under normal and stressed conditions.</b> Not just "it works sometimes."',subs:['Maturity','Fault tolerance','Recoverability']},
+  {name:'Usability',hint:'Can users actually use it?',def:'The effort needed to use the system — and the individual assessment of that use. <b>Quality as experienced by users.</b> A functionally correct system that users can\'t figure out is a failure.',subs:['Understandability','Learnability','Operability','Attractiveness']},
+  {name:'Efficiency',hint:'Does it use resources well?',def:'The relationship between the software\'s performance and the amount of resources used. <b>Getting the job done without wasting CPU, memory, bandwidth, or time.</b>',subs:['Time behaviour','Resource utilisation']},
+  {name:'Maintainability',hint:'Can we change it safely?',def:'The effort needed to make specified modifications. <b>How hard is it to fix a bug, add a feature, or change a behaviour?</b> The dominant cost over a system\'s life is not development — it\'s maintenance.',subs:['Analysability','Changeability','Stability','Testability']},
+  {name:'Portability',hint:'Does it work in other places?',def:'The ability of the software to be transferred from one environment to another. <b>Not just different operating systems</b> — also different hardware, software configurations, and organizational environments.',subs:['Adaptability','Installability','Co-existence','Replaceability']}
+];
+const colors=['var(--pos)','var(--neg)','var(--accent)','#a78bfa','#34d399','#60a5fa'];
+const grid=document.getElementById('qcGrid');
+qcData.forEach((q,i)=>{
+  const b=document.createElement('div');b.className='qc-btn';b.onclick=()=>showQC(i);
+  b.innerHTML=`<div class="qc-btn-name" style="color:${colors[i]}">${q.name}</div><div class="qc-btn-hint">${q.hint}</div>`;
+  grid.appendChild(b);
+});
+function showQC(idx){
+  document.querySelectorAll('.qc-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  const q=qcData[idx];
+  document.getElementById('qcName').textContent=q.name;
+  document.getElementById('qcName').style.color=colors[idx];
+  document.getElementById('qcDef').innerHTML=q.def;
+  document.getElementById('qcSubs').innerHTML=q.subs.map(s=>`<span class="qc-sub-item">${s}</span>`).join('');
+}
+</script>
+</body>
+</html>
