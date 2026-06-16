@@ -28,7 +28,6 @@
     -webkit-font-smoothing:antialiased;padding:0 24px 120px;
   }
   .wrap{max-width:1080px;margin:0 auto}
-
   header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
   .eyebrow{
     font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
@@ -55,40 +54,29 @@
     border:1px solid var(--line);border-radius:999px;padding:3px 10px;
     color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;
   }
-
-  /* ---- objective list ---- */
   .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
   .obj{
     display:flex;gap:14px;align-items:flex-start;padding:14px 18px;
     background:linear-gradient(180deg,var(--panel),var(--ink-2));
     border:1px solid var(--line);border-radius:12px;
   }
-  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px;letter-spacing:.06em}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}
   .obj-t{font-size:15px;color:var(--text);line-height:1.5}
-
-  /* ---- concept cards (same as DL gcard) ---- */
   .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
-  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
   .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}
   .gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
   .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}
   .gdef b{color:var(--text);font-weight:600}
   .gdef i{color:var(--text);font-style:italic}
-
-  /* ---- term breakdown cards (same as DL .terms/.term) ---- */
   .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
   .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
-  .term .tsym{font-family:var(--mono);font-weight:700;font-size:18px;min-width:48px;text-align:center;flex-shrink:0;line-height:1.4;letter-spacing:.04em}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:18px;min-width:48px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--pos)}
   .term .tbody{flex:1}
   .term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
   .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}
   .term .tdef b{color:var(--text);font-weight:600}
-  .term.ta .tsym{color:var(--pos)}
-  .term.tb .tsym{color:var(--neg)}
-  .term.tc .tsym{color:var(--accent)}
-  .term.td .tsym{color:var(--text)}
-
-  /* ---- exercise box ---- */
   .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
   .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
   .exercise p{font-size:15px;color:var(--text);line-height:1.6}
@@ -96,32 +84,19 @@
   .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
   .exercise ul li{font-size:14px;color:var(--muted)}
   .exercise ul li b{color:var(--text)}
-
-  /* ---- case study callout ---- */
   .casestudy{border:1px solid var(--neg);border-radius:14px;padding:18px 22px;background:rgba(67,198,214,.04);margin-top:20px}
   .cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg);margin-bottom:10px}
   .casestudy p{font-size:15px;color:var(--text);line-height:1.6}
-  .casestudy p+p{margin-top:8px}
-
-  /* ---- key takeaway ---- */
+  .casestudy p+p{margin-top:10px}
   .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
   .key-point p{font-size:15px;color:var(--text);line-height:1.6}
   .key-point p b{color:var(--pos)}
-
-  /* ---- split point ---- */
-  .split-point{
-    text-align:center;padding:22px 0;margin:20px 0;
-    border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);
-    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  }
-
-  /* ---- stat callouts ---- */
+  .split-point{text-align:center;padding:22px 0;margin:20px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .stat-row{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}
-  .stat{flex:1;min-width:160px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .stat{flex:1;min-width:160px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .2s}
+  .stat:hover{border-color:var(--accent);transform:translateY(-3px)}
   .stat .sv{font-family:var(--display);font-weight:900;font-size:clamp(28px,4vw,42px);color:var(--pos);line-height:1;letter-spacing:-.02em}
   .stat .sk{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
-
-  /* ---- homework panel ---- */
   .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
   .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
   .hw-list{display:flex;flex-direction:column;gap:12px}
@@ -129,8 +104,6 @@
   .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}
   .hw-text{font-size:15px;color:var(--muted);line-height:1.5}
   .hw-text b{color:var(--text);font-weight:600}
-
-  /* ---- floating nav ---- */
   .next-lesson{
     position:fixed;bottom:28px;right:28px;z-index:50;
     display:inline-flex;align-items:center;gap:10px;
@@ -140,7 +113,7 @@
     box-shadow:0 8px 24px -10px var(--glow);transition:.15s;
   }
   .next-lesson:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}
-  .next-lesson .arr{display:inline-block;transition:transform .15s}
+  .next-lesson .arr{transition:transform .15s}
   .next-lesson:hover .arr{transform:translateX(3px)}
   .home-btn{
     position:fixed;bottom:28px;left:28px;z-index:50;
@@ -150,11 +123,16 @@
     border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;
   }
   .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}
-  .home-btn .arr{display:inline-block;transition:transform .15s}
+  .home-btn .arr{transition:transform .15s}
   .home-btn:hover .arr{transform:translateX(-3px)}
-
   footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}
   a{color:var(--accent)}
+
+  /* ---- visual effects ---- */
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none;transition:width .08s linear}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+  .fade-up.vis{opacity:1;transform:translateY(0)}
+  .obj:hover{border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -163,377 +141,426 @@
 <header>
   <span class="eyebrow">SPM · Week 01</span>
   <h1>Introduction to <em>Software Project Management</em></h1>
-  <p class="lede">What a software project is, why they fail so often, and what "managing" one actually means — from lifecycle stages to stakeholder objectives and the project control cycle.</p>
+  <p class="lede">Why software projects fail so often — and what "managing" one actually means. We'll cover what a project is, what makes software uniquely hard, and how a PM keeps everything from falling apart.</p>
   <div class="meta">
-    <span class="meta-item"><b>Source:</b> Hughes & Cotterell Ch.1, pp. 1–20</span>
-    <span class="meta-item"><b>Duration:</b> ~100 min (split point marked)</span>
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.1 (pp. 1–20)</span>
+    <span class="meta-item"><b>Duration:</b> ~100 min · split point marked</span>
   </div>
 </header>
 
 <!-- ============ OBJECTIVES ============ -->
 <section id="objectives">
   <span class="tag">00 · Before we start</span>
-  <h2>Learning objectives</h2>
-  <p class="note">By the end of this lecture, students should be able to:</p>
+  <h2>What you'll be able to do after this lecture</h2>
   <div class="obj-grid">
-    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Define the scope of "software project management"</span></div>
-    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Understand the problems and concerns of software project managers</span></div>
-    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Define the usual stages of a software project</span></div>
-    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Explain the main elements of the role of management</span></div>
-    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Appreciate the need for planning, monitoring and control</span></div>
-    <div class="obj"><span class="obj-n">06</span><span class="obj-t">Identify the stakeholders of a project and their objectives</span></div>
-    <div class="obj"><span class="obj-n">07</span><span class="obj-t">Define the success criteria for a project</span></div>
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Explain what "software project management" actually covers</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Describe the problems and pressures that software project managers face</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Name the usual stages of a software project</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Break down what "management" actually involves, day to day</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Explain why planning, monitoring, and control are all three necessary — not just one or two</span></div>
+    <div class="obj"><span class="obj-n">06</span><span class="obj-t">Identify stakeholders and understand why each of them matters</span></div>
+    <div class="obj"><span class="obj-n">07</span><span class="obj-t">Distinguish between a project succeeding and a project delivering business value</span></div>
   </div>
 </section>
 
-<!-- ============ SECTION 1: HOOK ============ -->
+<!-- ============ HOOK ============ -->
 <section id="hook">
   <span class="tag">01 · Why does this matter?</span>
   <h2>Software projects fail — constantly<span class="timing">10 min</span></h2>
-  <p class="note">Open with the book's own numbers — no need to import outside statistics here. These figures come from the chapter itself (§1.2) and the impact hits immediately.</p>
+  <p class="note">These aren't made-up numbers. They come from real government audits and independent surveys of real software projects. Start here — because the question isn't <i>whether</i> this happens. It's <b>why it keeps happening</b>, even when the teams are smart and the budgets are big.</p>
 
   <div class="stat-row">
     <div class="stat">
       <div class="sv">£2.3bn</div>
-      <div class="sk">UK government ICT spend in 2002–03 — more than it spent on roads that year</div>
+      <div class="sk">UK government ICT spend in 2002–03 — more than the roads budget that year</div>
     </div>
     <div class="stat">
       <div class="sv">82%</div>
-      <div class="sk">of 13,322 projects surveyed by the Standish Group (2003) were <b>late</b></div>
+      <div class="sk">of 13,322 IT projects surveyed were <b>late</b> (Standish Group, 2003)</div>
     </div>
     <div class="stat">
       <div class="sv">43%</div>
-      <div class="sk">of the same projects came in <b>over budget</b></div>
+      <div class="sk">of those same projects came in <b>over budget</b></div>
     </div>
   </div>
 
-  <div class="subhead">Root cause (National Audit Office)</div>
-  <div class="key-point">
-    <p>Failures were traced to <b>"lack of skills and proven approach to project management and risk management."</b> Not technology. Not budget. The absence of structured management.</p>
+  <div class="key-point" style="margin-top:28px">
+    <p>The National Audit Office investigated the failures and found one root cause: <b>"lack of skills and a proven approach to project management and risk management."</b> Not bad technology. Not small budgets. The absence of structure around how the work was managed.</p>
   </div>
 
   <div class="exercise" style="margin-top:28px">
-    <div class="ex-tag">Discussion prompt — open the session</div>
-    <p>"Why do IT projects fail so often, even with smart people and big budgets?" Give students 2 minutes to write down one reason, then take 3–4 responses before moving on.</p>
+    <div class="ex-tag">Open discussion — 2 min</div>
+    <p>"Why do IT projects fail so often, even with smart people and large budgets?" Write down one reason before we start. We'll revisit your answers at the end of the semester — it's interesting to see how your explanation changes.</p>
   </div>
 </section>
 
-<!-- ============ SECTION 2: WHAT IS A PROJECT ============ -->
+<!-- ============ WHAT IS A PROJECT ============ -->
 <section id="what-is-project">
   <span class="tag">02 · What is a project?</span>
-  <h2>All projects are about meeting objectives<span class="timing">15 min</span></h2>
-  <p class="note">§1.1: the simplest possible definition — a project is a <b>planned activity</b>. Software project management = ensuring stakeholder objectives are met within the context of that planned activity.</p>
-
-  <div class="subhead">Figure 1.1 — the project spectrum</div>
-  <p class="note">Draw this on the board (or show it from the text). Projects sit between two poles:</p>
+  <h2>Not everything is a project<span class="timing">15 min</span></h2>
+  <p class="note">Paying staff every week is a routine task — same steps, same people, same outcome, repeated indefinitely. Moving from a manual process to a new payroll system? That's a project. The word sounds simple, but the distinction matters a lot for how you manage the work.</p>
+  <p class="note">Think of it as a spectrum. At one end, pure routine. At the other end, pure exploration. Projects live in the middle — not so familiar that you can run on autopilot, not so unknown that you can't even set a goal.</p>
 
   <div class="glossary" style="margin-top:20px">
     <div class="gcard">
-      <div class="gterm">Routine jobs <span class="gsym">← left end</span></div>
-      <div class="gdef">Repetitive, low uncertainty. Same inputs, same outputs, every time. <b>Example:</b> processing weekly payroll with an existing system.</div>
+      <div class="gterm">Routine jobs <span class="gsym">← left end of the spectrum</span></div>
+      <div class="gdef">You do these the same way every time. Same inputs, same process, predictable outputs. A payroll run. A weekly report. The goal of management here is <b>efficiency</b> — do the known thing faster and with fewer errors.</div>
     </div>
     <div class="gcard">
-      <div class="gterm">Projects <span class="gsym">← middle</span></div>
-      <div class="gdef">Non-routine, require planning, have specific objectives, a fixed time span, and constrained resources. <b>This is where the course lives.</b></div>
+      <div class="gterm">Projects <span class="gsym">← the middle</span></div>
+      <div class="gdef">Non-routine work with a clear objective, a fixed time limit, and constrained resources. You need to plan because you haven't done <i>exactly this</i> before. The goal of management here is <b>delivery</b> — reach the objective without running out of time, money, or people.</div>
     </div>
     <div class="gcard">
-      <div class="gterm">Exploration <span class="gsym">← right end</span></div>
-      <div class="gdef">High uncertainty — outcomes can't be defined in advance. <b>Example:</b> a research programme or a Mars rover mission where the "product" isn't fully known at the start.</div>
+      <div class="gterm">Exploration <span class="gsym">← right end of the spectrum</span></div>
+      <div class="gdef">You're not sure what you're looking for yet. Research, R&D, breakthrough innovation — the outcome is genuinely uncertain, and you might discover the goal itself changes as you work. Managing exploration looks very different from managing a project.</div>
     </div>
   </div>
 
-  <div class="subhead">Eight characteristics that mark something as a "project"</div>
-  <p class="note">From §1.3 — run through these quickly; the point is to distinguish projects from both pure routine work and open-ended exploration:</p>
+  <div class="subhead">Eight things that make something a "project"</div>
+  <p class="note" style="margin-top:14px">Not all of these have to apply at full intensity, but you'll find most of them in any real project:</p>
   <div class="glossary" style="margin-top:16px">
-    <div class="gcard"><div class="gterm">1. Non-routine</div><div class="gdef">Something that hasn't been done in exactly this form before.</div></div>
-    <div class="gcard"><div class="gterm">2. Requires planning</div><div class="gdef">The non-routine nature means you must think ahead — you can't rely on habit.</div></div>
-    <div class="gcard"><div class="gterm">3. Specific objectives</div><div class="gdef">There is an agreed-upon end state that defines completion.</div></div>
-    <div class="gcard"><div class="gterm">4. Fixed time span</div><div class="gdef">Projects have a start and an end — they are not ongoing operations.</div></div>
-    <div class="gcard"><div class="gterm">5. Work for someone else</div><div class="gdef">There is a client or stakeholder who commissioned the work and will judge its success.</div></div>
-    <div class="gcard"><div class="gterm">6. Multiple specialisms</div><div class="gdef">Different types of skill are required — no single person has all of them.</div></div>
-    <div class="gcard"><div class="gterm">7. Temporary team</div><div class="gdef">People are brought together for the duration of the project, then dispersed.</div></div>
-    <div class="gcard"><div class="gterm">8. Constrained resources</div><div class="gdef">Budget, time, and people are limited — trade-offs are unavoidable.</div></div>
+    <div class="gcard"><div class="gterm">Non-routine</div><div class="gdef">This exact combination of goal, context, and constraints hasn't been tackled before. You can't just copy last time's playbook.</div></div>
+    <div class="gcard"><div class="gterm">Requires planning</div><div class="gdef">Because it's non-routine, you have to think ahead — you can't just rely on habit or standard procedure.</div></div>
+    <div class="gcard"><div class="gterm">Specific objectives</div><div class="gdef">There's an agreed end state that defines "done." Without it, the project never ends — it just evolves forever.</div></div>
+    <div class="gcard"><div class="gterm">Fixed time span</div><div class="gdef">Projects have a start and a finish. They're not ongoing operations.</div></div>
+    <div class="gcard"><div class="gterm">Work for someone else</div><div class="gdef">There's a client or stakeholder who commissioned it and will judge whether it succeeded.</div></div>
+    <div class="gcard"><div class="gterm">Multiple specialisms needed</div><div class="gdef">No single person has all the skills required. You need a team.</div></div>
+    <div class="gcard"><div class="gterm">Temporary team</div><div class="gdef">People are brought together for the project's duration, then dispersed. Managing temporary teams is very different from managing a permanent department.</div></div>
+    <div class="gcard"><div class="gterm">Constrained resources</div><div class="gdef">Budget, time, and people are all limited. Trade-offs are unavoidable — and the PM's job is to make them explicitly, not accidentally.</div></div>
   </div>
 
   <div class="exercise">
-    <div class="ex-tag">Exercise 1.1 — in-class activity (5 min)</div>
-    <p>Rank these examples along the <b>routine → project → exploration</b> spectrum and justify your ordering:</p>
+    <div class="ex-tag">Exercise 1.1 — in class (5 min)</div>
+    <p>Place each of these somewhere on the <b>routine → project → exploration</b> spectrum. Justify your answer:</p>
     <ul>
       <li>Producing a daily newspaper</li>
-      <li>A Mars rover mission</li>
+      <li>A mission to Mars</li>
       <li>Getting married</li>
       <li>A second-year programming assignment</li>
       <li>Installing a word processor update</li>
     </ul>
-    <p style="margin-top:12px">Good opener — gets discussion going, and students often disagree on the edge cases (the programming assignment is particularly interesting).</p>
+    <p style="margin-top:10px">There's no single correct order — the disagreements are what make it interesting. Where does the programming assignment land? It depends on whether it's your first time touching the language.</p>
   </div>
 </section>
 
-<!-- ============ SECTION 3: SOFTWARE SPECIFICS ============ -->
+<!-- ============ SOFTWARE SPECIFICS ============ -->
 <section id="software-specifics">
-  <span class="tag">03 · What makes software projects different?</span>
-  <h2>Brooks' four characteristics<span class="timing">15 min</span></h2>
-  <p class="note">From §1.4. Fred Brooks identified four properties of software that make its project management uniquely difficult compared to building a bridge or manufacturing a product. These recur throughout the entire course.</p>
+  <span class="tag">03 · What makes software different?</span>
+  <h2>Four things that make software uniquely hard to manage<span class="timing">15 min</span></h2>
+  <p class="note">Fred Brooks managed IBM's OS/360 in the 1960s — one of the most ambitious (and troubled) software projects in history. From that experience, he identified four properties that make software projects harder to manage than almost any other kind of engineering work. Once you see them, you'll spot them everywhere.</p>
 
   <div class="terms">
-    <div class="term ta">
+    <div class="term">
       <div class="tsym">INV</div>
       <div class="tbody">
         <div class="tname">Invisibility</div>
-        <div class="tdef">Physical progress on a bridge is visible — you can see it grow. Software progress <b>isn't</b>. A team might be 80% done or 20% done and it looks the same from the outside. This makes monitoring and control uniquely hard.</div>
+        <div class="tdef">Walk past a building site and you can immediately tell if it's 20% done or 80% done — the structure is right there. Walk past a software team and you see the same screens whether they've built almost nothing or almost everything. <b>Software progress is invisible.</b> This makes it very easy to be confidently wrong about how much has actually been done.</div>
       </div>
     </div>
-    <div class="term ta">
+    <div class="term">
       <div class="tsym">CPX</div>
       <div class="tbody">
         <div class="tname">Complexity</div>
-        <div class="tdef">Software has <b>more complexity per pound/dollar</b> than virtually any other engineered product. A large system can have billions of possible states — no other engineering discipline deals with this scale of combinatorial complexity.</div>
+        <div class="tdef">A Boeing 747 has around 6 million physical parts. A modern operating system can have billions of possible states it can be in — and even a simple app, once you account for all combinations of inputs and user actions, has more complexity than most physical products. Unlike a car, you can't look at the parts and visually check whether they fit together correctly.</div>
       </div>
     </div>
-    <div class="term ta">
+    <div class="term">
       <div class="tsym">CON</div>
       <div class="tbody">
         <div class="tname">Conformity</div>
-        <div class="tdef">Software must conform to <b>human and organizational requirements</b>, which are inconsistent, contradictory, and constantly changing. Unlike physics, there's no underlying natural law the software can appeal to — it just has to do what people want.</div>
+        <div class="tdef">A civil engineer can say "physics doesn't allow that" and end the conversation. A software developer can't. Requirements come from people — and people are inconsistent, contradict themselves, and change their minds. The software has to conform to whatever humans need, even when those needs conflict with each other.</div>
       </div>
     </div>
-    <div class="term ta">
+    <div class="term">
       <div class="tsym">FLX</div>
       <div class="tbody">
         <div class="tname">Flexibility</div>
-        <div class="tdef">Because software <i>can</i> be changed easily (compared to concrete), it <i>is</i> expected to change — constantly. The perceived malleability of software becomes a source of uncontrolled scope growth.</div>
+        <div class="tdef">"Can we just add one more feature?" With a bridge, that question sounds absurd. With software, it sounds reasonable — it's just code, right? This expectation of easy change is what quietly doubles the scope of a project while the deadline stays the same. Software <i>can</i> be changed, so people expect it to absorb every new idea that comes up.</div>
       </div>
     </div>
   </div>
 
-  <div class="subhead">§1.5 — Contract vs. technical project management</div>
-  <p class="note">This book focuses on <b>supplier-side PM</b> (managing the people who build the software). Briefly distinguish:</p>
+  <div class="subhead">One more distinction worth making</div>
   <div class="glossary" style="margin-top:14px">
     <div class="gcard">
       <div class="gterm">Client-side PM</div>
-      <div class="gdef">Manages the budget, contract, and relationship with the supplier. Concerned with "are we getting what we paid for?"</div>
+      <div class="gdef">Manages the budget, contract, and relationship with the supplier. Asks: "Are we getting what we paid for?" This person works for the organization that commissioned the software.</div>
     </div>
     <div class="gcard">
       <div class="gterm">Supplier-side PM</div>
-      <div class="gdef">Manages the technical delivery — the team, the schedule, the quality. This is the primary focus of this course.</div>
+      <div class="gdef">Manages the people doing the actual build — the team, the schedule, the quality. This is the focus of this course. You'll be looking at software management from the inside.</div>
     </div>
   </div>
 </section>
 
-<!-- ============ SECTION 4: LIFECYCLE ============ -->
+<!-- ============ LIFECYCLE ============ -->
 <section id="lifecycle">
   <span class="tag">04 · The software project lifecycle</span>
-  <h2>From feasibility to acceptance<span class="timing">15 min</span></h2>
-  <p class="note">§1.6. Two figures to work through — draw both on the board or refer to the book:</p>
+  <h2>Every project goes through the same journey<span class="timing">15 min</span></h2>
+  <p class="note">The details vary enormously between projects, but the high-level shape is always the same. The book shows it at two levels of detail:</p>
 
   <div class="glossary" style="margin-top:20px">
     <div class="gcard">
       <div class="gterm">Figure 1.2 — the high-level cycle</div>
-      <div class="gdef"><b>Feasibility study</b> ("is it worth doing?") → <b>Plan</b> ("how do we do it?") → <b>Project execution</b> ("do it!"). A project can loop back — feasibility might be revisited mid-execution as scope changes.</div>
+      <div class="gdef">Three questions in sequence: <b>Is it worth doing?</b> (feasibility study) → <b>How do we do it?</b> (planning) → <b>Do it</b> (execution). Teams that skip the first two questions almost always regret it — they end up building the wrong thing, or building it without a plan.</div>
     </div>
     <div class="gcard">
-      <div class="gterm">Figure 1.3 — ISO 12207 lifecycle</div>
-      <div class="gdef">Requirements analysis → Architecture design → Detailed design → Code &amp; test → Integration → Qualification testing → Installation → Acceptance support. Note: this is a <i>reference standard</i>, not a prescription — Chapter 4 will discuss when to follow it strictly and when to adapt it.</div>
+      <div class="gterm">Figure 1.3 — ISO 12207 (the detailed version)</div>
+      <div class="gdef">Requirements analysis → Architecture design → Detailed design → Code &amp; test → Integration → Qualification testing → Installation → Acceptance support. This is a reference standard, not a rigid recipe. Chapter 4 will look at when to follow it closely and when to use something more flexible.</div>
     </div>
   </div>
 
   <div class="casestudy">
-    <div class="cs-tag">Running case study — introduce here (Exercise 1.2)</div>
-    <p><b>Brightmouth College</b> currently has its payroll run by a local authority computer centre. The college wants to replace this with an off-the-shelf package run in-house.</p>
-    <p style="margin-top:10px"><i>Ask students:</i> What are the main stages of this project? How would it differ if the software were written from scratch instead of purchased?</p>
-    <p style="margin-top:10px">This case study recurs throughout §1.8–1.16 and will be used as the <b>running example for the entire semester</b>. It reappears in Chapters 2–13. Introduce it now and make it familiar.</p>
+    <div class="cs-tag">Our running case study — Brightmouth College (Exercise 1.2)</div>
+    <p><b>Brightmouth College</b> currently has its payroll processed by a local authority computer centre. The college wants to replace this with an off-the-shelf package that runs in-house.</p>
+    <p>Ask yourself: what are the main stages of this project? How would the stages differ if they decided to build the software from scratch instead of buying a package?</p>
+    <p>This case study comes back in almost every chapter. Get familiar with it now — you'll be solving new problems with it all semester. Your capstone project will follow the same "build vs. buy / replace a legacy system" shape.</p>
   </div>
 
   <div class="split-point">— Natural split point for a two-session week —</div>
-
 </section>
 
-<!-- ============ SECTION 5: PLANS & METHODS ============ -->
+<!-- ============ PLANS / METHODS ============ -->
 <section id="plans-methods">
   <span class="tag">05 · Plans, methods, methodologies</span>
-  <h2>Three terms students confuse<span class="timing">10 min</span></h2>
-  <p class="note">§1.7–1.8. Clarify these three terms precisely — they are used loosely in industry but the book distinguishes them carefully:</p>
+  <h2>Three terms that get mixed up constantly<span class="timing">10 min</span></h2>
+  <p class="note">In industry these words get used interchangeably. They shouldn't be — they mean different things, and confusing them leads to planning mistakes.</p>
 
-  <div class="terms">
-    <div class="term tc">
+  <div class="terms" style="margin-top:20px">
+    <div class="term">
       <div class="tsym">Method</div>
       <div class="tbody">
-        <div class="tname">How to do a type of task</div>
-        <div class="tdef">A general technique applicable to a category of task. <b>Example:</b> "structured walkthrough" is a method for reviewing code.</div>
+        <div class="tname">A technique for doing a type of task</div>
+        <div class="tdef">Like a recipe — it's general and reusable. "Code review" is a method. "Function-point analysis" is a method. A method tells you <i>how to approach</i> a category of work, but not the specifics for this particular job.</div>
       </div>
     </div>
-    <div class="term tc">
+    <div class="term">
       <div class="tsym">Plan</div>
       <div class="tbody">
-        <div class="tname">A method applied to a specific real situation</div>
-        <div class="tdef">A plan takes a method and gives it concrete activities, dates, owners, and resource allocations. It's always particular — not generic.</div>
+        <div class="tname">A method applied to a specific situation</div>
+        <div class="tdef">A plan is concrete — real names, real dates, real resources. It's never generic. "We will do code review, led by Fatima, every Friday at 10am, starting March 5th" is a plan. The same project, with different people and a different deadline, would have a completely different plan.</div>
       </div>
     </div>
-    <div class="term tc">
+    <div class="term">
       <div class="tsym">Methodology</div>
       <div class="tbody">
-        <div class="tname">A grouped set of methods</div>
-        <div class="tdef">A collection of related methods used together. <b>Example:</b> object-oriented design is a methodology (it groups together multiple related methods for analysis, design, and implementation).</div>
+        <div class="tname">A collection of related methods used together</div>
+        <div class="tdef">Agile is a methodology — it groups sprints, standups, retrospectives, and user stories into one coherent approach. Scrum is a methodology. PRINCE2 is a methodology. Picking a methodology means picking a whole family of methods that were designed to work together.</div>
       </div>
     </div>
   </div>
 
-  <div class="subhead">Categorization dimensions (§1.8)</div>
-  <p class="note">Projects can also be characterized along these axes — useful for choosing the right methodology (Chapter 4 goes deeper):</p>
+  <div class="subhead">How do you choose the right approach?</div>
+  <p class="note" style="margin-top:14px">Projects can be characterized along a few key dimensions — and the right methodology depends heavily on where your project sits:</p>
   <div class="glossary" style="margin-top:14px">
-    <div class="gcard"><div class="gterm">Compulsory vs. voluntary users</div><div class="gdef">Payroll users have no choice but to use the system. A consumer app must compete for user adoption. This affects quality and usability requirements dramatically.</div></div>
-    <div class="gcard"><div class="gterm">Information systems vs. embedded/real-time</div><div class="gdef">An IS project manages data and business processes. An embedded/real-time system must respond to the physical world within tight time constraints — testing and reliability requirements are very different.</div></div>
-    <div class="gcard"><div class="gterm">Objective-driven vs. product-driven</div><div class="gdef"><b>Objective-driven:</b> the goal is clear but the solution isn't yet defined (e.g. "reduce payroll processing time by 50%"). <b>Product-driven:</b> the deliverable is specified in detail upfront (e.g. a specific piece of software with defined features).</div></div>
+    <div class="gcard">
+      <div class="gterm">Compulsory vs. voluntary users</div>
+      <div class="gdef">Employees using an internal system have no choice — they must use whatever you build. A consumer app has to compete for adoption. This changes the quality bar and the importance of usability completely.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Information system vs. embedded/real-time</div>
+      <div class="gdef">An information system manages data and business processes. An embedded system controls physical hardware in real time — a pacemaker, a car's braking system. The testing and reliability requirements are in a completely different league.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Objective-driven vs. product-driven</div>
+      <div class="gdef"><b>Objective-driven:</b> the goal is clear ("reduce payroll processing time by 50%") but the exact solution isn't defined yet. <b>Product-driven:</b> the deliverable is specified in detail before work begins. Most projects start objective-driven and drift toward product-driven as design decisions are made.</div>
+    </div>
   </div>
 
   <div class="exercise">
-    <div class="ex-tag">Exercises 1.4–1.5 — quick categorization</div>
-    <p>Apply these categories to <b>Brightmouth College's payroll project</b>: Is it objective-driven or product-driven? Is it an information system or an embedded system? Are the users compulsory or voluntary?</p>
-    <p style="margin-top:8px">Students should be able to justify each answer — the point is to practice applying the framework, not to get a single "right" answer.</p>
+    <div class="ex-tag">Quick categorization — Brightmouth College (Exercises 1.4–1.5)</div>
+    <p>Apply these three dimensions to Brightmouth College's payroll project. Is it objective-driven or product-driven? Information system or embedded? Compulsory or voluntary users? Be ready to justify each answer — there's more room for debate than it first appears.</p>
   </div>
 </section>
 
-<!-- ============ SECTION 6: STAKEHOLDERS ============ -->
+<!-- ============ STAKEHOLDERS ============ -->
 <section id="stakeholders">
   <span class="tag">06 · Stakeholders and objectives</span>
-  <h2>Who has a stake, and what do they want?<span class="timing">15 min</span></h2>
-  <p class="note">§1.9–1.10. This is one of the most practically important sections. Students often assume a project has one client — in reality there are multiple parties with conflicting interests, and the PM's job is to manage all of them.</p>
+  <h2>More people have a stake than you think<span class="timing">15 min</span></h2>
+  <p class="note">Most people assume a project has one client. In reality, there are almost always multiple groups with different — and sometimes contradictory — interests. Every one of those groups has the power to make your project fail, not by attacking it, but simply by withdrawing their support.</p>
 
-  <div class="subhead">Three categories of stakeholder</div>
-  <div class="glossary" style="margin-top:14px">
-    <div class="gcard"><div class="gterm">Internal to the project team</div><div class="gdef">Developers, analysts, testers — people doing the work. They want reasonable workloads, interesting problems, career development.</div></div>
-    <div class="gcard"><div class="gterm">External to the team but inside the organization</div><div class="gdef">Finance dept, HR, management, other departments who will use or be affected by the system. They want it delivered on time, on budget, and actually useful.</div></div>
-    <div class="gcard"><div class="gterm">External to the organization</div><div class="gdef">Customers, suppliers, regulatory bodies, the public. Their requirements may be non-negotiable (e.g. legal compliance).</div></div>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Internal to the project team</div>
+      <div class="gdef">The developers, analysts, testers — the people doing the work. They want interesting problems, reasonable workloads, and to learn something. Ignore them and the best ones leave.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">External to the team but inside the organization</div>
+      <div class="gdef">Finance, HR, other departments, senior management — anyone in the same organization who'll be affected by what you build. They want it delivered on time, on budget, and actually useful for their work.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">External to the organization</div>
+      <div class="gdef">Customers, suppliers, regulators, the public. Their requirements may be legally non-negotiable. Surprising a regulator late in a project is very expensive.</div>
+    </div>
   </div>
 
-  <div class="subhead">Theory W — Boehm & Ross</div>
-  <div class="key-point">
-    <p><b>Win-win:</b> The project manager's job is to make every stakeholder a winner. If any party loses, they will eventually find a way to make the project lose too — by withdrawing support, changing requirements, or undermining decisions. Identify what "winning" means for each stakeholder group early.</p>
+  <div class="key-point" style="margin-top:24px">
+    <p><b>Theory W — Boehm & Ross:</b> Your job as a project manager is to make every stakeholder a winner. Not a compromise where everyone loses a little bit equally — genuinely win. Because anyone who loses will eventually find a way to make the project lose too: by changing requirements, withdrawing approvals, or simply not championing the work when it needs support.</p>
   </div>
 
-  <div class="subhead">SMART objectives</div>
-  <p class="note" style="margin-top:14px">Project objectives must be testable. "Improve performance" is not an objective — it's a wish. The SMART framework turns wishes into measurable commitments:</p>
+  <div class="subhead">SMART objectives — turn wishes into commitments</div>
+  <p class="note" style="margin-top:14px">"Improve the system" is not an objective — it's a wish. A real objective is testable. The SMART framework is how you know whether you've actually written one:</p>
+
   <div class="terms" style="margin-top:14px">
-    <div class="term td"><div class="tsym">S</div><div class="tbody"><div class="tname">Specific</div><div class="tdef">Targets a particular outcome, not a vague direction. <b>"Reduce payroll processing time" → "Reduce payroll processing time by 50%."</b></div></div></div>
-    <div class="term td"><div class="tsym">M</div><div class="tbody"><div class="tname">Measurable</div><div class="tdef">Can be objectively verified. If you can't measure it, you can't know whether you've achieved it.</div></div></div>
-    <div class="term td"><div class="tsym">A</div><div class="tbody"><div class="tname">Achievable</div><div class="tdef">Realistic given the constraints. Setting an impossible target destroys team morale and project credibility.</div></div></div>
-    <div class="term td"><div class="tsym">R</div><div class="tbody"><div class="tname">Relevant</div><div class="tdef">Connects to an actual business need. Objectives that don't link to real organizational goals will eventually lose stakeholder support.</div></div></div>
-    <div class="term td"><div class="tsym">T</div><div class="tbody"><div class="tname">Time-constrained</div><div class="tdef">Has a deadline. Without one, "eventually" becomes the default answer to "when will this be done?"</div></div></div>
+    <div class="term"><div class="tsym">S</div><div class="tbody"><div class="tname">Specific</div><div class="tdef">Name the exact outcome. Not "improve performance" — <b>"reduce payroll processing time from 4 hours to 2 hours."</b></div></div></div>
+    <div class="term"><div class="tsym">M</div><div class="tbody"><div class="tname">Measurable</div><div class="tdef">If you can't measure it, you can't know when you've achieved it — and you can't defend your answer if someone disagrees.</div></div></div>
+    <div class="term"><div class="tsym">A</div><div class="tbody"><div class="tname">Achievable</div><div class="tdef">Ambitious is fine. Impossible destroys morale. The target has to be reachable with the available people, budget, and time.</div></div></div>
+    <div class="term"><div class="tsym">R</div><div class="tbody"><div class="tname">Relevant</div><div class="tdef">Does this objective connect to something the organization actually needs? A technically perfect feature that nobody uses isn't relevant.</div></div></div>
+    <div class="term"><div class="tsym">T</div><div class="tbody"><div class="tname">Time-constrained</div><div class="tdef">Without a deadline, "eventually" becomes the default answer to "when will this be done?" A deadline forces prioritization.</div></div></div>
   </div>
 
   <div class="exercise">
     <div class="ex-tag">Exercises 1.6–1.8 — group activity (8 min)</div>
     <p>In groups of 3–4, using <b>Brightmouth College's payroll project</b>:</p>
     <ul>
-      <li><b>Exercise 1.6:</b> List all the stakeholders you can identify — external, internal, and within the project team</li>
-      <li><b>Exercise 1.7:</b> Identify a project authority — who should have the final say on scope and acceptance?</li>
-      <li><b>Exercise 1.8:</b> Write two or three SMART objectives for the project. Challenge: can you write one for Brigette (the project leader) and one for the Finance department?</li>
+      <li><b>Ex 1.6:</b> List all the stakeholders — internal, external to the team, external to the organization</li>
+      <li><b>Ex 1.7:</b> Identify a project authority — who should have the final say on scope and acceptance?</li>
+      <li><b>Ex 1.8:</b> Write two SMART objectives. Try writing one from Brigette's (PM's) perspective and one from the Finance department's perspective. Do they conflict?</li>
     </ul>
   </div>
 </section>
 
-<!-- ============ SECTION 7: BUSINESS CASE ============ -->
+<!-- ============ BUSINESS CASE ============ -->
 <section id="business-case">
-  <span class="tag">07 · Business case and project success</span>
-  <h2>What does it mean to succeed?<span class="timing">10 min</span></h2>
-  <p class="note">§1.11–1.12. This distinction is one of the most important in the entire course and the book places it here in Chapter 1 deliberately.</p>
+  <span class="tag">07 · Project success vs. business success</span>
+  <h2>You can win the project and lose the war<span class="timing">10 min</span></h2>
+  <p class="note">Here's one of the most important ideas in the whole course: a project can be delivered <i>on time, on budget, and exactly to spec</i> — and still be considered a failure.</p>
+  <p class="note">Imagine you've been asked to build an app that employees use to book meeting rooms. You ship it on time, within budget, zero bugs, full feature list. Three months later, nobody's using it — everyone still just sends a quick message to the receptionist. You hit every project target. The business objective — getting people to actually change how they book rooms — was never achieved.</p>
 
-  <div class="glossary" style="margin-top:20px">
+  <div class="glossary" style="margin-top:24px">
     <div class="gcard">
       <div class="gterm">Project objectives</div>
-      <div class="gdef">Functional requirements delivered. On time. On budget. To the specified quality. These are the <b>internal</b> success criteria — within the PM's direct control.</div>
+      <div class="gdef">Functionality delivered. On time. On budget. To the agreed quality. These are <b>internal</b> success criteria — within the PM's direct control. Hitting all four doesn't guarantee business success.</div>
     </div>
     <div class="gcard">
       <div class="gterm">Business objectives</div>
-      <div class="gdef">Does the delivered product actually create value for the organization? Does it get used? Does it change behaviour? These are <b>external</b> success criteria — often not within the PM's control but absolutely matter.</div>
+      <div class="gdef">Does the delivered system create real value? Do people use it? Does it change behaviour? These are <b>external</b> criteria — often outside the PM's direct control, but they're the reason the project existed in the first place.</div>
     </div>
   </div>
 
-  <div class="key-point" style="margin-top:24px">
-    <p><b>A project can hit all four project-objective targets and still be a business failure.</b> Shipped on time, on budget, to spec — and nobody uses it. This is the business case failure: the project solved the wrong problem, or the problem changed, or the benefits were never realized.</p>
-  </div>
-
-  <div class="exercise">
+  <div class="exercise" style="margin-top:20px">
     <div class="ex-tag">Discussion prompt</div>
-    <p>"Can you think of a product that was delivered on time, on budget, to spec — but still failed in the market?" Take 2–3 examples from the class. This is where the lecture naturally opens up to student experience.</p>
+    <p>"Can you think of a product that was delivered on time, on budget, to spec — but failed in the market?" Take 2–3 examples from the class. This is a question you'll have much richer answers to by the end of this course than you do right now.</p>
   </div>
 </section>
 
-<!-- ============ SECTION 8: MANAGEMENT ============ -->
+<!-- ============ MANAGEMENT ACTIVITIES ============ -->
 <section id="management">
-  <span class="tag">08 · What is management?</span>
-  <h2>Eight activities and the control cycle<span class="timing">10 min</span></h2>
-  <p class="note">§1.13–1.14. "Management" is often treated as a vague concept. This section gives it concrete structure — 8 specific activities that a PM performs, and a feedback model for how control actually works.</p>
+  <span class="tag">08 · What does a PM actually do?</span>
+  <h2>Eight activities and one feedback loop<span class="timing">10 min</span></h2>
+  <p class="note">People often describe project management as vague — "keeping things on track" or "communicating." Here's a more precise answer: a PM performs eight distinct activities, continuously, throughout the project.</p>
 
-  <div class="subhead">The 8 management activities</div>
-  <div class="glossary" style="margin-top:16px">
-    <div class="gcard"><div class="gterm">Planning <span class="gsym">decide what to do and how</span></div><div class="gdef">Deciding what will be done, when, by whom, and with what resources. This is not a one-off event — plans are revised continuously.</div></div>
-    <div class="gcard"><div class="gterm">Organizing <span class="gsym">structure the team and work</span></div><div class="gdef">Dividing work into tasks, assigning responsibilities, establishing reporting lines.</div></div>
-    <div class="gcard"><div class="gterm">Staffing <span class="gsym">get the right people</span></div><div class="gdef">Recruiting, training, and retaining the people needed for the project.</div></div>
-    <div class="gcard"><div class="gterm">Directing <span class="gsym">guide day-to-day work</span></div><div class="gdef">Giving instructions, making decisions, resolving conflicts as work proceeds.</div></div>
-    <div class="gcard"><div class="gterm">Monitoring <span class="gsym">watch what is happening</span></div><div class="gdef">Collecting data on progress, quality, and cost — without monitoring you have no basis for control.</div></div>
-    <div class="gcard"><div class="gterm">Controlling <span class="gsym">act on what you see</span></div><div class="gdef">Taking corrective action when monitoring reveals a deviation from plan. Control without monitoring is guesswork; monitoring without control is useless.</div></div>
-    <div class="gcard"><div class="gterm">Innovating <span class="gsym">find better ways</span></div><div class="gdef">Adapting methods and processes as you learn more about the project and its constraints.</div></div>
-    <div class="gcard"><div class="gterm">Representing <span class="gsym">interface with the outside</span></div><div class="gdef">Communicating with stakeholders, sponsors, clients, and other teams — managing the project's external relationships.</div></div>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Planning</div><div class="gdef">Decide what needs to happen, when, and by whom. Not once at the start — <b>continuously</b>. Plans get revised as reality diverges from what was expected.</div></div>
+    <div class="gcard"><div class="gterm">Organizing</div><div class="gdef">Break the work into pieces. Assign the right pieces to the right people. Make sure everyone understands how their piece fits into the whole picture.</div></div>
+    <div class="gcard"><div class="gterm">Staffing</div><div class="gdef">Get the right people. Keep them. Help them develop. The team is the project — get this wrong and everything else is harder.</div></div>
+    <div class="gcard"><div class="gterm">Directing</div><div class="gdef">Make decisions when the team is stuck. Resolve conflicts before they slow things down. Keep work moving forward when the path is unclear.</div></div>
+    <div class="gcard"><div class="gterm">Monitoring</div><div class="gdef">Collect real data on what's actually happening — not what you hoped would happen, and not what people tell you when they're trying to sound positive. No monitoring = no control.</div></div>
+    <div class="gcard"><div class="gterm">Controlling</div><div class="gdef">Act on what monitoring tells you. Adjust the plan. Reallocate resources. Monitoring without control is just watching things go wrong.</div></div>
+    <div class="gcard"><div class="gterm">Innovating</div><div class="gdef">Find better ways to work. Don't just repeat what the last project did. Adapt methods to what this particular project actually needs.</div></div>
+    <div class="gcard"><div class="gterm">Representing</div><div class="gdef">Be the interface between your team and the outside world. Manage stakeholder expectations on both sides — protect the team from unnecessary noise, but make sure the organization stays informed.</div></div>
   </div>
 
-  <div class="subhead">Figure 1.4 — the project control cycle</div>
-  <p class="note" style="margin-top:14px">Draw this loop on the board:</p>
-  <div class="key-point">
-    <p><b>Real world</b> → data collection → <b>data processing</b> (compare to plan, model outcomes) → <b>decisions</b> (revise plan, reallocate resources) → <b>implementation</b> → back to the real world. Projects are controlled by continuously cycling through this loop — not by writing a plan once at the start and executing it blindly.</p>
+  <div class="subhead">The project control cycle — Figure 1.4</div>
+  <div class="key-point" style="margin-top:14px">
+    <p>Control isn't a one-time action — it's a loop that runs continuously: <b>collect data from the real world</b> → <b>compare to the plan</b> → <b>decide what to do</b> → <b>implement the decision</b> → observe the world again. Projects fall out of control when teams stop cycling through this loop — usually because monitoring feels uncomfortable when things aren't going well.</p>
   </div>
 
   <div class="exercise">
-    <div class="ex-tag">Exercise 1.9 — Paul Duggan case (5 min)</div>
-    <p>The book gives a short narrative of a section manager's typical day: a staffing meeting, a team member's accident, arranging a replacement, dealing with a client call, reviewing a report.</p>
-    <p style="margin-top:8px">Students map each of Paul's actions to one of the 8 management activities. Works well as a quick individual exercise before comparing answers as a class — the same action often maps to multiple activities, which is the interesting part.</p>
+    <div class="ex-tag">Exercise 1.9 — Paul Duggan's day</div>
+    <p>The book gives a short story about a section manager's typical Monday: a staffing meeting, a team member's accident, finding a replacement contractor, a difficult call with a client, reviewing a progress report.</p>
+    <p>Map each of Paul's actions to one of the 8 management activities. Then compare with a partner. You'll find the same action often maps to more than one activity — that's the point. Management activities don't happen in isolation.</p>
   </div>
 </section>
 
-<!-- ============ SECTION 9: WRAP-UP ============ -->
+<!-- ============ WRAP-UP ============ -->
 <section id="wrapup">
   <span class="tag">09 · Wrap-up</span>
-  <h2>Five conclusions and a template<span class="timing">5 min</span></h2>
-  <p class="note">§1.15–1.16. The book states 5 conclusions for the chapter — worth stating them explicitly:</p>
+  <h2>Five things to take away from today<span class="timing">5 min</span></h2>
+
   <div class="glossary" style="margin-top:20px">
-    <div class="gcard"><div class="gterm">1. Projects are inherently uncertain</div><div class="gdef">Especially software projects — the invisibility and flexibility characteristics mean change is constant.</div></div>
-    <div class="gcard"><div class="gterm">2. Software has particular difficulties</div><div class="gdef">Invisibility, complexity, conformity, and flexibility make software PM harder than most other engineering disciplines.</div></div>
-    <div class="gcard"><div class="gterm">3. Clear objectives are central to success</div><div class="gdef">Without them, the team has no shared target and stakeholders have no basis for evaluating progress.</div></div>
-    <div class="gcard"><div class="gterm">4. Objectives need measurable tests</div><div class="gdef">SMART criteria — if you can't measure it, you can't manage it.</div></div>
-    <div class="gcard"><div class="gterm">5. Communication channels must be established early</div><div class="gdef">With all stakeholders — not just the development team. Surprises late in a project are almost always caused by communication failures early on.</div></div>
+    <div class="gcard"><div class="gterm">1. Software projects are uncertain by nature</div><div class="gdef">Not because teams are careless — because invisibility, complexity, conformity, and flexibility are built into the medium. Design your management approach around that uncertainty, don't pretend it away.</div></div>
+    <div class="gcard"><div class="gterm">2. Clear objectives are non-negotiable</div><div class="gdef">Without them, every person on the team has a slightly different definition of "done" — and nobody realizes until near the deadline.</div></div>
+    <div class="gcard"><div class="gterm">3. Objectives must be measurable</div><div class="gdef">"Better performance" is a wish, not an objective. If you can't measure it, you can't manage it — and you can't prove you achieved it.</div></div>
+    <div class="gcard"><div class="gterm">4. Project success ≠ business success</div><div class="gdef">On time + on budget + to spec is not the full definition of success. The system also has to actually solve the problem it was built for.</div></div>
+    <div class="gcard"><div class="gterm">5. Communication needs to be set up deliberately</div><div class="gdef">Problems don't surface unless there are channels for them to surface through. Silence from a team is never a good sign — it usually means people don't feel safe raising issues, not that everything is fine.</div></div>
   </div>
 
-  <div class="subhead">Annex 1 — the project plan template</div>
-  <div class="casestudy">
-    <div class="cs-tag">Capstone tie-in</div>
-    <p>The book's Annex 1 gives the standard sections of a project plan: Introduction, Background/business case, Objectives, Constraints, Methods, Products, Activities, Resources, Risks, Management.</p>
-    <p style="margin-top:10px">This is the <b>template for the semester capstone project plan deliverable.</b> Point it out now — students will be filling this in incrementally as each chapter is covered. Every chapter in this course contributes something to one or more of these sections.</p>
+  <div class="casestudy" style="margin-top:32px">
+    <div class="cs-tag">Capstone tie-in — Annex 1</div>
+    <p>The book's Annex 1 lists every section a solid project plan should include: <b>Introduction, Background/business case, Objectives, Constraints, Methods, Products, Activities, Resources, Risks, Management.</b></p>
+    <p>This is your capstone project plan template. From here on, each chapter of this course fills in another part of it. Keep it in mind as we move forward — everything connects back here.</p>
   </div>
 </section>
 
 <!-- ============ HOMEWORK ============ -->
 <section id="homework" style="border-bottom:none">
-  <span class="tag">Homework</span>
-  <h2>Follow-up</h2>
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
   <div class="homework" style="margin-top:24px">
-    <h3>Before next session</h3>
+    <h3>Homework</h3>
     <div class="hw-list">
-      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Ch.1 in full (pp. 1–20)</span></div>
-      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Further Exercises §1.16:</b> #1 (reflect on a personal ICT project experience), #2 (roles in an IS department), #3 (stakeholders and objectives for a public library system)</span></div>
-      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> form groups of 3–4 and choose a "build vs. buy / replace a legacy system" scenario similar to Brightmouth College. Come to next session with the scenario written in one paragraph.</span></div>
-      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Optional:</b> bring one real-world example of a product "delivered on time, on budget, to spec — but still a business failure" for next session's opening discussion.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 1 in full (pp. 1–20)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Further Exercises §1.16:</b> #1 (reflect on a personal ICT project), #2 (roles in an IS department), #3 (stakeholders and objectives for a public library system)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> form groups of 3–4 and choose a "build vs. buy / replace a legacy system" scenario similar to Brightmouth College. One paragraph describing the scenario, ready to discuss next session.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Optional:</b> Find a real example of a product delivered on time, on budget, to spec — but that still failed in the market. Bring it to the next session.</span></div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>Built for classroom use · Hughes & Cotterell, Software Project Management, 5th ed., Ch.1 (pp. 1–20)</div>
+  <div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.1 (pp. 1–20)</div>
 </footer>
 
 </div>
 
 <a class="next-lesson" href="02-project-evaluation.html">Next lecture <span class="arr">→</span></a>
 <a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+
+<div id="prg"></div>
+
+<script>
+/* reading progress bar */
+const prg = document.getElementById('prg');
+window.addEventListener('scroll', () => {
+  const max = document.body.scrollHeight - window.innerHeight;
+  if(max > 0) prg.style.width = (window.scrollY / max * 100) + '%';
+}, {passive: true});
+
+/* scroll-reveal: add class in JS so no-JS users still see content */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); } });
+}, {threshold: 0.06});
+document.querySelectorAll('section').forEach(s => { s.classList.add('fade-up'); io.observe(s); });
+
+/* animated stat counters */
+const statCfg = [
+  {pre:'£', target:2.3, suf:'bn', dec:1},
+  {pre:'',  target:82,  suf:'%', dec:0},
+  {pre:'',  target:43,  suf:'%', dec:0}
+];
+const svEls = [...document.querySelectorAll('.stat .sv')];
+svEls.forEach((el, i) => { if(statCfg[i]) el.textContent = statCfg[i].pre + '0' + statCfg[i].suf; });
+
+function animCount(el, cfg) {
+  const dur = 1400, t0 = performance.now();
+  (function step(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = p < 0.5 ? 2*p*p : -1 + (4-2*p)*p;
+    el.textContent = cfg.pre + (e * cfg.target).toFixed(cfg.dec) + cfg.suf;
+    if(p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+const sio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const idx = [...document.querySelectorAll('.stat')].indexOf(e.target);
+    if(svEls[idx] && statCfg[idx]) animCount(svEls[idx], statCfg[idx]);
+    sio.unobserve(e.target);
+  });
+}, {threshold: 0.5});
+document.querySelectorAll('.stat').forEach(s => sio.observe(s));
+</script>
 
 </body>
 </html>
