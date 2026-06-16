@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring & Control — Week 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:15px;min-width:52px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--accent)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* EVM chart */
+  .evm-wrap{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .evm-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .evm-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+  .evm-svg{width:100%;max-width:640px;display:block;margin:0 auto}
+  .evm-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:20px}
+  .evm-metric{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .evm-metric-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .evm-metric-val{font-family:var(--display);font-weight:700;font-size:22px}
+  .evm-metric-sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .pos-val{color:var(--pos)}.neg-val{color:var(--neg)}.acc-val{color:var(--accent)}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 09</span>
+  <h1>Monitoring &amp; <em>Control</em></h1>
+  <p class="lede">A plan without monitoring is just a wish. Monitoring without control is just watching things go wrong. This week: how to tell what's really happening in a project — and how to act on that information.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.9 (pp. 212–235)</span>
+    <span class="meta-item"><b>Duration:</b> ~90 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Explain the monitoring-control cycle and why it must be continuous</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Identify the common ways projects are measured for progress</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Calculate and interpret Earned Value Management (EVM) metrics</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Draw and interpret a milestone slip chart</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Produce an exception report that leads to a decision</span></div>
+  </div>
+</section>
+
+<section id="collecting-data">
+  <span class="tag">01 · Getting real data</span>
+  <h2>The hardest part is getting honest information<span class="timing">15 min</span></h2>
+  <p class="note">The project control cycle from Week 1 (observe → process → decide → act) only works if the "observe" step produces accurate data. But people under pressure systematically report optimistic progress — especially when they think bad news will be unwelcome. If your team knows that "I'm behind" leads to micromanagement, they'll say "nearly there" until they can't anymore. Then the problem surfaces at the worst possible moment.</p>
+  <p class="note">The PM's job is to create conditions where honest reporting is safe and expected — and to triangulate multiple data sources so self-reporting isn't the only input.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Progress reports</div><div class="gdef">Regular written updates from each team member or work package owner: what was completed, what's in progress, what's blocked, what's ahead. The format should be standardized and lightweight — if it takes more than 15 minutes to write, it won't get done honestly.</div></div>
+    <div class="gcard"><div class="gterm">Product inspection</div><div class="gdef">Review the actual deliverables, not just the status reports. Code exists or it doesn't. Specifications are approved or they're not. Don't accept "90% done" as a status — what specifically is the remaining 10%?</div></div>
+    <div class="gcard"><div class="gterm">Meetings</div><div class="gdef">Checkpoint meetings, standups, reviews. The value isn't the meeting itself — it's the conversations that happen around it. Team members who won't write down a problem often talk about it in a 1-on-1. Regular face-to-face check-ins surface problems the formal reporting misses.</div></div>
+    <div class="gcard"><div class="gterm">Exception reports</div><div class="gdef">When something significant deviates from plan — budget, schedule, scope, quality — a formal exception report goes to senior management with: what happened, the impact, options, and a recommendation. Exceptions should be rare but communicated immediately, not collected for the monthly report.</div></div>
+  </div>
+
+  <div class="key-point">
+    <p><b>The 90% problem:</b> "I'm 90% done" is the most dangerous phrase in software project management. The last 10% almost always takes longer than the first 90%. When you hear "nearly done," ask: what specific tasks remain? What's the estimated effort for each? Have you hit any problems in that remaining work? Replace percentage claims with concrete deliverable status.</p>
+  </div>
+</section>
+
+<section id="evm">
+  <span class="tag">02 · Earned Value Management</span>
+  <h2>Three numbers that tell you exactly where you stand<span class="timing">30 min</span></h2>
+  <p class="note">Traditional progress tracking has a flaw: it measures cost and schedule separately. A project can be within budget <i>and</i> behind schedule — because it's done less work than planned. Earned Value Management (EVM) integrates cost and schedule into a single coherent framework.</p>
+  <p class="note">EVM is based on three values for each activity and for the whole project:</p>
+
+  <div class="terms" style="margin-top:20px">
+    <div class="term">
+      <div class="tsym">PV</div>
+      <div class="tbody"><div class="tname">Planned Value (Budgeted Cost of Work Scheduled)</div><div class="tdef">How much work <i>should</i> have been done by now, expressed in budget terms. This is read from your baseline plan — at week 8, the plan says we should have completed work worth £24,000 of budget. <b>PV = the plan.</b></div></div>
+    </div>
+    <div class="term">
+      <div class="tsym">EV</div>
+      <div class="tbody"><div class="tname">Earned Value (Budgeted Cost of Work Performed)</div><div class="tdef">How much work <i>has actually</i> been done, in the same budget terms. If a £10,000 activity is 60% complete, it has earned £6,000. <b>EV = what you've actually accomplished, measured in plan-dollars.</b></div></div>
+    </div>
+    <div class="term">
+      <div class="tsym">AC</div>
+      <div class="tbody"><div class="tname">Actual Cost (Actual Cost of Work Performed)</div><div class="tdef">What you've actually spent to achieve the EV. If you spent £8,000 to earn £6,000 of value, you're over cost. <b>AC = what you've actually spent.</b></div></div>
+    </div>
+  </div>
+
+  <div class="subhead">Derived metrics</div>
+  <div class="terms" style="margin-top:14px">
+    <div class="term"><div class="tsym">CV</div><div class="tbody"><div class="tname">Cost Variance = EV − AC</div><div class="tdef">Positive = under budget. Negative = over budget. <b>CV = EV − AC.</b></div></div></div>
+    <div class="term"><div class="tsym">SV</div><div class="tbody"><div class="tname">Schedule Variance = EV − PV</div><div class="tdef">Positive = ahead of schedule. Negative = behind schedule. <b>SV = EV − PV.</b></div></div></div>
+    <div class="term"><div class="tsym">CPI</div><div class="tbody"><div class="tname">Cost Performance Index = EV ÷ AC</div><div class="tdef">CPI &gt; 1.0: getting more than £1 of work per £1 spent. CPI &lt; 1.0: over budget. A CPI of 0.85 means you're getting 85p of work for every £1 spent.</div></div></div>
+    <div class="term"><div class="tsym">SPI</div><div class="tbody"><div class="tname">Schedule Performance Index = EV ÷ PV</div><div class="tdef">SPI &gt; 1.0: ahead of schedule. SPI &lt; 1.0: behind. SPI of 0.80 means you've done 80% of the work that should be done by now.</div></div></div>
+  </div>
+
+  <div class="evm-wrap">
+    <div class="evm-title">EVM Dashboard — Project at week 8</div>
+    <div class="evm-sub">At week 8, the plan said we'd spend £24,000 and complete 60% of the project. Actual: we've spent £28,000 but only completed 50%.</div>
+    <svg class="evm-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="170" x2="580" y2="170" stroke="#2a3040" stroke-width="1"/>
+      <line x1="40" y1="10" x2="40" y2="170" stroke="#2a3040" stroke-width="1"/>
+      <!-- PV line (planned) -->
+      <polyline points="40,170 120,148 200,126 280,104 360,82 440,60 520,38 580,20" stroke="#ffb95c" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+      <!-- EV line (earned) -->
+      <polyline points="40,170 120,155 200,140 280,125 340,110" stroke="#43c6d6" stroke-width="2" fill="none"/>
+      <circle cx="340" cy="110" r="5" fill="#43c6d6"/>
+      <!-- AC line (actual spend) -->
+      <polyline points="40,170 120,150 200,130 280,110 340,90" stroke="#ff7a5c" stroke-width="2" fill="none"/>
+      <circle cx="340" cy="90" r="5" fill="#ff7a5c"/>
+      <!-- Now line -->
+      <line x1="340" y1="20" x2="340" y2="170" stroke="#2a3040" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="342" y="28" fill="#8b909e" font-size="9" font-family="JetBrains Mono">Now (week 8)</text>
+      <!-- Labels -->
+      <text x="50" y="22" fill="#ffb95c" font-size="10" font-family="JetBrains Mono">PV (plan)</text>
+      <text x="350" y="105" fill="#43c6d6" font-size="10" font-family="JetBrains Mono">EV=£20k</text>
+      <text x="350" y="86" fill="#ff7a5c" font-size="10" font-family="JetBrains Mono">AC=£28k</text>
+      <text x="348" y="140" fill="#ffb95c" font-size="10" font-family="JetBrains Mono">PV=£24k</text>
+      <text x="44" y="185" fill="#8b909e" font-size="9" font-family="JetBrains Mono">Week 0</text>
+      <text x="560" y="185" fill="#8b909e" font-size="9" font-family="JetBrains Mono">End</text>
+    </svg>
+    <div class="evm-metrics">
+      <div class="evm-metric"><div class="evm-metric-label">PV (plan value)</div><div class="evm-metric-val acc-val">£24k</div><div class="evm-metric-sub">should have been done</div></div>
+      <div class="evm-metric"><div class="evm-metric-label">EV (earned value)</div><div class="evm-metric-val neg-val">£20k</div><div class="evm-metric-sub">actually completed</div></div>
+      <div class="evm-metric"><div class="evm-metric-label">AC (actual cost)</div><div class="evm-metric-val pos-val">£28k</div><div class="evm-metric-sub">actually spent</div></div>
+      <div class="evm-metric"><div class="evm-metric-label">CV = EV−AC</div><div class="evm-metric-val pos-val">−£8k</div><div class="evm-metric-sub">over budget</div></div>
+      <div class="evm-metric"><div class="evm-metric-label">SV = EV−PV</div><div class="evm-metric-val pos-val">−£4k</div><div class="evm-metric-sub">behind schedule</div></div>
+      <div class="evm-metric"><div class="evm-metric-label">CPI = EV÷AC</div><div class="evm-metric-val pos-val">0.71</div><div class="evm-metric-sub">71p of work per £1 spent</div></div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>EVM's most powerful feature:</b> forecasting. Given the current CPI, what will the project cost at completion? <code>EAC = BAC ÷ CPI</code>. If the total budget (BAC) was £80,000 and CPI is 0.71, the forecast final cost is £80,000 ÷ 0.71 = £112,676. That's an early warning — when the project is only 25% done — that it will overrun by £32k if nothing changes.</p>
+  </div>
+</section>
+
+<section id="milestone-slip">
+  <span class="tag">03 · Milestone slip charts</span>
+  <h2>Visualizing schedule drift over time<span class="timing">10 min</span></h2>
+  <p class="note">A milestone slip chart tracks, over time, how the forecast completion date for each milestone changes. Each row is a milestone. Each column is a reporting date. The cells show the forecasted completion date for that milestone at that point in time. If the forecast slides right over successive reports, the schedule is slipping.</p>
+  <p class="note">The chart makes a pattern obvious that gets hidden in narrative reports: a milestone that's "still on track" for 5 reports in a row and then suddenly slips 4 weeks is actually a failure of early warning — the slip was happening all along, but nobody surfaced it until it was unavoidable.</p>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 9.1 — EVM calculations</div>
+    <p>Project data at the end of week 10 (total budget = £100,000, planned 12-week project):</p>
+    <p>PV = £60,000 (should be 60% complete). EV = £48,000 (48% actually completed). AC = £55,000 (£55k spent so far).</p>
+    <p>Calculate: CV, SV, CPI, SPI. Then forecast: what will the project cost at completion (EAC)? How many weeks behind schedule is the project (in budget terms)?</p>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 9 in full (pp. 212–235)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 9.2:</b> Given a 6-milestone project with actual vs. planned progress at week 8, draw a milestone slip chart. Identify which milestones are at risk and write an exception report for the worst one.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Design your monitoring approach — what data will you collect, how often, from whom? What are your exception thresholds? Document this as Section 10 (Management approach) of your project plan.</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.9 (pp. 212–235)</div></footer>
+</div>
+<a class="next-lesson" href="10-managing-contracts.html">Week 10 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+</script>
+</body>
+</html>
