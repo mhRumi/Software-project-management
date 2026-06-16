@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Contracts — Week 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .tbl-wrap{overflow-x:auto;margin-top:20px;border-radius:14px;border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:14px}th{padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left}
+  td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--muted);vertical-align:top;line-height:1.5}tr:last-child td{border-bottom:none}tr:nth-child(even) td{background:var(--ink-2)}td b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 10</span>
+  <h1>Managing <em>Contracts</em></h1>
+  <p class="lede">Most real software projects involve contracts — with clients, with suppliers, with both. A contract is an alignment tool: it defines what each party expects and what happens when expectations aren't met. Get this wrong and technical success won't save you.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.10 (pp. 236–253)</span>
+    <span class="meta-item"><b>Duration:</b> ~80 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Describe the major types of software contract and when each is appropriate</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Explain how to select a supplier using requirements and a structured evaluation</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Describe what a typical contract should contain</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Explain the key challenges of managing supplier and client relationships</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Identify when a contract needs to be changed and how to manage that process</span></div>
+  </div>
+</section>
+
+<section id="contract-types">
+  <span class="tag">01 · Contract types</span>
+  <h2>Which party takes the risk?<span class="timing">20 min</span></h2>
+  <p class="note">A contract type is fundamentally a decision about who carries the financial risk of uncertainty. If requirements are clear and scope is fixed, the supplier can take the risk. If requirements are fuzzy and scope will change, the client must accept more financial exposure. There's no universally "better" type — it depends entirely on how much is known at signing time.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Contract type</th><th>Who takes the risk</th><th>Best for</th><th>Main danger</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Fixed price</b></td>
+          <td>Supplier — they absorb cost overruns</td>
+          <td>Well-defined requirements, stable scope, experienced supplier</td>
+          <td>Supplier over-estimates to cover risk, or cuts corners to protect margin if scope was underestimated</td>
+        </tr>
+        <tr>
+          <td><b>Time & Materials (T&M)</b></td>
+          <td>Client — they pay for all actual hours</td>
+          <td>Agile projects, exploratory work, when scope will evolve</td>
+          <td>No natural cost ceiling — the client is exposed to unlimited cost growth</td>
+        </tr>
+        <tr>
+          <td><b>Cost plus fixed fee</b></td>
+          <td>Client pays actual cost + agreed fee</td>
+          <td>R&D, novel work where cost genuinely can't be predicted</td>
+          <td>Supplier has little incentive to control costs — they earn the same fixed fee regardless</td>
+        </tr>
+        <tr>
+          <td><b>Cost plus incentive fee</b></td>
+          <td>Shared — supplier earns more for coming in under budget/time</td>
+          <td>Long-term relationships, large complex projects</td>
+          <td>Complex to negotiate and administer — defining "incentive" requires good metrics</td>
+        </tr>
+        <tr>
+          <td><b>Fixed price per unit</b></td>
+          <td>Shared — price is set per deliverable</td>
+          <td>Maintenance, support services where volume is variable</td>
+          <td>Disputes over what counts as a "unit" of work; quality can drop as supplier optimizes for volume</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>The connection to project approach:</b> Fixed-price contracts assume scope is defined — which maps to waterfall. T&M contracts accommodate changing scope — which enables agile. If a client insists on fixed-price for an agile project, something has to give: either the agile approach or the fixed price. This mismatch is the source of enormous contract disputes in industry.</p>
+  </div>
+</section>
+
+<section id="selecting">
+  <span class="tag">02 · Selecting a supplier</span>
+  <h2>The cheapest bid is rarely the best deal<span class="timing">20 min</span></h2>
+  <p class="note">When choosing between suppliers, the temptation is to anchor on price. The better approach: define your requirements first, weight each requirement by importance, score each supplier against them, and see who comes out ahead on the weighted total. Price is one criterion among many — not the only one.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Invitation to Tender (ITT)</div><div class="gdef">The document you send to potential suppliers describing what you need. Should include: scope, technical requirements, quality standards, timelines, reporting expectations, and evaluation criteria. The ITT sets the terms of the comparison — if you don't specify it, you can't fairly compare responses to it.</div></div>
+    <div class="gcard"><div class="gterm">Evaluation criteria</div><div class="gdef">Weighted against: technical capability, relevant experience, proposed approach, team quality, price, references, financial stability. Evaluating bids without pre-defined criteria leads to post-hoc rationalization — you know which supplier you liked and you find reasons to pick them.</div></div>
+    <div class="gcard"><div class="gterm">Pilot / proof of concept</div><div class="gdef">For high-value or high-risk contracts, ask shortlisted suppliers to build a small proof of concept. The cost of the pilot is trivial compared to the cost of choosing the wrong supplier for a year-long engagement. Real capability always beats claimed capability.</div></div>
+  </div>
+</section>
+
+<section id="contract-content">
+  <span class="tag">03 · What a contract contains</span>
+  <h2>Handshakes don't resolve disputes<span class="timing">15 min</span></h2>
+  <p class="note">A good contract isn't adversarial — it's a shared memory of what was agreed, so that when disputes arise (and they will), there's a reference point rather than two competing recollections. Every software contract should address:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Deliverables and acceptance criteria</div><div class="gdef">What will be delivered? What tests or criteria determine if it's acceptable? Without acceptance criteria, "done" is subjective — and the supplier will use their definition while the client uses theirs.</div></div>
+    <div class="gcard"><div class="gterm">Payment terms</div><div class="gdef">When are payments due? Milestone-based payments (tied to accepted deliverables) are usually better than time-based payments for the client. For the supplier, milestone payments create risk — they may do work before being paid. Both sides need this negotiated explicitly.</div></div>
+    <div class="gcard"><div class="gterm">Intellectual property</div><div class="gdef">Who owns the code, the data, the design? Does the client have source code escrow rights? Can the supplier reuse components in future projects? These questions are easy to ignore and expensive to resolve in court.</div></div>
+    <div class="gcard"><div class="gterm">Liability and warranties</div><div class="gdef">What happens if the software causes a loss? Who is liable, up to what limit? What warranty period applies after delivery? Without these, the supplier's implied liability may be unlimited — which they will price into their bid, or refuse the contract entirely.</div></div>
+    <div class="gcard"><div class="gterm">Variation procedure</div><div class="gdef">How are changes to scope handled? Who can authorize a change? How is additional cost agreed? Without a variation procedure, every change request becomes a dispute. This is especially critical under fixed-price contracts.</div></div>
+    <div class="gcard"><div class="gterm">Termination conditions</div><div class="gdef">Under what conditions can either party exit? What notice is required? What payments are due on termination? Having this written down makes it much less likely to be needed.</div></div>
+  </div>
+</section>
+
+<section id="managing-relationship">
+  <span class="tag">04 · Managing the relationship</span>
+  <h2>The contract is the floor, not the ceiling<span class="timing">10 min</span></h2>
+  <p class="note">Good contract management isn't about enforcing the contract — it's about making the contract unnecessary by maintaining a healthy working relationship. The best supplier-client partnerships treat the contract as a last resort, not a daily reference document.</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">Regular communication</div><div class="gdef">Scheduled progress meetings, shared dashboards, joint working sessions. Don't let the client's only view of the project be the monthly report — by then, surprises are unavoidable. The PM on the supplier side has dual accountability: to their own organization, and to the client relationship.</div></div>
+    <div class="gcard"><div class="gterm">Change control</div><div class="gdef">Every request for change should go through a formal process: describe the change, estimate the impact, agree on cost and schedule adjustment, get written approval before work begins. The most common source of project failure isn't technical — it's scope creep that was never formally acknowledged or paid for.</div></div>
+    <div class="gcard"><div class="gterm">Managing the end</div><div class="gdef">Project closeout requires: formal acceptance sign-off, handover of documentation, knowledge transfer, ensuring warranties are understood, and a final review of lessons learned. Projects that fade out without formal closure often resurface as disputes when the client discovers something didn't work as expected six months later.</div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 10.1 — contract type selection</div>
+    <p>For each scenario, recommend a contract type and justify your choice:</p>
+    <p>A. Brightmouth College replacing its payroll system with a known off-the-shelf product. Scope is defined. Three suppliers are bidding.</p>
+    <p>B. A startup hiring an agency to design and build their MVP mobile app. They expect requirements to change significantly as they learn from user testing.</p>
+    <p>C. A defence contractor building a radar tracking system with novel sensor fusion requirements. The technical approach isn't yet settled.</p>
+    <p>D. A bank procuring ongoing maintenance support for a legacy application. Volume of requests will vary month to month.</p>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 10 in full (pp. 236–253)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 10.2:</b> Draft an ITT for one component of the Brightmouth payroll project. Define scope, acceptance criteria, and evaluation weightings.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Identify any external suppliers or contracts your project would need. Recommend a contract type for each and justify the choice in relation to your project's approach and scope uncertainty.</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.10 (pp. 236–253)</div></footer>
+</div>
+<a class="next-lesson" href="11-managing-people.html">Week 11 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+</script>
+</body>
+</html>
