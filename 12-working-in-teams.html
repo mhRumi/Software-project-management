@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working in Teams — Week 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:14px;min-width:52px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--accent)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}.exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* Tuckman stage explorer */
+  .tuckman-wrap{background:var(--ink);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-top:24px}
+  .tuckman-title{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:6px}
+  .tuckman-sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .tuckman-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .tuckman-tab{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;transition:.15s}
+  .tuckman-tab:hover{border-color:var(--muted);color:var(--text)}
+  .tuckman-tab.active{border-color:var(--accent);background:rgba(255,185,92,.1);color:var(--accent)}
+  .tuckman-panel{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:20px 24px;display:none}
+  .tuckman-panel.show{display:block}
+  .tp-stage{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:4px}
+  .tp-mood{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .tp-box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .tp-box-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .tp-box-text{font-size:13px;color:var(--muted);line-height:1.5}.tp-box-text b{color:var(--text)}
+  @media(max-width:600px){.tp-grid{grid-template-columns:1fr}}
+
+  /* Belbin grid */
+  .belbin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px}
+  .brole{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 18px;transition:border-color .15s}
+  .brole:hover{border-color:var(--neg)}
+  .brole-cat{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--neg);margin-bottom:6px}
+  .brole-name{font-family:var(--display);font-weight:700;font-size:16px;margin-bottom:6px}
+  .brole-text{font-size:13px;color:var(--muted);line-height:1.5}.brole-text b{color:var(--text)}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 12</span>
+  <h1>Working in <em>Teams</em></h1>
+  <p class="lede">Putting five skilled individuals in a room doesn't make a team. Teams go through predictable stages of development, carry distinct roles, and make decisions in ways that can either leverage everyone's strengths or amplify everyone's biases. This week: how teams actually work.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.12 (pp. 271–292)</span>
+    <span class="meta-item"><b>Duration:</b> ~80 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Describe each of Tuckman's four stages of team development and the PM's appropriate response to each</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">List Belbin's nine team roles and explain why a balanced team outperforms a team of experts</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Describe common decision-making approaches and their trade-offs</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Identify leadership styles appropriate for different team situations</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Explain groupthink and describe how to prevent it</span></div>
+  </div>
+</section>
+
+<section id="tuckman">
+  <span class="tag">01 · How teams develop</span>
+  <h2>Every new team goes through the same stages<span class="timing">25 min</span></h2>
+  <p class="note">Imagine you've just been assigned to a project team of four people you've never worked with. On day one, everyone is polite, a bit cautious, and deferring to each other. Three weeks in, there's an argument about how to approach a design decision. Two months in, the team has its own shorthand and just gets things done.</p>
+  <p class="note">This isn't random. Psychologist Bruce Tuckman identified in 1965 that all groups go through the same sequence of stages, and later added a fifth. Understanding where your team is in this sequence determines what kind of leadership they actually need.</p>
+
+  <div class="tuckman-wrap">
+    <div class="tuckman-title">Tuckman's Stages of Team Development</div>
+    <div class="tuckman-sub">Click a stage to explore what's happening and what the PM should do</div>
+    <div class="tuckman-tabs">
+      <div class="tuckman-tab active" onclick="showStage('forming')">Forming</div>
+      <div class="tuckman-tab" onclick="showStage('storming')">Storming</div>
+      <div class="tuckman-tab" onclick="showStage('norming')">Norming</div>
+      <div class="tuckman-tab" onclick="showStage('performing')">Performing</div>
+      <div class="tuckman-tab" onclick="showStage('adjourning')">Adjourning</div>
+    </div>
+    <div class="tuckman-panel show" id="stage-forming">
+      <div class="tp-stage">Forming</div><div class="tp-mood">Polite · Uncertain · Dependent on leader</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6">The team has just come together. People are sizing each other up, avoiding conflict, testing the boundaries of acceptable behaviour. There is high dependence on the leader for direction — nobody yet knows what the norms are.</p>
+      <div class="tp-grid">
+        <div class="tp-box"><div class="tp-box-title">What you see</div><div class="tp-box-text">Lots of questions, requests for clarification. Excessive politeness. People holding back opinions. Waiting for others to go first.</div></div>
+        <div class="tp-box"><div class="tp-box-title">What the PM should do</div><div class="tp-box-text"><b>Be directive.</b> Clarify goals, roles, and expectations explicitly. Create quick early wins. Introductions matter — help people see each other as humans, not resources.</div></div>
+      </div>
+    </div>
+    <div class="tuckman-panel" id="stage-storming">
+      <div class="tp-stage">Storming</div><div class="tp-mood">Friction · Testing authority · Sub-groups forming</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6">The politeness wears off. Conflicts emerge — about how to work, who has authority, different working styles. This feels like the team is breaking down. It isn't. It's growing. Storming is necessary — a team that skips it has suppressed its conflicts, not resolved them.</p>
+      <div class="tp-grid">
+        <div class="tp-box"><div class="tp-box-title">What you see</div><div class="tp-box-text">Disagreements about approach. Resistance to the PM's direction. Cliques forming. Productivity dips temporarily.</div></div>
+        <div class="tp-box"><div class="tp-box-title">What the PM should do</div><div class="tp-box-text"><b>Coach, don't control.</b> Create space for disagreements to surface constructively. Don't suppress conflict — help the team work through it. Focus on process, not personality.</div></div>
+      </div>
+    </div>
+    <div class="tuckman-panel" id="stage-norming">
+      <div class="tp-stage">Norming</div><div class="tp-mood">Agreement · Cohesion · Shared norms</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6">The team has worked through its conflicts and established shared ways of working. Trust is building. People understand each other's strengths and compensate for weaknesses without being asked. There's a team identity now — an "us."</p>
+      <div class="tp-grid">
+        <div class="tp-box"><div class="tp-box-title">What you see</div><div class="tp-box-text">More collaboration, less friction. Shared language and shorthand. Constructive feedback. Rising productivity.</div></div>
+        <div class="tp-box"><div class="tp-box-title">What the PM should do</div><div class="tp-box-text"><b>Support and facilitate.</b> Delegate more, intervene less. Reinforce positive norms. Watch for early signs of groupthink as cohesion increases.</div></div>
+      </div>
+    </div>
+    <div class="tuckman-panel" id="stage-performing">
+      <div class="tp-stage">Performing</div><div class="tp-mood">High output · Autonomous · Self-correcting</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6">Not all teams reach this stage. Those that do are remarkable — highly functional, self-directing, and capable of complex problem-solving with minimal overhead. The team can manage its own dynamics. Members know when to lead and when to follow without being told.</p>
+      <div class="tp-grid">
+        <div class="tp-box"><div class="tp-box-title">What you see</div><div class="tp-box-text">High output, high quality. Self-organised. Disagreements resolved quickly internally. Very little need for PM intervention on day-to-day work.</div></div>
+        <div class="tp-box"><div class="tp-box-title">What the PM should do</div><div class="tp-box-text"><b>Delegate and unblock.</b> Your job is removing obstacles and protecting the team from external interference — not managing the work directly. Get out of the way.</div></div>
+      </div>
+    </div>
+    <div class="tuckman-panel" id="stage-adjourning">
+      <div class="tp-stage">Adjourning</div><div class="tp-mood">Closure · Reflection · Transition</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6">Added by Tuckman in 1977. When the project ends, the team disbands. This has a real emotional dimension — particularly for high-performing teams. Done poorly, it creates anxiety and disengagement in the final phases. Done well, it becomes a source of motivation for the next assignment.</p>
+      <div class="tp-grid">
+        <div class="tp-box"><div class="tp-box-title">What you see</div><div class="tp-box-text">Reduced focus on delivery as people worry about what's next. Some disengagement. Emotional responses to project closure — pride, relief, sadness.</div></div>
+        <div class="tp-box"><div class="tp-box-title">What the PM should do</div><div class="tp-box-text"><b>Mark the ending deliberately.</b> Run a retrospective. Celebrate achievements. Be transparent about what happens next. Ensure knowledge is captured before people disperse.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>Important:</b> any significant change to the team — a new member joins, a key person leaves, scope changes radically — can send the team back to Forming or Storming. This is normal. The PM should expect it and respond accordingly.</p>
+  </div>
+</section>
+
+<section id="belbin">
+  <span class="tag">02 · Belbin team roles</span>
+  <h2>The team you want vs. the team you have<span class="timing">20 min</span></h2>
+  <p class="note">Meredith Belbin spent nine years studying management teams at Henley Business School. His central finding: <i>teams of brilliant individuals often perform worse than teams of average individuals with balanced roles.</i> The problem isn't competence — it's that teams of experts tend to have the same blind spots, fight over the same territory, and neglect the same tasks.</p>
+  <p class="note">Belbin identified nine team roles that need to be covered for a team to function effectively. One person can cover multiple roles, and roles shift depending on context — but if a role is consistently absent, the team has a structural weakness.</p>
+
+  <div class="belbin-grid">
+    <div class="brole"><div class="brole-cat">Thinking</div><div class="brole-name">Plant</div><div class="brole-text">Creative, unorthodox. <b>Generates novel ideas</b> but can be impractical. Easily hurt by criticism.</div></div>
+    <div class="brole"><div class="brole-cat">Thinking</div><div class="brole-name">Monitor Evaluator</div><div class="brole-text">Analytical, strategic. <b>Evaluates options objectively</b> and spots flaws. Can seem unenthusiastic but rarely wrong.</div></div>
+    <div class="brole"><div class="brole-cat">Thinking</div><div class="brole-name">Specialist</div><div class="brole-text">Deep technical knowledge. <b>Provides rare expertise</b> on specific topics. Tends to stay narrow; may disengage outside their specialism.</div></div>
+    <div class="brole"><div class="brole-cat">Action</div><div class="brole-name">Shaper</div><div class="brole-text">Driven, challenging, thrives under pressure. <b>Drives the team to overcome obstacles</b>. Can be provocative or abrasive.</div></div>
+    <div class="brole"><div class="brole-cat">Action</div><div class="brole-name">Implementer</div><div class="brole-text">Disciplined, practical, reliable. <b>Turns ideas into concrete plans</b> and gets on with it. Slow to change; can be inflexible.</div></div>
+    <div class="brole"><div class="brole-cat">Action</div><div class="brole-name">Completer Finisher</div><div class="brole-text">Meticulous, painstaking, conscientious. <b>Ensures nothing is missed</b>. Can worry unnecessarily; reluctant to delegate.</div></div>
+    <div class="brole"><div class="brole-cat">People</div><div class="brole-name">Coordinator</div><div class="brole-text">Calm, confident, mature. <b>Clarifies goals and delegates effectively</b>. Can be perceived as manipulative.</div></div>
+    <div class="brole"><div class="brole-cat">People</div><div class="brole-name">Teamworker</div><div class="brole-text">Cooperative, perceptive, diplomatic. <b>Keeps the team together</b> under pressure. Can be indecisive in tough calls.</div></div>
+    <div class="brole"><div class="brole-cat">People</div><div class="brole-name">Resource Investigator</div><div class="brole-text">Enthusiastic, outgoing, communicative. <b>Explores opportunities and external connections</b>. Loses interest after initial excitement.</div></div>
+  </div>
+
+  <div class="exercise" style="margin-top:24px">
+    <div class="ex-tag">Group Activity — 15 min</div>
+    <p>In your capstone project group: each person identifies which one or two Belbin roles they naturally tend to play. Map out your team's coverage. Answer these questions:</p>
+    <p>1. Which roles are covered by multiple people? (risk: duplication, stepping on toes)</p>
+    <p>2. Which roles are missing entirely? (risk: structural blind spot)</p>
+    <p>3. Can anyone stretch to cover the missing roles? Or do you need to consciously compensate?</p>
+  </div>
+</section>
+
+<section id="decisions">
+  <span class="tag">03 · Decision making</span>
+  <h2>How a team decides determines what it can agree to<span class="timing">10 min</span></h2>
+  <p class="note">Not all decisions should be made the same way. The method you choose affects both the quality of the decision and the team's commitment to implementing it.</p>
+
+  <div class="terms">
+    <div class="term"><div class="tsym">⬆</div><div class="tbody"><div class="tname">Consensus</div><div class="tdef">Everyone must be able to live with the decision — not necessarily their first choice. <b>High commitment, slow process.</b> Best for high-stakes, irreversible decisions where buy-in matters.</div></div></div>
+    <div class="term"><div class="tsym">✓</div><div class="tbody"><div class="tname">Majority vote</div><div class="tdef">Faster than consensus. <b>Risk: the minority may not implement the decision fully.</b> Works when the decision is reversible and commitment from everyone isn't critical.</div></div></div>
+    <div class="term"><div class="tsym">→</div><div class="tbody"><div class="tname">Expert decision</div><div class="tdef">The person with most expertise decides. <b>Fast and well-informed, but disengages everyone else.</b> Best for technical decisions where the rest of the team genuinely can't evaluate the options.</div></div></div>
+    <div class="term"><div class="tsym">⊙</div><div class="tbody"><div class="tname">PM decision (autocratic)</div><div class="tdef">The PM decides and announces. <b>Fastest of all, lowest commitment.</b> Appropriate for urgent, time-pressured decisions where deliberation is too expensive.</div></div></div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>Groupthink:</b> high-cohesion teams sometimes converge too quickly on one view, suppressing dissent to preserve harmony. Signs: no disagreement in meetings, alternative views dismissed quickly, illusion of unanimity. Fix it by assigning a devil's advocate, explicitly inviting challenge, or running anonymous idea submissions before group discussion.</p>
+  </div>
+</section>
+
+<section id="leadership">
+  <span class="tag">04 · Leadership</span>
+  <h2>Leadership style should match the situation<span class="timing">10 min</span></h2>
+  <p class="note">There is no single best leadership style. Hersey and Blanchard's Situational Leadership model argues that the appropriate style depends on the <i>readiness</i> of the team member for the specific task — their competence and commitment level for that work.</p>
+
+  <div class="glossary">
+    <div class="gcard"><div class="gterm">Directing <span class="gsym">low competence, high commitment</span></div><div class="gdef">New to the task, eager to try. Tell them clearly what to do and how. They need direction, not autonomy — but keep the tone positive. <i>Example: a junior developer on their first deployment.</i></div></div>
+    <div class="gcard"><div class="gterm">Coaching <span class="gsym">some competence, variable commitment</span></div><div class="gdef">Learning, but encountering setbacks that affect confidence. Explain the why, invite their input, give detailed feedback. More two-way than directing. <i>Example: mid-level dev who's done some of this before but not all of it.</i></div></div>
+    <div class="gcard"><div class="gterm">Supporting <span class="gsym">high competence, variable motivation</span></div><div class="gdef">They know how to do it but aren't sure they want to. Facilitate rather than direct — share decision-making, listen actively, encourage. The block is motivational, not technical. <i>Example: senior dev who's lost enthusiasm for the project.</i></div></div>
+    <div class="gcard"><div class="gterm">Delegating <span class="gsym">high competence, high commitment</span></div><div class="gdef">Fully capable and motivated. Set the goal, agree the constraints, then get out of the way. Checking in too frequently signals distrust and reduces performance. <i>Example: a senior dev who's done this a hundred times.</i></div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 12 in full (pp. 271–292)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone:</b> Complete the Belbin role mapping activity for your group and submit a one-page summary identifying your team's strongest and weakest areas</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Reflection:</b> Think of a group decision you've been part of that went badly. Which decision-making process was used? What would you do differently now?</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.12 (pp. 271–292)</div></footer>
+</div>
+<a class="next-lesson" href="13-software-quality.html">Week 13 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+
+function showStage(id){
+  document.querySelectorAll('.tuckman-tab').forEach((t,i)=>{
+    const ids=['forming','storming','norming','performing','adjourning'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.tuckman-panel').forEach(p=>p.classList.remove('show'));
+  const el=document.getElementById('stage-'+id);
+  if(el)el.classList.add('show');
+}
+</script>
+</body>
+</html>
