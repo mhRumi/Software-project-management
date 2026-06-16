@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Planning — Week 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;--line:#2a3040;--text:#e9e7e0;--muted:#8b909e;--pos:#ff7a5c;--neg:#43c6d6;--accent:#ffb95c;--glow:rgba(255,122,92,.45);--mono:'JetBrains Mono',monospace;--body:'Hanken Grotesk',system-ui,sans-serif;--display:'Fraunces',Georgia,serif;}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:radial-gradient(1200px 700px at 80% -10%,rgba(255,122,92,.07),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(67,198,214,.06),transparent 55%),var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 24px 120px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,7vw,82px);line-height:.96;letter-spacing:-.02em}h1 em{font-style:italic;font-weight:400;color:var(--pos)}
+  .lede{max-width:620px;margin-top:24px;font-size:18px;color:var(--muted)}
+  .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}.meta-item{font-family:var(--mono);font-size:12px;color:var(--muted)}.meta-item b{color:var(--text)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--neg)}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em;margin:10px 0 14px}
+  .subhead{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:36px 0 10px}
+  .note{max-width:680px;color:var(--muted);font-size:16px;line-height:1.7}.note+.note{margin-top:12px}.note b{color:var(--text);font-weight:600}.note i{color:var(--text);font-style:italic}
+  .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
+  .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .obj{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:12px;transition:border-color .15s}.obj:hover{border-color:var(--accent)}
+  .obj-n{font-family:var(--mono);font-size:11px;color:var(--accent);min-width:22px;padding-top:3px}.obj-t{font-size:15px;color:var(--text);line-height:1.5}
+  .glossary{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+  .gcard{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
+  .gcard:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 8px 24px -14px var(--glow)}
+  .gterm{font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:baseline;gap:8px}.gsym{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:400}
+  .gdef{color:var(--muted);font-size:14px;line-height:1.6;margin-top:8px}.gdef b{color:var(--text);font-weight:600}.gdef i{color:var(--text);font-style:italic}
+  .terms{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .term{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .term .tsym{font-family:var(--mono);font-weight:700;font-size:14px;min-width:52px;text-align:center;flex-shrink:0;line-height:1.4;color:var(--accent)}
+  .term .tbody{flex:1}.term .tname{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:4px}
+  .term .tdef{color:var(--muted);font-size:14px;line-height:1.6}.term .tdef b{color:var(--text);font-weight:600}
+  .exercise{border:1px solid var(--accent);border-radius:14px;padding:18px 22px;background:rgba(255,185,92,.04);margin-top:20px}
+  .ex-tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .exercise p{font-size:15px;color:var(--text);line-height:1.6}.exercise p+p{margin-top:8px}
+  .exercise ul{padding-left:20px;margin-top:8px;display:flex;flex-direction:column;gap:6px}.exercise ul li{font-size:14px;color:var(--muted)}.exercise ul li b{color:var(--text)}
+  .key-point{border-left:3px solid var(--pos);padding:14px 20px;background:rgba(255,122,92,.05);border-radius:0 12px 12px 0;margin-top:20px}
+  .key-point p{font-size:15px;color:var(--text);line-height:1.6}.key-point p b{color:var(--pos)}
+  .homework{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:18px;padding:32px}
+  .homework h3{font-family:var(--display);font-weight:700;font-size:24px;margin-bottom:20px}
+  .hw-list{display:flex;flex-direction:column;gap:12px}.hw-item{display:flex;gap:14px;align-items:flex-start}
+  .hw-arrow{font-family:var(--mono);font-size:13px;color:var(--accent);flex-shrink:0;padding-top:2px}.hw-text{font-size:15px;color:var(--muted);line-height:1.5}.hw-text b{color:var(--text);font-weight:600}
+  .next-lesson{position:fixed;bottom:28px;right:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--pos);color:var(--ink);border-radius:999px;padding:14px 24px;box-shadow:0 8px 24px -10px var(--glow);transition:.15s;}
+  .next-lesson:hover{transform:translateY(-2px)}.next-lesson .arr{display:inline-block;transition:transform .15s}.next-lesson:hover .arr{transform:translateX(3px)}
+  .home-btn{position:fixed;bottom:28px;left:28px;z-index:50;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:14px 24px;transition:.15s;}
+  .home-btn:hover{transform:translateY(-2px);border-color:var(--muted)}.home-btn .arr{display:inline-block;transition:transform .15s}.home-btn:hover .arr{transform:translateX(-3px)}
+  footer{padding:48px 0 0;color:var(--muted);font-size:14px;font-family:var(--mono)}a{color:var(--accent)}
+
+  /* Network / CPM diagram */
+  .net-wrap{background:var(--ink);border:1px solid var(--line);border-radius:16px;padding:28px;margin-top:24px;overflow-x:auto}
+  .net-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .net-svg{width:100%;min-width:560px;display:block}
+
+  /* Gantt */
+  .gantt-wrap{background:var(--ink);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:24px;overflow-x:auto}
+  .gantt-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .gantt-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .gantt-label{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:120px;flex-shrink:0}
+  .gantt-track{flex:1;background:var(--panel);border-radius:4px;height:22px;position:relative;min-width:300px}
+  .gantt-bar{position:absolute;top:3px;height:16px;border-radius:3px}
+  .gantt-bar.critical{background:var(--pos);opacity:.85}
+  .gantt-bar.normal{background:var(--accent);opacity:.7}
+  .gantt-weeks{display:flex;justify-content:space-between;padding:0 0 6px;font-family:var(--mono);font-size:10px;color:var(--muted);min-width:300px}
+
+  #prg{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--accent);z-index:200;pointer-events:none}
+  .fade-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.fade-up.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">SPM · Week 06</span>
+  <h1><em>Activity Planning</em></h1>
+  <p class="lede">A list of tasks is not a plan. A plan tells you which tasks depend on which other tasks, how long each will take, what the earliest possible finish date is, and which tasks — if they slip — will definitely make the whole project late. That's what this week is about.</p>
+  <div class="meta">
+    <span class="meta-item"><b>Source:</b> Hughes & Cotterell, Ch.6 (pp. 129–161)</span>
+    <span class="meta-item"><b>Duration:</b> ~100 min</span>
+  </div>
+</header>
+
+<section id="objectives">
+  <span class="tag">00 · Before we start</span>
+  <h2>What you'll be able to do after this lecture</h2>
+  <div class="obj-grid">
+    <div class="obj"><span class="obj-n">01</span><span class="obj-t">Construct a Work Breakdown Structure from a set of deliverables</span></div>
+    <div class="obj"><span class="obj-n">02</span><span class="obj-t">Identify activity dependencies and draw a network diagram</span></div>
+    <div class="obj"><span class="obj-n">03</span><span class="obj-t">Calculate the critical path and explain why it matters</span></div>
+    <div class="obj"><span class="obj-n">04</span><span class="obj-t">Calculate early start, late start, and float for each activity</span></div>
+    <div class="obj"><span class="obj-n">05</span><span class="obj-t">Draw and interpret a Gantt chart</span></div>
+  </div>
+</section>
+
+<section id="network">
+  <span class="tag">01 · From tasks to network</span>
+  <h2>The order of work matters as much as the work itself<span class="timing">15 min</span></h2>
+  <p class="note">Imagine building a house. You can't lay the roof before the walls are up. You can't install plumbing before the rough framing is done — but you can paint the outside at the same time someone is installing the kitchen inside. The constraints of what comes before what, and what can happen in parallel, determine the minimum project duration more than the total hours of work do.</p>
+  <p class="note">A network diagram makes these constraints visible. It's the foundation of all schedule planning.</p>
+
+  <div class="terms" style="margin-top:20px">
+    <div class="term">
+      <div class="tsym">FS</div>
+      <div class="tbody"><div class="tname">Finish-to-Start</div><div class="tdef">Activity B cannot start until Activity A is finished. The most common dependency. "You can't test code that hasn't been written."</div></div>
+    </div>
+    <div class="term">
+      <div class="tsym">SS</div>
+      <div class="tbody"><div class="tname">Start-to-Start</div><div class="tdef">Activity B can start as soon as Activity A starts. They can run in parallel once both are initiated. "Documentation can start as soon as coding starts."</div></div>
+    </div>
+    <div class="term">
+      <div class="tsym">FF</div>
+      <div class="tbody"><div class="tname">Finish-to-Finish</div><div class="tdef">Activity B cannot finish until Activity A finishes. "Testing cannot finish until all bugs from development are fixed."</div></div>
+    </div>
+  </div>
+
+  <div class="subhead">Example network — IOE payroll project (simplified)</div>
+  <div class="net-wrap">
+    <div class="net-title">Activity on Node (AoN) network · click any node to highlight its path</div>
+    <svg class="net-svg" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" id="netSvg">
+      <!-- arrows -->
+      <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3Z" fill="#2a3040"/></marker>
+      <marker id="ahc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3Z" fill="#ff7a5c"/></marker></defs>
+      <!-- critical path edges -->
+      <line x1="90" y1="80" x2="180" y2="80" stroke="#ff7a5c" stroke-width="2" marker-end="url(#ahc)" class="cp-edge"/>
+      <line x1="270" y1="80" x2="360" y2="80" stroke="#ff7a5c" stroke-width="2" marker-end="url(#ahc)" class="cp-edge"/>
+      <line x1="450" y1="80" x2="540" y2="80" stroke="#ff7a5c" stroke-width="2" marker-end="url(#ahc)" class="cp-edge"/>
+      <line x1="630" y1="80" x2="660" y2="80" stroke="#ff7a5c" stroke-width="2" marker-end="url(#ahc)" class="cp-edge"/>
+      <!-- non-critical edges -->
+      <line x1="90" y1="80" x2="180" y2="190" stroke="#2a3040" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="270" y1="190" x2="360" y2="80" stroke="#2a3040" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="270" y1="190" x2="540" y2="80" stroke="#2a3040" stroke-width="1.5" marker-end="url(#ah)"/>
+      <!-- nodes -->
+      <g id="n-A" class="net-node" style="cursor:pointer" onclick="hlNode('A')">
+        <rect x="10" y="55" width="80" height="50" rx="10" fill="#171b26" stroke="#ff7a5c" stroke-width="2"/>
+        <text x="50" y="77" fill="#e9e7e0" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">A</text>
+        <text x="50" y="92" fill="#8b909e" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Req. Analysis</text>
+        <text x="50" y="104" fill="#ffb95c" font-size="9" font-family="JetBrains Mono" text-anchor="middle">5 weeks</text>
+      </g>
+      <g id="n-B" class="net-node" style="cursor:pointer" onclick="hlNode('B')">
+        <rect x="180" y="55" width="90" height="50" rx="10" fill="#171b26" stroke="#ff7a5c" stroke-width="2"/>
+        <text x="225" y="77" fill="#e9e7e0" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">B</text>
+        <text x="225" y="92" fill="#8b909e" font-size="9" font-family="JetBrains Mono" text-anchor="middle">System Design</text>
+        <text x="225" y="104" fill="#ffb95c" font-size="9" font-family="JetBrains Mono" text-anchor="middle">8 weeks</text>
+      </g>
+      <g id="n-C" class="net-node" style="cursor:pointer" onclick="hlNode('C')">
+        <rect x="180" y="165" width="90" height="50" rx="10" fill="#171b26" stroke="#2a3040" stroke-width="2"/>
+        <text x="225" y="187" fill="#e9e7e0" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">C</text>
+        <text x="225" y="202" fill="#8b909e" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Data Migration</text>
+        <text x="225" y="214" fill="#ffb95c" font-size="9" font-family="JetBrains Mono" text-anchor="middle">6 weeks</text>
+      </g>
+      <g id="n-D" class="net-node" style="cursor:pointer" onclick="hlNode('D')">
+        <rect x="360" y="55" width="90" height="50" rx="10" fill="#171b26" stroke="#ff7a5c" stroke-width="2"/>
+        <text x="405" y="77" fill="#e9e7e0" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">D</text>
+        <text x="405" y="92" fill="#8b909e" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Development</text>
+        <text x="405" y="104" fill="#ffb95c" font-size="9" font-family="JetBrains Mono" text-anchor="middle">14 weeks</text>
+      </g>
+      <g id="n-E" class="net-node" style="cursor:pointer" onclick="hlNode('E')">
+        <rect x="540" y="55" width="90" height="50" rx="10" fill="#171b26" stroke="#ff7a5c" stroke-width="2"/>
+        <text x="585" y="77" fill="#e9e7e0" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">E</text>
+        <text x="585" y="92" fill="#8b909e" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Testing</text>
+        <text x="585" y="104" fill="#ffb95c" font-size="9" font-family="JetBrains Mono" text-anchor="middle">6 weeks</text>
+      </g>
+      <!-- CP label -->
+      <text x="350" y="245" fill="#ff7a5c" font-size="10" font-family="JetBrains Mono" text-anchor="middle">— Critical Path  (A→B→D→E = 33 weeks)</text>
+    </svg>
+  </div>
+</section>
+
+<section id="cpa">
+  <span class="tag">02 · Critical Path Analysis</span>
+  <h2>Which tasks, if late, make the whole project late?<span class="timing">25 min</span></h2>
+  <p class="note">The critical path is the longest sequence of dependent activities through the network. It defines the minimum possible project duration. Any delay on a critical path activity delays the entire project by the same amount. Tasks <i>not</i> on the critical path have "float" — a buffer of time they can slip without affecting the end date.</p>
+  <p class="note">Finding the critical path involves two passes through the network:</p>
+
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard">
+      <div class="gterm">Forward pass — find the Earliest dates</div>
+      <div class="gdef">Start at the beginning (time 0) and work forward. For each activity, the <b>Earliest Start (ES)</b> is the latest finishing time of all its predecessors. <b>Earliest Finish (EF)</b> = ES + Duration. The EF of the final activity is the earliest possible project completion date.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Backward pass — find the Latest dates</div>
+      <div class="gdef">Start at the project end date and work backward. The <b>Latest Finish (LF)</b> of each activity is the earliest Latest Start of all its successors. <b>Latest Start (LS)</b> = LF − Duration. Any activity with LS = ES (and LF = EF) is on the critical path.</div>
+    </div>
+    <div class="gcard">
+      <div class="gterm">Float (Slack)</div>
+      <div class="gdef"><b>Float = LS − ES = LF − EF.</b> Float is the amount of time an activity can be delayed without delaying the project. Critical path activities have zero float — that's what makes them critical. Non-critical activities have positive float — a scheduling buffer.</div>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:20px">
+    <p><b>PERT — adding uncertainty:</b> Program Evaluation and Review Technique uses three time estimates per activity: <b>Optimistic (O)</b>, <b>Most Likely (M)</b>, <b>Pessimistic (P)</b>. Expected duration = (O + 4M + P) / 6. This gives a weighted average that explicitly accounts for uncertainty — and can be used to calculate the probability of meeting a given deadline.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-tag">Exercise 6.1 — forward and backward pass</div>
+    <p>For the network above (A=5, B=8, C=6, D=14, E=6 weeks; C depends on A; D depends on B and C; E depends on D):</p>
+    <p>1. Perform a forward pass to find all ES and EF values.</p>
+    <p>2. Perform a backward pass to find all LS and LF values.</p>
+    <p>3. Calculate float for each activity. Which activities are on the critical path?</p>
+    <p>4. If Activity C takes 10 weeks instead of 6, does it become critical? Does the project end date change?</p>
+  </div>
+</section>
+
+<section id="gantt">
+  <span class="tag">03 · Gantt Charts</span>
+  <h2>Turning the network into a readable schedule<span class="timing">15 min</span></h2>
+  <p class="note">A Gantt chart displays activities as horizontal bars on a time axis. Unlike a network diagram, it makes the calendar visible — actual dates, dependencies shown as bars starting where predecessors end, and resources often annotated along each bar. It's the most widely used scheduling tool in industry, and what most project management software (MS Project, Jira, Trello timelines) produces.</p>
+
+  <div class="gantt-wrap">
+    <div class="gantt-title">Gantt chart — IOE Payroll Project (weeks)</div>
+    <div class="gantt-weeks" style="margin-left:132px;max-width:calc(100% - 132px)">
+      <span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30</span><span>33</span>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">A · Req. Analysis</div>
+      <div class="gantt-track"><div class="gantt-bar critical" style="left:0%;width:15.2%"></div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">B · System Design</div>
+      <div class="gantt-track"><div class="gantt-bar critical" style="left:15.2%;width:24.2%"></div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">C · Data Migration</div>
+      <div class="gantt-track"><div class="gantt-bar normal" style="left:15.2%;width:18.2%"></div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">D · Development</div>
+      <div class="gantt-track"><div class="gantt-bar critical" style="left:39.4%;width:42.4%"></div></div>
+    </div>
+    <div class="gantt-row">
+      <div class="gantt-label">E · Testing</div>
+      <div class="gantt-track"><div class="gantt-bar critical" style="left:81.8%;width:18.2%"></div></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:20px;font-family:var(--mono);font-size:11px;color:var(--muted)">
+      <span><span style="display:inline-block;width:14px;height:10px;background:var(--pos);border-radius:2px;margin-right:6px;opacity:.85"></span>Critical path</span>
+      <span><span style="display:inline-block;width:14px;height:10px;background:var(--accent);border-radius:2px;margin-right:6px;opacity:.7"></span>Non-critical (has float)</span>
+    </div>
+  </div>
+
+  <div class="key-point" style="margin-top:24px">
+    <p><b>Gantt charts show time, not logic.</b> You can see when things happen, but not why one task must follow another. In large projects, a Gantt chart without the underlying network is easy to misread. When someone proposes moving a bar to the left, always check the network first — it may be impossible due to dependencies.</p>
+  </div>
+</section>
+
+<section id="wrapup">
+  <span class="tag">04 · Wrap-up</span>
+  <h2>Key takeaways</h2>
+  <div class="glossary" style="margin-top:20px">
+    <div class="gcard"><div class="gterm">The critical path is where your attention belongs</div><div class="gdef">Recovering from a delay on a non-critical activity costs float — which you may have plenty of. Recovering from a delay on a critical activity requires compressing the schedule by adding resources, removing scope, or accepting a later delivery date. The PM's job is to know which is which at all times.</div></div>
+    <div class="gcard"><div class="gterm">Float is project oxygen</div><div class="gdef">Float gives you flexibility to respond to the unexpected. Consuming all float early (by not enforcing deadlines on non-critical tasks) removes the buffer when you need it most, often turning formerly safe activities into critical ones.</div></div>
+    <div class="gcard"><div class="gterm">Networks are inputs, Gantts are outputs</div><div class="gdef">Build the logic in a network first. Use the critical path analysis to establish dates. Then produce the Gantt chart for communication. If you go straight to the Gantt, you're drawing a picture without understanding the dependencies beneath it.</div></div>
+  </div>
+</section>
+
+<section id="homework" style="border-bottom:none">
+  <span class="tag">Follow-up</span>
+  <h2>Before next session</h2>
+  <div class="homework" style="margin-top:24px">
+    <h3>Homework</h3>
+    <div class="hw-list">
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text">Read Chapter 6 in full (pp. 129–161)</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Exercise 6.3:</b> Build a complete network for the Brightmouth College payroll project. Perform a forward and backward pass. Identify the critical path and compute float for each non-critical activity.</span></div>
+      <div class="hw-item"><span class="hw-arrow">→</span><span class="hw-text"><b>Capstone teams:</b> Convert your WBS into a network diagram and produce a Gantt chart. Label which activities are critical. This becomes your project schedule (Section 8 of the plan).</span></div>
+    </div>
+  </div>
+</section>
+<footer><div>Hughes & Cotterell, Software Project Management, 5th ed., Ch.6 (pp. 129–161)</div></footer>
+</div>
+<a class="next-lesson" href="07-risk-management.html">Week 07 <span class="arr">→</span></a>
+<a class="home-btn" href="index.html"><span class="arr">←</span> Home</a>
+<div id="prg"></div>
+<script>
+const prg=document.getElementById('prg');
+window.addEventListener('scroll',()=>{const m=document.body.scrollHeight-window.innerHeight;if(m>0)prg.style.width=(window.scrollY/m*100)+'%';},{passive:true});
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:0.06});
+document.querySelectorAll('section').forEach(s=>{s.classList.add('fade-up');io.observe(s);});
+</script>
+</body>
+</html>
