@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <style>
   :root{
     --ink:#0c0e13;--ink-2:#13161f;--panel:#171b26;--panel-2:#1d2230;
@@ -102,6 +105,8 @@
   .eq-box{background:var(--ink);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:18px;overflow-x:auto}
   .eq-line{font-family:var(--mono);font-size:clamp(15px,2.6vw,22px);letter-spacing:.02em;white-space:nowrap;line-height:1.8}
   .eq-line+.eq-line{margin-top:8px}
+  .katex{color:var(--text);font-size:1.08em}
+  .note-list .katex,.note .katex,td .katex{color:var(--text)}
   .ek{color:var(--muted)}
   .ev{color:var(--accent);font-weight:700}
   .er{color:var(--pos);font-weight:700}
@@ -309,7 +314,7 @@
         <tr>
           <td><b>Net Profit</b></td>
           <td>How much do we make in total, over the whole lifetime?</td>
-          <td><code>Σ income − Σ costs</code></td>
+          <td>\(\sum \text{income} - \sum \text{costs}\)</td>
           <td>Ignores <i>when</i> cash flows happen. £50k in year 1 and £50k in year 5 look exactly the same.</td>
         </tr>
         <tr>
@@ -321,13 +326,13 @@
         <tr>
           <td><b>ROI / ARR</b></td>
           <td>What's our average annual return as a percentage?</td>
-          <td><code>(avg annual profit ÷ total investment) × 100</code></td>
+          <td>\(\dfrac{\text{avg annual profit}}{\text{total investment}} \times 100\)</td>
           <td>Still ignores timing. Harder to compare with a bank interest rate, because they compound.</td>
         </tr>
         <tr>
           <td><b>NPV</b></td>
           <td>What are all future cash flows worth in today's money?</td>
-          <td><code>PV = value ÷ (1 + r)ᵗ</code> — summed over all years</td>
+          <td>\(PV = \dfrac{\text{value}}{(1+r)^t}\) — summed over all years</td>
           <td>Requires choosing a discount rate — the answer is sensitive to that choice.</td>
         </tr>
         <tr>
@@ -399,8 +404,8 @@
 
   <div class="subhead">Return on investment (ROI / ARR)</div>
   <ul class="note-list">
-    <li>Also called the <b>accounting rate of return</b>. It compares net profitability to the investment required: <code>ROI = (average annual profit ÷ total investment) × 100</code>.</li>
-    <li><b>Project 1 example:</b> £50,000 net profit over 5 years = £10,000 average annual profit; ROI = (10,000 ÷ 100,000) × 100 = <b>10%</b>.</li>
+    <li>Also called the <b>accounting rate of return (ARR)</b> — same thing, different name. It asks a simple question: <i>how much profit does the project make each year, on average, as a percentage of what you put in?</i> \(\text{ROI} = \dfrac{\text{average annual profit}}{\text{total investment}} \times 100\).</li>
+    <li><b>Project 1 example:</b> £50,000 net profit over 5 years = £10,000 average annual profit; \(\text{ROI} = \dfrac{10{,}000}{100{,}000} \times 100 = \mathbf{10\%}\).</li>
   </ul>
 
   <div class="tbl-wrap" style="margin-top:16px">
@@ -427,7 +432,7 @@
     <li>Net profit treats all time periods equally, which isn't realistic: <b>£100 today is worth more than £100 in a year's time</b> — invest £91 today at 10% interest and it becomes roughly £100 in a year, so £91 now and £100 in a year are treated as equivalent.</li>
     <li><b>Discounting</b> — the general name for that shrinking trick: taking a future amount of money and working out what it's actually worth <i>today</i>, since money loses value the longer you have to wait for it.</li>
     <li><b>Discount rate</b> — the interest rate used to do the shrinking. It's usually based on what the money could otherwise earn if invested elsewhere (e.g. left in a bank), so it plays the same role as the 10% in the £91/£100 example above.</li>
-    <li>NPV applies discounting to every cash flow, then adds the results up: <code>Present value = value in year t ÷ (1 + r)ᵗ</code> — where <i>r</i> is the discount rate and <i>t</i> is how many years in the future that cash flow happens.</li>
+    <li>NPV applies discounting to every cash flow, then adds the results up: \(PV = \dfrac{\text{value in year } t}{(1+r)^t}\) — where <i>r</i> is the discount rate and <i>t</i> is how many years in the future that cash flow happens.</li>
     <li><b>Discount factor</b> — a ready-made multiplier that does that ÷(1 + r)ᵗ calculation for you. Table 2.2 lists them for common rates, so in practice you multiply each year's cash flow by the table's factor rather than working out the power by hand.</li>
     <li>The initial investment (year 0) is assumed to happen immediately and is <i>not</i> discounted; every later cash flow is discounted by the appropriate factor, then all the discounted values are summed to get the NPV.</li>
     <li><b>Worked example — Table 2.3, Project 1 @ 10%:</b> −£100,000 (year 0, undiscounted) + £9,091 + £8,264 + £7,513 + £13,660 + £62,090 = <b>NPV = £618</b>. Barely positive — Project 1 is only marginally worthwhile at this discount rate.</li>
@@ -523,7 +528,7 @@
 
   <div class="exercise">
     <div class="ex-tag">Exercise 2.7 — BuyRight expected income</div>
-    <p>Three possible income scenarios, each with a probability attached. Calculate <b>expected income</b> = Σ(income × probability) using Table 2.6. Then ask: should BuyRight proceed? Development costs £750,000. Ongoing costs: £200,000/year. Expected income from the table: £500,000/year. What does that imply for the business case?</p>
+    <p>Three possible income scenarios, each with a probability attached. Calculate <b>expected income</b> \(= \sum (\text{income} \times \text{probability})\) using Table 2.6. Then ask: should BuyRight proceed? Development costs £750,000. Ongoing costs: £200,000/year. Expected income from the table: £500,000/year. What does that imply for the business case?</p>
   </div>
 
   <div class="exercise" style="margin-top:16px">
@@ -691,6 +696,14 @@
 <div id="prg"></div>
 
 <script>
+/* render LaTeX equations */
+renderMathInElement(document.body, {
+  delimiters: [
+    {left: '\\(', right: '\\)', display: false},
+    {left: '\\[', right: '\\]', display: true}
+  ]
+});
+
 /* reading progress bar */
 const prg = document.getElementById('prg');
 window.addEventListener('scroll', () => {
