@@ -49,6 +49,11 @@
   .note+.note{margin-top:12px}
   .note b{color:var(--text);font-weight:600}
   .note i{color:var(--text);font-style:italic}
+  .note-list{max-width:680px;padding-left:20px;margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .note-list li{color:var(--muted);font-size:16px;line-height:1.6}
+  .note-list li b{color:var(--text);font-weight:600}
+  .note-list li i{color:var(--text);font-style:italic}
+  .note-list+.subhead{margin-top:32px}
   .timing{font-family:var(--mono);font-size:11px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);display:inline-block;margin-left:10px;vertical-align:middle;}
 
   .obj-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
@@ -335,14 +340,107 @@
     </table>
   </div>
 
-  <div class="subhead">Why NPV is the most important of these</div>
-  <p class="note" style="margin-top:14px">Net profit treats all time periods equally, which isn't realistic. <b>£1,000 five years from now is not the same as £1,000 today</b> — if you had £1,000 today, you could put it in the bank and it would grow. NPV adjusts for this by discounting future cash flows back to their present value, using your organization's "cost of capital" (or required rate of return) as the discount rate.</p>
-  <p class="note">The result: two projects with identical net profit can rank very differently on NPV, simply because one pays returns earlier. Exercises 2.5–2.6 demonstrate this exactly with the IOE projects.</p>
+  <div class="subhead">Table 2.1 — the four IOE cash-flow projections</div>
+  <p class="note" style="margin-top:14px">These are the actual numbers the book uses for every technique below — work through them live, they're small enough to follow by hand. Year 0 is the initial investment, made immediately and not discounted; years 1–5 are cash flows at the end of each year. Negative = expenditure, positive = income.</p>
+
+  <div class="tbl-wrap" style="margin-top:16px">
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Project 1 (£)</th><th>Project 2 (£)</th><th>Project 3 (£)</th><th>Project 4 (£)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0 (investment)</td><td>−100,000</td><td>−1,000,000</td><td>−100,000</td><td>−120,000</td></tr>
+        <tr><td>1</td><td>10,000</td><td>200,000</td><td>30,000</td><td>30,000</td></tr>
+        <tr><td>2</td><td>10,000</td><td>200,000</td><td>30,000</td><td>30,000</td></tr>
+        <tr><td>3</td><td>10,000</td><td>200,000</td><td>30,000</td><td>30,000</td></tr>
+        <tr><td>4</td><td>20,000</td><td>200,000</td><td>30,000</td><td>30,000</td></tr>
+        <tr><td>5</td><td>100,000</td><td>300,000</td><td>30,000</td><td>75,000</td></tr>
+        <tr><td><b>Net profit</b></td><td><b>50,000</b></td><td><b>100,000</b></td><td><b>50,000</b></td><td><b>75,000</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subhead">Net profit</div>
+  <ul class="note-list">
+    <li>Net profit = <b>total income − total costs</b>, over the whole project life.</li>
+    <li>Project 2 has the greatest net profit (£100,000) — but only by risking a £1,000,000 investment.</li>
+    <li>If IOE actually had £1m to invest, it could instead fund Projects 1, 3 <i>and</i> 4 together — £50,000 + £50,000 + £75,000 = <b>£175,000 combined net profit</b>, spread across three products instead of staked on one.</li>
+    <li>Every project also carries risk, so committing the full £1m to a single project is itself a risk decision, not just a financial one.</li>
+    <li><b>Blind spot — timing:</b> Projects 1 and 3 both net exactly £50,000, so net profit alone ranks them equally.</li>
+    <li>But Project 1's income arrives mostly in year 5 (£100,000 in the final year alone), while Project 3 returns a steady £30,000 every year from year 1.</li>
+    <li>Waiting longer for a return means funding the investment for longer — and distant estimates are less reliable than short-term ones. The two projects are not really equivalent, even though net profit says they are.</li>
+  </ul>
+
+  <div class="subhead">Payback period</div>
+  <ul class="note-list">
+    <li>The time taken to break even — to recover the initial investment out of cumulative income.</li>
+    <li>Organizations normally prefer the shortest payback, since it minimizes the time a project is "in debt."</li>
+    <li>Read it straight off the cumulative cash flow line for each project in Table 2.1:</li>
+  </ul>
+
+  <div class="tbl-wrap" style="margin-top:16px">
+    <table>
+      <thead>
+        <tr><th>Project</th><th>Cumulative cash flow reaches zero…</th><th>Approx. payback</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Project 1</td><td>between year 4 (−£50,000) and year 5 (+£50,000)</td><td>~4.5 years</td></tr>
+        <tr><td>Project 2</td><td>between year 4 (−£200,000) and year 5 (+£100,000)</td><td>~4.7 years</td></tr>
+        <tr><td>Project 3</td><td>between year 3 (−£10,000) and year 4 (+£20,000)</td><td>~3.3 years</td></tr>
+        <tr><td>Project 4</td><td>exactly at year 4 (£0 cumulative)</td><td>4 years</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul class="note-list">
+    <li><b>Advantage:</b> simple to calculate, and not particularly sensitive to small forecasting errors.</li>
+    <li><b>Blind spot:</b> totally ignores any income (or expenditure) once the project has broken even — so the fact that Projects 2 and 4 are, overall, more profitable than Project 3 is invisible to this measure.</li>
+  </ul>
+
+  <div class="subhead">Return on investment (ROI / ARR)</div>
+  <ul class="note-list">
+    <li>Also called the <b>accounting rate of return</b>. It compares net profitability to the investment required: <code>ROI = (average annual profit ÷ total investment) × 100</code>.</li>
+    <li><b>Project 1 example:</b> £50,000 net profit over 5 years = £10,000 average annual profit; ROI = (10,000 ÷ 100,000) × 100 = <b>10%</b>.</li>
+  </ul>
+
+  <div class="tbl-wrap" style="margin-top:16px">
+    <table>
+      <thead>
+        <tr><th>Project</th><th>Avg. annual profit</th><th>Investment</th><th>ROI</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Project 1</td><td>£10,000</td><td>£100,000</td><td>10%</td></tr>
+        <tr><td>Project 2</td><td>£20,000</td><td>£1,000,000</td><td>2%</td></tr>
+        <tr><td>Project 3</td><td>£10,000</td><td>£100,000</td><td>10%</td></tr>
+        <tr><td>Project 4</td><td>£15,000</td><td>£120,000</td><td>12.5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul class="note-list">
+    <li><b>Blind spot 1:</b> like net profit, it takes no account of the timing of the cash flows.</li>
+    <li><b>Blind spot 2:</b> this rate of return bears no real relationship to the interest rates offered or charged by banks, since it ignores <b>compounding</b> — the way interest itself earns more interest over time, which is how bank rates actually grow money. Potentially very misleading as a comparison against "just put the money in the bank instead."</li>
+  </ul>
+
+  <div class="subhead">Net present value (NPV)</div>
+  <ul class="note-list">
+    <li>Net profit treats all time periods equally, which isn't realistic: <b>£100 today is worth more than £100 in a year's time</b> — invest £91 today at 10% interest and it becomes roughly £100 in a year, so £91 now and £100 in a year are treated as equivalent.</li>
+    <li><b>Discounting</b> — the general name for that shrinking trick: taking a future amount of money and working out what it's actually worth <i>today</i>, since money loses value the longer you have to wait for it.</li>
+    <li><b>Discount rate</b> — the interest rate used to do the shrinking. It's usually based on what the money could otherwise earn if invested elsewhere (e.g. left in a bank), so it plays the same role as the 10% in the £91/£100 example above.</li>
+    <li>NPV applies discounting to every cash flow, then adds the results up: <code>Present value = value in year t ÷ (1 + r)ᵗ</code> — where <i>r</i> is the discount rate and <i>t</i> is how many years in the future that cash flow happens.</li>
+    <li><b>Discount factor</b> — a ready-made multiplier that does that ÷(1 + r)ᵗ calculation for you. Table 2.2 lists them for common rates, so in practice you multiply each year's cash flow by the table's factor rather than working out the power by hand.</li>
+    <li>The initial investment (year 0) is assumed to happen immediately and is <i>not</i> discounted; every later cash flow is discounted by the appropriate factor, then all the discounted values are summed to get the NPV.</li>
+    <li><b>Worked example — Table 2.3, Project 1 @ 10%:</b> −£100,000 (year 0, undiscounted) + £9,091 + £8,264 + £7,513 + £13,660 + £62,090 = <b>NPV = £618</b>. Barely positive — Project 1 is only marginally worthwhile at this discount rate.</li>
+    <li><b>Why it matters:</b> Projects 1 and 3 have identical net profit (£50,000) and identical ROI (10%) — yet very different NPVs, because Project 1 makes you wait longer for the bulk of its income.</li>
+    <li><b>Choosing a discount rate</b> is the main difficulty with NPV — use the organization's standard rate if it has one, otherwise base it on available interest/borrowing rates plus a premium for the fact that software projects are normally riskier than lending to a bank.</li>
+    <li>The exact rate matters less than using the <i>same</i> rate across all compared projects — but check the ranking isn't sensitive to small changes in that rate, since NPV can re-rank projects that looked equivalent (or differently ordered) under net profit or ROI.</li>
+    <li><b>Discounted cash flow (DCF)</b> — the umbrella name for any technique, like NPV or IRR (below), that works by discounting future cash flows before comparing them.</li>
+  </ul>
 
   <!-- ---- INTERACTIVE NPV CALCULATOR ---- -->
   <div class="npv-calc">
     <div class="npv-calc-title">NPV Calculator — Table 2.3, Project 1</div>
-    <div class="npv-calc-sub">Drag the slider to see how the discount rate changes the NPV decision. Cash flows: Year 0 = −£50,000 / Years 1–5 = +£13,350 each.</div>
+    <div class="npv-calc-sub">Drag the slider to see how the discount rate changes the NPV decision. Cash flows (from Table 2.1): Year 0 = −£100,000 / Years 1–3 = +£10,000 / Year 4 = +£20,000 / Year 5 = +£100,000.</div>
 
     <div class="npv-slider-row">
       <span class="npv-slider-label">Discount rate</span>
@@ -358,7 +456,7 @@
       </div>
       <div class="npv-result-box" style="flex:0;min-width:200px">
         <div class="npv-result-label">IRR (approx.)</div>
-        <div class="npv-result-val" style="color:var(--accent);font-size:clamp(22px,3vw,34px)">~10.5%</div>
+        <div class="npv-result-val" style="color:var(--accent);font-size:clamp(22px,3vw,34px)">~10.2%</div>
         <div class="npv-verdict" style="color:var(--muted)">The rate at which NPV = £0</div>
       </div>
     </div>
@@ -378,13 +476,25 @@
     </div>
   </div>
 
+  <div class="subhead">Internal rate of return (IRR)</div>
+  <ul class="note-list">
+    <li>One disadvantage of NPV: it isn't directly comparable with earnings from other investments or the cost of borrowing capital, since those are normally quoted as a percentage interest rate.</li>
+    <li>IRR fixes this: it's <b>the discount rate that would produce an NPV of exactly zero</b> — a percentage return directly comparable with interest rates.</li>
+    <li>A project with an estimated IRR of 10% is worthwhile if capital can be borrowed for less than 10%, or if it can't be invested elsewhere for a return greater than 10%.</li>
+    <li><b>Project 1 example:</b> NPV is +£618 at 10% and turns negative by 11%, so its IRR is only just above 10% — roughly 10.2%.</li>
+    <li>Normally calculated with a spreadsheet's IRR function (given a seed/guess value) rather than by hand.</li>
+    <li><b>Deficiency 1:</b> doesn't indicate the <i>absolute size</i> of the return — an NPV of £100,000 at 15% IRR can be more attractive than an NPV of £10,000 at 18% IRR, because the net benefit is greater even though the rate of return is lower.</li>
+    <li><b>Deficiency 2:</b> under certain cash-flow patterns, more than one discount rate can produce a zero NPV — if that happens, take the lowest value and ignore the others.</li>
+    <li>NPV and IRR are useful, but neither is a complete answer alone — also consider whether the organization can actually fund and repay the cash flows involved, and how the project's risk compares with safer alternatives like a bank deposit.</li>
+  </ul>
+
   <div class="key-point" style="margin-top:24px">
-    <p><b>The most important insight from this table:</b> no single technique is sufficient. Use net profit to check basic viability. Use payback period to understand how long you're exposed. Use ROI to compare with other investment options. Use NPV to account for time — and to re-rank projects that look equal on simpler measures. Real evaluation always combines several.</p>
+    <p><b>The most important insight from this table:</b> no single technique is sufficient. Use net profit to check basic viability. Use payback period to understand how long you're exposed. Use ROI to compare with other investment options. Use NPV to account for time — and to re-rank projects that look equal on simpler measures. Use IRR to compare against interest rates. Real evaluation always combines several.</p>
   </div>
 
   <div class="exercise">
     <div class="ex-tag">Exercises 2.2–2.6 — follow along with Table 2.1</div>
-    <p>Students calculate payback period (Ex 2.3), ROI (Ex 2.4), and NPV (Ex 2.5–2.6) for all four IOE projects. The key moment: <b>Projects 1 and 2 have identical net profit, but different NPVs</b> — because they have different cash flow timing. This is when the "aha" moment about NPV usually lands.</p>
+    <p>Students calculate payback period (Ex 2.3), ROI (Ex 2.4), and NPV (Ex 2.5–2.6) for all four IOE projects. The key moment: <b>Projects 1 and 3 have identical net profit (£50,000) and identical ROI (10%), but different NPVs</b> — because they have different cash flow timing. This is when the "aha" moment about NPV usually lands.</p>
   </div>
 </section>
 
@@ -595,7 +705,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('section').forEach(s => { s.classList.add('fade-up'); io.observe(s); });
 
 /* ---- Interactive NPV Calculator ---- */
-const cashFlows = [-50000, 13350, 13350, 13350, 13350, 13350];
+const cashFlows = [-100000, 10000, 10000, 10000, 20000, 100000];
 const slider = document.getElementById('rateSlider');
 const rateDisplay = document.getElementById('rateDisplay');
 const npvVal = document.getElementById('npvVal');
